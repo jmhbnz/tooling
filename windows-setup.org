@@ -30,6 +30,43 @@
   the unix account that wsl will use.
 
 
+* Install an x server for wsl
+
+  One of the ways we extend standard wsl functionality is installing an x server
+  on windows to allow graphical applications to be run.
+
+  This has the added benefit of allowing command line clipboard tools like [[https://github.com/astrand/xclip][xclip]] to
+  be used within wsl.
+
+  The x server I've found to be rock solid for this purpose is [[https://sourceforge.net/projects/vcxsrv/][VcXsrv]].  Which is also
+  open source.
+
+  #+NAME: Download and install VcXsrv
+  #+BEGIN_SRC tmate
+  cd /mnt/c/Users/jmhbnz/Downloads/
+  wget https://sourceforge.net/projects/vcxsrv/files/latest/download
+  mv download installer.exe
+  cmd.exe /c installer.exe
+  #+END_SRC
+
+  
+  After following through the installer we want to ensure VcXsrv launches at startup
+  with our desired configuration.
+
+  To achieve this we can add an xlaunch configuration which is just xml with a fancy
+  extension to our machines startup folder.
+
+  #+NAME: Apply our VcXsrv configuration
+  #+BEGIN_SRC tmate
+  cd /mnt/c/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Startup
+  cat > VcXsrv.xlaunch << EOF
+  <?xml version="1.0" encoding="UTF-8"?>
+  <XLaunch WindowMode="MultiWindow" ClientMode="NoClient" LocalClient="False" Display="-1" LocalProgram="xcalc" RemoteProgram="xterm" RemotePassword="" PrivateKey="" RemoteHost="" RemoteUser="" XDMCPHost="" XDMCPBroadcast="False" XDMCPIndirect="False" Clipboard="True" ClipboardPrimary="True" ExtraParams="" Wgl="True" DisableAC="False" XDMCPTerminate="False"/>
+  EOF
+  cmd.exe /c VcXsrv.xlaunch
+  #+END_SRC
+
+
 * Configure windows ten
 
   Enable all tray icons to be visible and restart explorer
