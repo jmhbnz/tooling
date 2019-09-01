@@ -20,7 +20,7 @@
   #+NAME: Install standard packages 
   #+BEGIN_SRC tmate
   sudo apt-get install -y git curl wget tmate locales xclip tmux net-tools less
-                        \ software-properties-common htop wget
+  \ software-properties-common htop wget
   #+END_SRC
 
 
@@ -30,6 +30,25 @@
   #+BEGIN_SRC tmate
   curl -L -O https://github.com/jgm/pandoc/releases/download/2.7.3/pandoc-2.7.3-1-amd64.deb  
   sudo dpkg -i /tmp/pandoc-2.7.3-1-amd64.deb
+  #+END_SRC
+
+
+  For additional package management we use node. The code below installs node ~12~.
+
+  #+NAME: Install node
+  #+BEGIN_SRC tmate 
+  sudo curl  -sL https://deb.nodesource.com/setup_12.x | bash -
+  sudo apt-get install -y nodejs
+  #+END_SRC
+
+  
+  For managing secrets we use [[https://bitwarden.com/][bitwarden]] which provides a great [[https://github.com/bitwarden/cli][cli utility]].
+
+  #+NAME: Install bitwarden and login
+  #+BEGIN_SRC tmate
+  export account=[BITWARDEN_ACCOUNT]
+  sudo npm install -g @bitwarden/cli 
+  bw login $account
   #+END_SRC
 
 
@@ -82,3 +101,18 @@
   ln -sf ~/.emacs.d/private/local/dot-spacemacs/.spacemacs ~/.spacemacs
   emacs --batch -l ~/.emacs.d/init.el
   #+END_SRC
+
+
+* Setup environment dotfiles
+
+  Within wsl we can use .dotfiles to further customise our environment. The script
+  below restores my versions of key dotfiles automatically.
+
+  #+NAME: Clone and restore the dotfiles
+  #+BEGIN_SRC tmate
+  git clone ssh://git@gitlab.jamma.life:2224/jmhbnz/tooling.git
+  cd /tooling/
+  mv * ~/
+  #+END_SRC
+
+
