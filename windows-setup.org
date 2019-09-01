@@ -1,0 +1,5 @@
+#+TITLE: Windows 10 Setup
+#+AUTHOR: James Blair
+#+EMAIL: mail@jamesblair.net
+#+DATE: 1st September 2019
+
