@@ -3,19 +3,18 @@
 #+EMAIL: mail@jamesblair.net
 #+DATE: 1st September 2019
 
-* Introduction
 
-  This document captures my standard development environment for future replication
-  and aims to make it as easy as possible to setup and use.
+This document captures my standard development environment for future replication
+and aims to make it as easy as possible to setup and use.
 
-  The environment is based on Windows 10 using [[https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux][Windows Subsystem for Linux]] for a 
-  command line interface.
+The environment is based on Windows 10 using [[https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux][Windows Subsystem for Linux]] for a 
+command line inter face.
 
-  For pair programming I rely on [[https://www.gnu.org/software/emacs/][emacs]], specifically [[https://github.com/syl20bnr/spacemacs][spacemacs]] with [[https://tmate.io/][tmate]].
+For pair programming I rely on [[https://www.gnu.org/software/emacs/][emacs]], specifically [[https://github.com/syl20bnr/spacemacs][spacemacs]] with [[https://tmate.io/][tmate]].
 
-  This documentation is split into two main sections:
-  - [[windows-setup.org][Windows 10]]
-  - [[wsl-setup.org][Windows Subsystem for Linux]]
+This documentation is split into two main sections:
+ - [[windows-setup.org][Windows 10]]
+ - [[wsl-setup.org][Windows Subsystem for Linux]]
 
 
 
