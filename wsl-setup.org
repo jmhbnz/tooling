@@ -68,6 +68,27 @@
   #+END_SRC
 
 
+  For cloud infrastructure deployments we use [[https://www.terraform.io/][terraforms]].
+
+  #+BEGIN_SRC shell
+  # Download the binary
+  wget 'https://releases.hashicorp.com/terraform/0.12.9/terraform_0.12.9_linux_amd64.zip'
+
+  # Unzip it
+  unzip *.zip
+
+  # Move the binary to path
+  sudo mv terraform /usr/bin/
+
+  # Clean up
+  rm *amd64.zip 
+  #+END_SRC
+
+  #+RESULTS:
+  | Archive:   | terraform_0.12.9_linux_amd64.zip |
+  | inflating: | terraform                        |
+
+
 * Install spacemacs
 
   A key component in our environment is spacemacs. The section below will setup
