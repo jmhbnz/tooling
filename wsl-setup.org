@@ -9,25 +9,27 @@
   To get started we ensure the package manager is up to date.
 
   #+NAME: Update system packages
-  #+BEGIN_SRC tmate
+  #+BEGIN_SRC shell
   sudo apt-get update && sudo apt-get upgrade
   #+END_SRC
+
+  #+RESULTS: Update system packages
 
 
   Next we install a series of standard packages that form part of our workflow or
   are dependencies for other tools in our environment.
 
   #+NAME: Install standard packages 
-  #+BEGIN_SRC tmate
-  sudo apt-get install -y git curl wget tmate locales xclip tmux net-tools less
-  \ software-properties-common htop wget
+  #+BEGIN_SRC shell
+  sudo apt-get install -y git curl wget shell locales xclip tmux net-tools less
+  \ software-properties-common htop wget apt-transport-https ca-certificates
   #+END_SRC
 
 
   We use [[https://pandoc.org/][pandoc]] for documentation export from spacemacs.
 
   #+NAME: Install pandoc
-  #+BEGIN_SRC tmate
+  #+BEGIN_SRC shell
   curl -L -O https://github.com/jgm/pandoc/releases/download/2.7.3/pandoc-2.7.3-1-amd64.deb  
   sudo dpkg -i /tmp/pandoc-2.7.3-1-amd64.deb
   #+END_SRC
@@ -36,7 +38,7 @@
   For additional package management we use node. The code below installs node ~12~.
 
   #+NAME: Install node
-  #+BEGIN_SRC tmate 
+  #+BEGIN_SRC shell 
   sudo curl  -sL https://deb.nodesource.com/setup_12.x | bash -
   sudo apt-get install -y nodejs
   #+END_SRC
@@ -45,10 +47,24 @@
   For managing secrets we use [[https://bitwarden.com/][bitwarden]] which provides a great [[https://github.com/bitwarden/cli][cli utility]].
 
   #+NAME: Install bitwarden and login
-  #+BEGIN_SRC tmate
+  #+BEGIN_SRC shell
   export account=[BITWARDEN_ACCOUNT]
   sudo npm install -g @bitwarden/cli 
   bw login $account
+  #+END_SRC
+
+
+  For working with google cloud platform we use the [[https://cloud.google.com/sdk/][GCP SDK]], which provides our cli tools.
+
+  #+BEGIN_SRC shell
+  # Add the Cloud SDK distribution URI as a package source: 
+  echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+  
+  # Import the Google Cloud public key: 
+  curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
+
+  # Update and install the Cloud SDK: 
+  sudo apt-get update && sudo apt-get install google-cloud-sdk
   #+END_SRC
 
 
