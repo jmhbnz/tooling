@@ -56,6 +56,7 @@
 
   For working with google cloud platform we use the [[https://cloud.google.com/sdk/][GCP SDK]], which provides our cli tools.
 
+  #+NAME: Install google cloud sdk
   #+BEGIN_SRC shell
   # Add the Cloud SDK distribution URI as a package source: 
   echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
@@ -70,6 +71,7 @@
 
   For cloud infrastructure deployments we use [[https://www.terraform.io/][terraforms]].
 
+  #+NAME: Install hashicorp terraforms
   #+BEGIN_SRC shell
   # Download the binary
   wget 'https://releases.hashicorp.com/terraform/0.12.9/terraform_0.12.9_linux_amd64.zip'
@@ -87,6 +89,14 @@
   #+RESULTS:
   | Archive:   | terraform_0.12.9_linux_amd64.zip |
   | inflating: | terraform                        |
+
+
+  For ad-hoc system administration we use ansible
+
+  #+NAME: Install ansible
+  #+BEGIN_SRC shell
+  sudo yum install -y ansible
+  #+END_SRC
 
 
 * Install spacemacs
