@@ -189,7 +189,7 @@
   set ssl_force_tls=yes
   set imap_user=`bw get username hosted`
   set imap_pass=`bw get password hosted`
-  set from='bw get username hosted`
+  set from=`bw get username hosted`
   set realname='James Blair'
   set folder=imaps://mail.jamesblair.net
   set header_cache="~/.mutt/cache/headers"
@@ -202,6 +202,7 @@
   set postponed="=Drafts"
   set record="=Sent"
   set imap_passive=no
+  set spoolfile=imaps://mail.jamesblair.net/INBOX
   EOF
   #+END_SRC
 
