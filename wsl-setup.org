@@ -22,7 +22,7 @@
   #+NAME: Install standard packages 
   #+BEGIN_SRC shell
   sudo apt-get install -y git curl wget shell locales xclip tmux net-tools less
-  \ software-properties-common htop wget apt-transport-https ca-certificates
+  \ software-properties-common htop wget apt-transport-https ca-certificates mutt
   #+END_SRC
 
 
@@ -150,6 +150,62 @@
   #+END_SRC
 
 
+* Setup mutt email client
+
+  For reading email we ideally use a cli based client for fast searching
+  and lightweight mail reading.
+
+  The [[https://gitlab.com/muttmua/mutt/][mutt]] mail client fills these roles well for imap mailboxes.
+
+  The first step to setup mutt is to ensure it is installed.
+
+  #+NAME: Install mutt
+  #+BEGIN_SRC shell
+  sudo apt-get install mutt 
+  #+END_SRC
+
+  After installing mutt we then need to create configuration directories 
+  and files.
+
+  #+NAME: Create mutt config files
+  #+BEGIN_SRC shell
+  mkdir -p ~/.mutt/cache/headers
+  mkdir ~/.mutt/cache/bodies
+  touch ~/.mutt/certificates
+  touch ~/.muttrc
+  #+END_SRC
+
+  One configuration folders and files exist we just need to populate our
+  user mutt configuration file with a configuration for our particular 
+  mail provider.
+
+  The example below utilises the ~bitwarden~ cli utility for secrets to
+  ensure these are securely gathered at runtime and not stored in the file.
+
+  #+NAME: Set mutt configuration
+  #+BEGIN_SRC shell
+  cat > ~/.muttrc << EOF
+  set ssl_starttls=yes
+  set ssl_force_tls=yes
+  set imap_user=`bw get username hosted`
+  set imap_pass=`bw get password hosted`
+  set from='bw get username hosted`
+  set realname='James Blair'
+  set folder=imaps://mail.jamesblair.net
+  set header_cache="~/.mutt/cache/headers"
+  set message_cachedir="~/.mutt/cache/bodies"
+  set certificate_file="~/.mutt/certificates"
+  set smtp_url="smtp://`bw get username hosted`@mail.jamesblair.net:587/"
+  set smtp_pass=`bw get password hosted`
+  set move=no
+  set imap_keepalive=900
+  set postponed="=Drafts"
+  set record="=Sent"
+  set imap_passive=no
+  EOF
+  #+END_SRC
+
+
 * Setup environment dotfiles
 
   Within wsl we can use .dotfiles to further customise our environment. The script
@@ -161,5 +217,3 @@
   cd /tooling/
   mv * ~/
   #+END_SRC
-
-
