@@ -94,7 +94,7 @@ fi
 alias  ls='ls -l --color'
 alias emacs='emacs -nw -nbc'
 alias bwu='export BW_SESSION=$(bw unlock --raw)'
-alias bwgi='bw get item'
+alias bwgi='bw get item --pretty'
 alias bwgp='bw get password'
 
 # Alias definitions.
@@ -116,5 +116,15 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+# Configure display for vcxsrv
 export DISPLAY=:0.0
+
+# Start from home folder
 cd ~/
+
+# Start ssh-agent
+eval `ssh-agent`
+
+# Start bitwarden
+bwu
