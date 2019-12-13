@@ -39,7 +39,7 @@
 
   #+NAME: Install node
   #+BEGIN_SRC shell 
-  sudo curl  -sL https://deb.nodesource.com/setup_12.x | bash -
+  sudo curl  -sL https://deb.nodesource.com/setup_12.x | sudo bash -
   sudo apt-get install -y nodejs
   #+END_SRC
 
