@@ -25,18 +25,20 @@
   sudo apt-get update && sudo apt-get upgrade
   #+END_SRC
 
-  #+RESULTS: Update system packages
-
 
   Next we install a series of standard packages that form part of our workflow or
   are dependencies for other tools in our environment.
 
   #+NAME: Install standard packages 
   #+BEGIN_SRC shell
-  sudo apt-get install -y \
-  git curl wget locales xclip tmux net-tools less \
-  software-properties-common htop wget apt-transport-https ca-certificates mutt \
-  screenfetch make gcc libgnutls28-dev libtinfo-dev
+  # Install basic utilities
+  sudo apt-get install -y git locales curl wget xclip tmux net-tools less wget htop screenfetch
+  
+  # Install pre-requisites for compiling emacs
+  sudo apt-get install -y make gcc libgnutls28-dev libtinfo-dev
+  
+  # Install dpkg management tools
+  sudo apt-get install -y software-properties-common apt-transport-https ca-certificates
   #+END_SRC
 
 
