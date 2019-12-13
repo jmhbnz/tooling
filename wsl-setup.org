@@ -33,8 +33,10 @@
 
   #+NAME: Install standard packages 
   #+BEGIN_SRC shell
-  sudo apt-get install -y git curl wget locales xclip tmux net-tools less
-  \ software-properties-common htop wget apt-transport-https ca-certificates mutt
+  sudo apt-get install -y \
+  git curl wget locales xclip tmux net-tools less \
+  software-properties-common htop wget apt-transport-https ca-certificates mutt \
+  screenfetch
   #+END_SRC
 
 
