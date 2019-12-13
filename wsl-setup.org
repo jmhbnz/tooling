@@ -39,6 +39,9 @@
   
   # Install dpkg management tools
   sudo apt-get install -y software-properties-common apt-transport-https ca-certificates
+
+  # Install terminal customisation packages
+  sudo apt install -y xterm xtermcontrol
   #+END_SRC
 
 
