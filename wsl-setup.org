@@ -115,31 +115,28 @@
   #+END_SRC
 
 
-* Install spacemacs
+* Install iimacs
 
-  A key component in our environment is spacemacs. The section below will setup
-  version ~27.0.50~ of emacs and then spacemacs on top.
+  A key component in our environment is the ii version of emacs. The section below will setup
+  emacs version ~26.3~ and then iimacs on top.
 
-  #+NAME: Clone the emacs repository
+  #+NAME: Download and extract emacs source
   #+BEGIN_SRC tmate
-  git clone -b stable  --depth=1 https://github.com/ii/emacs
+  cd ~/Downloads/
+  wget https://mirror.ossplanet.net/gnu/emacs/emacs-26.3.tar.xz
+  tar xf emacs-26.3.tar.xz
+  cd emacs-26.3.tar.xz
   #+END_SRC
 
-  #+NAME: Install dependencies
-  #+BEGIN_SRC tmate
-  sudo apt-get install autoconf make gcc texinfo libgtk-3-dev libxpm-dev libjpeg-dev libgif-dev libtiff5-dev libgnutls28-dev libncurses5-dev 
-  #+END_SRC
 
   #+NAME: Compile and install emacs
   #+BEGIN_SRC tmate
-  cd /emacs/
-  ./autogen.sh
-  ./configure.sh
-  make
+  ./configure --without-x
+  sudo make -j `nproc`
   sudo make install
   #+END_SRC
 
-  After compiling and installing emacs we should verify that version ~27.0.50~ is
+  After compiling and installing emacs we should verify that version ~26.3~ is
   installed.
 
   #+BEGIN_SRC tmate
@@ -147,23 +144,7 @@
   #+END_SRC
 
  
-* Setup a local emacs pacakge mirror
 
-  To save time we will setup a local mirror for all the LISP files that we need as part of spacemacs.
-  Depending on your machine and internet connection it may take some time to download, configure and compile.
-
-  #+NAME: Setup local emacs elpa mirror
-  #+BEGIN_SRC tmate
-  sudo git clone --depth 1 -b stable https:/github.com/ii/elpa-mirror /usr/local/elpa-mirror
-  #+END_SRC
-
-  Setup spacemacs within our home folder.
-
-  #+BEGIN_SRC tmate
-  git clone --depth 1 -b stable --recurse-submodules https://github.com/ii/spacemacs.git ~/.emacs.d
-  ln -sf ~/.emacs.d/private/local/dot-spacemacs/.spacemacs ~/.spacemacs
-  emacs --batch -l ~/.emacs.d/init.el
-  #+END_SRC
 
 
 * Setup mutt email client
