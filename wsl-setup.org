@@ -228,5 +228,5 @@
   #+BEGIN_SRC tmate
   git clone ssh://git@gitlab.jamma.life:2224/jmhbnz/tooling.git
   cd /tooling/
-  mv * ~/
+  cp .* ~/
   #+END_SRC
