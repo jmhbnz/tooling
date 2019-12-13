@@ -4,6 +4,18 @@
 #+DATE: 1st September 2019
 
 
+* Setup home folder structure
+
+  This section sets up my preferred set of initial folders inside my home directory.
+
+  #+NAME: Setup home folder strucuture
+  #+BEGIN_SRC shell
+  cd ~/
+  mkdir Documents
+  mkdir Downloads
+  #+END_SRC
+
+
 * Update and install packages
 
   To get started we ensure the package manager is up to date.
