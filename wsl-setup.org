@@ -142,7 +142,21 @@
   #+BEGIN_SRC tmate
   emacs --version  
   #+END_SRC
-
+  
+  Once the right version of emacs is running we can then layer in iimacs on top
+  Documentation for this is here: https://github.com/iimacs/.emacs.d
+  
+  #+BEGIN_SRC tmate
+  cd ~/ # do as your own user
+  git clone --recursive https://github.com/iimacs/.emacs.d ~/.iimacs.d
+  #+END_SRC
+  
+  Add the following to your bashrc:
+  export IIMACS=~/.iimacs.d
+  export PATH=${IIMACS}/bin:${PATH}
+  export EMACSLOADPATH=${IIMACS}:
+  
+  You can now start emacs :)
  
 
 
