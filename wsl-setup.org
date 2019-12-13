@@ -36,7 +36,7 @@
   sudo apt-get install -y \
   git curl wget locales xclip tmux net-tools less \
   software-properties-common htop wget apt-transport-https ca-certificates mutt \
-  screenfetch make gcc
+  screenfetch make gcc gnutls-bin
   #+END_SRC
 
 
