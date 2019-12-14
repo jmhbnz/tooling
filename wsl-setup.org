@@ -4,6 +4,13 @@
 #+DATE: 1st September 2019
 
 
+This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux][Windows Subsystem for Linux]] on Windows 10.  This particular setup contains my opinionated view of a good foundation and layers on some pairing and development orientated tooling over top.
+
+*Caveats:* Please note this guide is written for the [[https://www.microsoft.com/en-us/p/debian/9msvkqc78pk6][Debian WSL distribution]].
+
+*Acknowledgements:* Large elements of this wsl setup came about through collaboration with the great people at [[https://ii.coop][ii.coop]].  I encourage you to explore and contribute to their work on [[https://gitlab.ii.coop][gitlab]] as many elements form a core part of this setup and workflow.
+
+
 * Setup home folder structure
 
   This section sets up my preferred set of initial folders inside my home directory.
