@@ -160,32 +160,56 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
 
 ** Step 4 - Install iimacs editor
 
-   A key component in our environment is the ii version of emacs. The section below will setup
-   emacs version ~26.3~ and then iimacs on top.
+   A key component in our environment is the ii extension of spacemacs. 
+   The section below will setup emacs version ~26.3~ and then layer
+   the ii version of spacemacs on top.
+
+   Our first step is to download the base emacs 26.3 source code.
 
    #+NAME: Download and extract emacs source
    #+BEGIN_SRC tmate
+   # Work from our downloads directory
    cd ~/Downloads/
+
+   # Download the tarball for emacs 26.3 source code
    wget https://mirror.ossplanet.net/gnu/emacs/emacs-26.3.tar.xz
+   
+   # Untar the source code archive
    tar xf emacs-26.3.tar.xz
+
+   # Change to the extracted directory
    cd emacs-26.3.tar.xz
    #+END_SRC
 
 
+   After downloading and untarring the source code we are ready to
+   attempt resolving dependencies and compiling.
+
+   We configure without-x as this environment is solely focussed on 
+   running within terminal i.e. ~emacs -nw~.
+
    #+NAME: Compile and install emacs
    #+BEGIN_SRC tmate
+   # Run configure to resolve any dependencies minus x window support
    ./configure --without-x
+  
+   # Compile the application with make, using all available cpu cores
    sudo make -j `nproc`
+
+   # Run make install to move/install compiled binaries
    sudo make install
    #+END_SRC
+
 
    After compiling and installing emacs we should verify that version ~26.3~ is
    installed.
 
+   #+NAME: Verify correct emacs version is installed
    #+BEGIN_SRC tmate
    emacs --version  
    #+END_SRC
   
+
    Once the right version of emacs is running we can then layer in iimacs on top
    Documentation for this is here: https://github.com/iimacs/.emacs.d
   
@@ -202,8 +226,6 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
    You can now start emacs :)
  
 
-
-  
 ** Step 5 - Setup mutt email client
 
    For reading email we ideally use a cli based client for fast searching
