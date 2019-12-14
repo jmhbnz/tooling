@@ -11,118 +11,138 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
 *Acknowledgements:* Large elements of this wsl setup came about through collaboration with the great people at [[https://ii.coop][ii.coop]].  I encourage you to explore and contribute to their work on [[https://gitlab.ii.coop][gitlab]] as many elements form a core part of this setup and workflow.
 
 
-* Setup home folder structure
+** Setup home folder structure
 
-  This section sets up my preferred set of initial folders inside my home directory.
+   After installing the Debian WSL distribution no folders are present in your home folder.
+   
+   In this section we create some quick standard folders to keep our home folder somewhat organised.
 
-  #+NAME: Setup home folder strucuture
-  #+BEGIN_SRC shell
-  cd ~/
-  mkdir Documents
-  mkdir Downloads
-  #+END_SRC
+   #+NAME: Setup home folder strucuture
+   #+BEGIN_SRC shell
+   # Ensure we are in our home folder
+   cd ~/
+   
+   # Create a documents folder for our git repositories
+   mkdir Documents
 
-
-* Update and install packages
-
-  To get started we ensure the package manager is up to date.
-
-  #+NAME: Update system packages
-  #+BEGIN_SRC shell
-  sudo apt-get update && sudo apt-get upgrade
-  #+END_SRC
+   # Create a downloads folder for temporary objects
+   mkdir Downloads
+   #+END_SRC
 
 
-  Next we install a series of standard packages that form part of our workflow or
-  are dependencies for other tools in our environment.
+** Update and install packages
 
-  #+NAME: Install standard packages 
-  #+BEGIN_SRC shell
-  # Install basic utilities
-  sudo apt-get install -y git locales curl wget xclip tmux net-tools less wget htop screenfetch
+   To get started we ensure the package manager is up to date.
+
+   #+NAME: Update system packages
+   #+BEGIN_SRC shell
+   sudo apt-get update && sudo apt-get upgrade
+   #+END_SRC
+
+
+   Next we install a series of standard packages that form part of our workflow or
+   are dependencies for other tools in our environment.
+
+   #+NAME: Install standard packages 
+   #+BEGIN_SRC shell
+   # Install basic utilities
+   sudo apt-get install -y git locales curl wget xclip tmux net-tools less wget htop screenfetch
   
-  # Install pre-requisites for compiling emacs
-  sudo apt-get install -y make gcc libgnutls28-dev libtinfo-dev
+   # Install pre-requisites for compiling emacs
+   sudo apt-get install -y make gcc libgnutls28-dev libtinfo-dev
   
-  # Install dpkg management tools
-  sudo apt-get install -y software-properties-common apt-transport-https ca-certificates
+   # Install dpkg and apt management tools
+   sudo apt-get install -y software-properties-common apt-transport-https ca-certificates
 
-  # Install terminal customisation packages
-  sudo apt install -y xterm xtermcontrol
-  #+END_SRC
-
-
-  We use [[https://pandoc.org/][pandoc]] for documentation export from spacemacs.
-
-  #+NAME: Install pandoc
-  #+BEGIN_SRC shell
-  curl -L -O https://github.com/jgm/pandoc/releases/download/2.7.3/pandoc-2.7.3-1-amd64.deb  
-  sudo dpkg -i /tmp/pandoc-2.7.3-1-amd64.deb
-  #+END_SRC
+   # Install terminal customisation packages
+   sudo apt install -y xterm xtermcontrol
+   #+END_SRC
 
 
-  For additional package management we use node. The code below installs node ~12~.
+   We use [[https://pandoc.org/][pandoc]] for documentation export from spacemacs and other markup conversion tasks.
 
-  #+NAME: Install node
-  #+BEGIN_SRC shell 
-  sudo curl  -sL https://deb.nodesource.com/setup_12.x | sudo bash -
-  sudo apt-get install -y nodejs
-  #+END_SRC
+   #+NAME: Install pandoc
+   #+BEGIN_SRC shell
+   # Work from our downloads folder
+   cd ~/Downloads
+
+   # Download the latest release (check if newer is available)
+   curl -L -O https://github.com/jgm/pandoc/releases/download/2.9/pandoc-2.9-1-amd64.deb  
+   
+   # Install the package with dpkg
+   sudo dpkg -i pandoc-2.9-1-amd64.deb
+   #+END_SRC
+
+
+   For additional package management we use [[https://www.npmjs.com/][node package manager]]. The code below installs node ~12~.
+
+   #+NAME: Install node
+   #+BEGIN_SRC shell 
+   # Curl down the shell script for adding version 12 of nodejs to apt
+   sudo curl  -sL https://deb.nodesource.com/setup_12.x | sudo bash -
+   
+   # Install the nodejs package via apt
+   sudo apt-get install -y nodejs
+   #+END_SRC
 
   
-  For managing secrets we use [[https://bitwarden.com/][bitwarden]] which provides a great [[https://github.com/bitwarden/cli][cli utility]].
+   For managing secrets we use [[https://bitwarden.com/][bitwarden]] which provides a great [[https://github.com/bitwarden/cli][cli utility]].
 
-  #+NAME: Install bitwarden and login
-  #+BEGIN_SRC shell
-  export account=[BITWARDEN_ACCOUNT]
-  sudo npm install -g @bitwarden/cli 
-  bw login $account
-  #+END_SRC
+   This section should be expanded in future to cover setting alias for common bitwarden tasks.
 
+   #+NAME: Install bitwarden and login
+   #+BEGIN_SRC shell
+   # Set an environment variable with our login email for bitwarden
+   export account=[BITWARDEN_ACCOUNT]
 
-  For working with google cloud platform we use the [[https://cloud.google.com/sdk/][GCP SDK]], which provides our cli tools.
+   # Install the bitwarden cli via node package manager
+   sudo npm install -g @bitwarden/cli 
 
-  #+NAME: Install google cloud sdk
-  #+BEGIN_SRC shell
-  # Add the Cloud SDK distribution URI as a package source: 
-  echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-  
-  # Import the Google Cloud public key: 
-  curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
-
-  # Update then install the Google Cloud SDK & kubectl: 
-  sudo apt-get update && sudo apt-get install google-cloud-sdk kubectl
-  #+END_SRC
+   # Test login to bitwarden
+   bw login $account
+   #+END_SRC
 
 
-  For cloud infrastructure deployments we use [[https://www.terraform.io/][terraforms]].
+   For working with google cloud platform we use the [[https://cloud.google.com/sdk/][GCP SDK]], which provides our cli tools.
 
-  #+NAME: Install hashicorp terraforms
-  #+BEGIN_SRC shell
-  # Download the binary
-  wget 'https://releases.hashicorp.com/terraform/0.12.9/terraform_0.12.9_linux_amd64.zip'
+   #+NAME: Install google cloud sdk
+   #+BEGIN_SRC shell
+   # Add the Cloud SDK distribution URI as a package source: 
+   echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
 
-  # Unzip it
-  unzip *.zip
+   # Import the Google Cloud public key: 
+   curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
 
-  # Move the binary to path
-  sudo mv terraform /usr/bin/
-
-  # Clean up
-  rm *amd64.zip 
-  #+END_SRC
-
-  #+RESULTS:
-  | Archive:   | terraform_0.12.9_linux_amd64.zip |
-  | inflating: | terraform                        |
+   # Update then install the Google Cloud SDK & kubectl: 
+   sudo apt-get update && sudo apt-get install google-cloud-sdk kubectl
+   #+END_SRC
 
 
-  For ad-hoc system administration we use ansible
+   For cloud infrastructure deployments we use [[https://www.terraform.io/][terraforms]].
 
-  #+NAME: Install ansible
-  #+BEGIN_SRC shell
-  sudo yum install -y ansible
-  #+END_SRC
+   #+NAME: Install hashicorp terraforms
+   #+BEGIN_SRC shell
+   # Download the binary
+   wget 'https://releases.hashicorp.com/terraform/0.12.9/terraform_0.12.9_linux_amd64.zip'
+
+   # Unzip it
+   unzip *.zip
+
+   # Move the binary to path
+   sudo mv terraform /usr/bin/
+
+   # Clean up
+   rm *amd64.zip 
+   #+END_SRC
+
+
+   For ad-hoc system administration we use [[https://deb.nodesource.com/setup_12.x ][ansible]].
+
+   #+NAME: Install ansible
+   #+BEGIN_SRC shell
+   # Install ansible via apt package manager
+   sudo apt-get install -y ansible
+   #+END_SRC
 
 
 * Install iimacs
@@ -170,7 +190,7 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
  
 
 
-
+  
 * Setup mutt email client
 
   For reading email we ideally use a cli based client for fast searching
