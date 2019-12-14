@@ -11,7 +11,7 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
 *Acknowledgements:* Large elements of this wsl setup came about through collaboration with the great people at [[https://ii.coop][ii.coop]].  I encourage you to explore and contribute to their work on [[https://gitlab.ii.coop][gitlab]] as many elements form a core part of this setup and workflow.
 
 
-** Setup home folder structure
+** Step 1 - Setup home folder structure
 
    After installing the Debian WSL distribution no folders are present in your home folder.
    
@@ -30,7 +30,7 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
    #+END_SRC
 
 
-** Update and install packages
+** Step 2 - Update and install packages
 
    To get started we ensure the package manager is up to date.
 
@@ -145,117 +145,119 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
    #+END_SRC
 
 
-* Install iimacs
+** Step 3 - Setup environment dotfiles
 
-  A key component in our environment is the ii version of emacs. The section below will setup
-  emacs version ~26.3~ and then iimacs on top.
+   Within wsl we can use .dotfiles to further customise our environment. The script
+   below restores my versions of key dotfiles automatically.
 
-  #+NAME: Download and extract emacs source
-  #+BEGIN_SRC tmate
-  cd ~/Downloads/
-  wget https://mirror.ossplanet.net/gnu/emacs/emacs-26.3.tar.xz
-  tar xf emacs-26.3.tar.xz
-  cd emacs-26.3.tar.xz
-  #+END_SRC
+   #+NAME: Clone and restore the dotfiles
+   #+BEGIN_SRC tmate
+   git clone ssh://git@gitlab.jamma.life:2224/jmhbnz/tooling.git
+   cd /tooling/
+   cp .* ~/
+   #+END_SRC
 
 
-  #+NAME: Compile and install emacs
-  #+BEGIN_SRC tmate
-  ./configure --without-x
-  sudo make -j `nproc`
-  sudo make install
-  #+END_SRC
+** Step 4 - Install iimacs editor
 
-  After compiling and installing emacs we should verify that version ~26.3~ is
-  installed.
+   A key component in our environment is the ii version of emacs. The section below will setup
+   emacs version ~26.3~ and then iimacs on top.
 
-  #+BEGIN_SRC tmate
-  emacs --version  
-  #+END_SRC
+   #+NAME: Download and extract emacs source
+   #+BEGIN_SRC tmate
+   cd ~/Downloads/
+   wget https://mirror.ossplanet.net/gnu/emacs/emacs-26.3.tar.xz
+   tar xf emacs-26.3.tar.xz
+   cd emacs-26.3.tar.xz
+   #+END_SRC
+
+
+   #+NAME: Compile and install emacs
+   #+BEGIN_SRC tmate
+   ./configure --without-x
+   sudo make -j `nproc`
+   sudo make install
+   #+END_SRC
+
+   After compiling and installing emacs we should verify that version ~26.3~ is
+   installed.
+
+   #+BEGIN_SRC tmate
+   emacs --version  
+   #+END_SRC
   
-  Once the right version of emacs is running we can then layer in iimacs on top
-  Documentation for this is here: https://github.com/iimacs/.emacs.d
+   Once the right version of emacs is running we can then layer in iimacs on top
+   Documentation for this is here: https://github.com/iimacs/.emacs.d
   
-  #+BEGIN_SRC tmate
-  cd ~/ # do as your own user
-  git clone --recursive https://github.com/iimacs/.emacs.d ~/.iimacs.d
-  #+END_SRC
+   #+BEGIN_SRC tmate
+   cd ~/ # do as your own user
+   git clone --recursive https://github.com/iimacs/.emacs.d ~/.iimacs.d
+   #+END_SRC
   
-  Add the following to your bashrc:
-  export IIMACS=~/.iimacs.d
-  export PATH=${IIMACS}/bin:${PATH}
-  export EMACSLOADPATH=${IIMACS}:
+   Add the following to your bashrc:
+   export IIMACS=~/.iimacs.d
+   export PATH=${IIMACS}/bin:${PATH}
+   export EMACSLOADPATH=${IIMACS}:
   
-  You can now start emacs :)
+   You can now start emacs :)
  
 
 
   
-* Setup mutt email client
+** Step 5 - Setup mutt email client
 
-  For reading email we ideally use a cli based client for fast searching
-  and lightweight mail reading.
+   For reading email we ideally use a cli based client for fast searching
+   and lightweight mail reading.
 
-  The [[https://gitlab.com/muttmua/mutt/][mutt]] mail client fills these roles well for imap mailboxes.
+   The [[https://gitlab.com/muttmua/mutt/][mutt]] mail client fills these roles well for imap mailboxes.
 
-  The first step to setup mutt is to ensure it is installed.
+   The first step to setup mutt is to ensure it is installed.
 
-  #+NAME: Install mutt
-  #+BEGIN_SRC shell
-  sudo apt-get install mutt 
-  #+END_SRC
+   #+NAME: Install mutt
+   #+BEGIN_SRC shell
+   sudo apt-get install mutt 
+   #+END_SRC
 
-  After installing mutt we then need to create configuration directories 
-  and files.
+   After installing mutt we then need to create configuration directories 
+   and files.
 
-  #+NAME: Create mutt config files
-  #+BEGIN_SRC shell
-  mkdir -p ~/.mutt/cache/headers
-  mkdir ~/.mutt/cache/bodies
-  touch ~/.mutt/certificates
-  touch ~/.muttrc
-  #+END_SRC
+   #+NAME: Create mutt config files
+   #+BEGIN_SRC shell
+   mkdir -p ~/.mutt/cache/headers
+   mkdir ~/.mutt/cache/bodies
+   touch ~/.mutt/certificates
+   touch ~/.muttrc
+   #+END_SRC
 
-  One configuration folders and files exist we just need to populate our
-  user mutt configuration file with a configuration for our particular 
-  mail provider.
+   One configuration folders and files exist we just need to populate our
+   user mutt configuration file with a configuration for our particular 
+   mail provider.
 
-  The example below utilises the ~bitwarden~ cli utility for secrets to
-  ensure these are securely gathered at runtime and not stored in the file.
+   The example below utilises the ~bitwarden~ cli utility for secrets to
+   ensure these are securely gathered at runtime and not stored in the file.
 
-  #+NAME: Set mutt configuration
-  #+BEGIN_SRC shell
-  cat > ~/.muttrc << EOF
-  set ssl_starttls=yes
-  set ssl_force_tls=yes
-  set imap_user=`bw get username hosted`
-  set imap_pass=`bw get password hosted`
-  set from=`bw get username hosted`
-  set realname='James Blair'
-  set folder=imaps://mail.jamesblair.net
-  set header_cache="~/.mutt/cache/headers"
-  set message_cachedir="~/.mutt/cache/bodies"
-  set certificate_file="~/.mutt/certificates"
-  set smtp_url="smtp://`bw get username hosted`@mail.jamesblair.net:587/"
-  set smtp_pass=`bw get password hosted`
-  set move=no
-  set imap_keepalive=900
-  set postponed="=Drafts"
-  set record="=Sent"
-  set imap_passive=no
-  set spoolfile=imaps://mail.jamesblair.net/INBOX
-  EOF
-  #+END_SRC
+   #+NAME: Set mutt configuration
+   #+BEGIN_SRC shell
+   cat > ~/.muttrc << EOF
+   set ssl_starttls=yes
+   set ssl_force_tls=yes
+   set imap_user=`bw get username hosted`
+   set imap_pass=`bw get password hosted`
+   set from=`bw get username hosted`
+   set realname='James Blair'
+   set folder=imaps://mail.jamesblair.net
+   set header_cache="~/.mutt/cache/headers"
+   set message_cachedir="~/.mutt/cache/bodies"
+   set certificate_file="~/.mutt/certificates"
+   set smtp_url="smtp://`bw get username hosted`@mail.jamesblair.net:587/"
+   set smtp_pass=`bw get password hosted`
+   set move=no
+   set imap_keepalive=900
+   set postponed="=Drafts"
+   set record="=Sent"
+   set imap_passive=no
+   set spoolfile=imaps://mail.jamesblair.net/INBOX
+   EOF
+   #+END_SRC
 
 
-* Setup environment dotfiles
-
-  Within wsl we can use .dotfiles to further customise our environment. The script
-  below restores my versions of key dotfiles automatically.
-
-  #+NAME: Clone and restore the dotfiles
-  #+BEGIN_SRC tmate
-  git clone ssh://git@gitlab.jamma.life:2224/jmhbnz/tooling.git
-  cd /tooling/
-  cp .* ~/
-  #+END_SRC
