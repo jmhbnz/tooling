@@ -76,6 +76,9 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
    
    # Install the package with dpkg
    sudo dpkg -i pandoc*
+   
+   # Remove the package file after install
+   rm pandoc*
    #+END_SRC
 
 
