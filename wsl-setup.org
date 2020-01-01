@@ -52,7 +52,7 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
    sudo apt-get install -y make gcc libgnutls28-dev libtinfo-dev
   
    # Install dpkg and apt management tools
-   sudo apt-get install -y software-properties-common apt-transport-https ca-certificates
+   sudo apt-get install -y software-properties-common apt-transport-https ca-certificates dirmngr
 
    # Install terminal customisation packages
    sudo apt install -y xterm xtermcontrol
