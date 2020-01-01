@@ -169,7 +169,7 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
 
    #+NAME: Clone and restore the dotfiles
    #+BEGIN_SRC tmate
-   git clone ssh://git@gitlab.jamma.life:2224/jmhbnz/tooling.git ~/Documents/
+   git clone ssh://git@gitlab.jamma.life:2224/jmhbnz/tooling.git ~/Documents/tooling/
    cd ~/Documents/tooling/
    cp .* ~/
    #+END_SRC
