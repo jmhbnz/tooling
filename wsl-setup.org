@@ -67,10 +67,15 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
    cd ~/Downloads
 
    # Download the latest release (check if newer is available)
-   curl -L -O https://github.com/jgm/pandoc/releases/download/2.9/pandoc-2.9-1-amd64.deb  
+   echo Downloading latest release zip from github
+   curl -s https://api.github.com/repos/jgm/pandoc/releases/latest \
+   | grep "browser_download_url.*deb" \
+   | cut -d : -f 2,3 \
+   | tr -d \" \
+   | wget -i -
    
    # Install the package with dpkg
-   sudo dpkg -i pandoc-2.9-1-amd64.deb
+   sudo dpkg -i pandoc*
    #+END_SRC
 
 
