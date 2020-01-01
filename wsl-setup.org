@@ -162,11 +162,15 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
 
    Within wsl we can use .dotfiles to further customise our environment. The script
    below restores my versions of key dotfiles automatically.
+   
+   *Note* The git clone below relies on having permission to clone the 
+   repository referenced.  For me this means having an ssh key present
+   which has been added to gitlab.
 
    #+NAME: Clone and restore the dotfiles
    #+BEGIN_SRC tmate
-   git clone ssh://git@gitlab.jamma.life:2224/jmhbnz/tooling.git
-   cd /tooling/
+   git clone ssh://git@gitlab.jamma.life:2224/jmhbnz/tooling.git ~/Documents/
+   cd ~/Documents/tooling/
    cp .* ~/
    #+END_SRC
 
