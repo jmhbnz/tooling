@@ -148,11 +148,14 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
 
    #+NAME: Install ansible
    #+BEGIN_SRC shell
-   # Add a ppa source so we can install the latest version
-   sudo apt-add-repository --yes --update ppa:ansible/ansible
+   # Add a source entry to apt sources
+   sudo echo deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main >> /etc/apt/sources.list
+   
+   # Add the required key
+   sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367
    
    # Install ansible via apt package manager
-   sudo apt-get install -y ansible
+   sudo apt-get update && sudo apt-get install -y ansible
    #+END_SRC
 
 
