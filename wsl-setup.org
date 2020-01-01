@@ -67,7 +67,7 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
    cd ~/Downloads
 
    # Download the latest release (check if newer is available)
-   echo Downloading latest release zip from github
+   echo Downloading latest release deb from github
    curl -s https://api.github.com/repos/jgm/pandoc/releases/latest \
    | grep "browser_download_url.*deb" \
    | cut -d : -f 2,3 \
