@@ -122,7 +122,7 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
    curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
 
    # Update then install the Google Cloud SDK & kubectl: 
-   sudo apt-get update && sudo apt-get install google-cloud-sdk kubectl
+   sudo apt-get update && sudo apt-get install -y google-cloud-sdk kubectl
    #+END_SRC
 
 
