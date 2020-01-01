@@ -200,7 +200,7 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
    tar xf emacs-26.3.tar.xz
 
    # Change to the extracted directory
-   cd emacs-26.3.tar.xz
+   cd emacs-26.3
    #+END_SRC
 
 
