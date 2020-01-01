@@ -236,16 +236,16 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
    Documentation for this is here: https://github.com/iimacs/.emacs.d
   
    #+BEGIN_SRC tmate
-   cd ~/ # do as your own user
-   git clone --recursive https://github.com/iimacs/.emacs.d ~/.iimacs.d
+   # Clone iimacs from github
+   git clone --recursive https://github.com/iimacs/.emacs.d ~/.iimacs.d ~/
+   
+   # Add the following entries to .bashrc
+   echo 'IIMACS=~/.iimacs.d' | tee -a ~/.bashrc
+   echo 'PATH=${IIMACS}/bin:${PATH}' | tee -a ~/.bashrc
+   echo 'EMACSLOADPATH=${IIMACS}:' | tee -a ~/.bashrc
    #+END_SRC
   
-   Add the following to your bashrc:
-   export IIMACS=~/.iimacs.d
-   export PATH=${IIMACS}/bin:${PATH}
-   export EMACSLOADPATH=${IIMACS}:
-  
-   You can now start emacs :)
+   You can now start ~iimacs~ :)
  
 
 ** Step 5 - Setup mutt email client
