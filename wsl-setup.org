@@ -239,10 +239,12 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
    # Clone iimacs from github
    git clone --recursive https://github.com/iimacs/.emacs.d ~/.iimacs.d ~/
    
-   # Add the following entries to .bashrc
-   echo 'IIMACS=~/.iimacs.d' | tee -a ~/.bashrc
-   echo 'PATH=${IIMACS}/bin:${PATH}' | tee -a ~/.bashrc
-   echo 'EMACSLOADPATH=${IIMACS}:' | tee -a ~/.bashrc
+   # This ensures ii tooling is added to emacs
+   cat <<EOF | sudo tee /etc/profile.d/99-iimacs.sh
+   export IIMACS=~/.iimacs.d
+   export PATH=${IIMACS}/bin:${PATH}
+   export EMACSLOADPATH=${IIMACS}:
+   EOF
    #+END_SRC
   
    You can now start ~iimacs~ :)
