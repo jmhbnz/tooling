@@ -46,7 +46,7 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
    #+NAME: Install standard packages 
    #+BEGIN_SRC shell
    # Install basic utilities
-   sudo apt-get install -y git locales curl wget xclip tmux net-tools less wget htop screenfetch zip openssh-client
+   sudo apt-get install -y git locales curl wget xclip xsel tmux net-tools less wget htop screenfetch zip openssh-client
   
    # Install pre-requisites for compiling emacs
    sudo apt-get install -y make gcc libgnutls28-dev libtinfo-dev
@@ -249,6 +249,43 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
   
    You can now start ~iimacs~ :)
  
+   One final configuration step specific to wsl is setup custom ~xsel~ bindings for copy/paste.
+   Add the snippet below to your ~~/.iimacs~ user functions at the bottom of the file.
+   Once added you can adjust the key bindings to your preferred keys.   
+
+   #+BEGIN_SRC elisp
+   (defun copy-to-clipboard ()
+      "Copies selection to x-clipboard."
+      (interactive)
+      (if (display-graphic-p)
+          (progn
+            (message "Yanked region to x-clipboard!")
+            (call-interactively 'clipboard-kill-ring-save)
+            )
+        (if (region-active-p)
+            (progn
+              (shell-command-on-region (region-beginning) (region-end) "xsel -i -b")
+              (message "Copied region to clipboard.")
+              (deactivate-mark))
+          (message "No region active; can't copy to clipboard!")))
+      )
+
+    (defun paste-from-clipboard ()
+      "Pastes from x-clipboard."
+      (interactive)
+      (if (display-graphic-p)
+          (progn
+            (clipboard-yank)
+            (message "graphics active")
+            )
+        (insert (shell-command-to-string "xsel -o -b"))
+        )
+      )
+
+   (evil-leader/set-key "o y" 'copy-to-clipboard)
+   (evil-leader/set-key "o p" 'paste-from-clipboard)
+   #+END_SRC
+
 
 ** Step 5 - Setup mutt email client
 
