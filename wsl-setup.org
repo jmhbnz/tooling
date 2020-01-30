@@ -46,7 +46,7 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
    #+NAME: Install standard packages 
    #+BEGIN_SRC shell
    # Install basic utilities
-   sudo apt-get install -y git locales curl wget xclip xsel tmux net-tools less wget htop screenfetch zip openssh-client
+   sudo apt-get install -y git locales curl wget xclip xsel tmux net-tools less wget htop screenfetch zip openssh-client dictd
   
    # Install pre-requisites for compiling emacs
    sudo apt-get install -y make gcc libgnutls28-dev libtinfo-dev
