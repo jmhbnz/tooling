@@ -123,7 +123,16 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
    # Update then install the Google Cloud SDK & kubectl: 
    sudo apt-get update && sudo apt-get install -y google-cloud-sdk kubectl
    #+END_SRC
+   
+   For working with [[https://aws.com][Amazon Web Services]] we need the [[https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html][AWS CLI]].
 
+   #+NAME: Install amazon web services cli
+   #+BEGIN_SRC shell
+   cd ~/Downloads/
+   curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+   unzip awscliv2.zip
+   sudo ./aws/install 
+   #+END_SRC 
 
    For cloud infrastructure deployments we use [[https://www.terraform.io/][terraforms]].
 
