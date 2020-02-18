@@ -66,4 +66,4 @@ cd ~/
 eval `ssh-agent`
 
 # Start bitwarden
-bwu
+if [ -z "$BW_SESSION" ] ; then echo "Bitwarden set"; else bwu; fi
