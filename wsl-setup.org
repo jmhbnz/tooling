@@ -242,60 +242,30 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
    #+END_SRC
   
 
-   Once the right version of emacs is running we can then layer in iimacs on top
-   Documentation for this is here: https://github.com/iimacs/.emacs.d
+   Once the right version of emacs is running we can then layer in kubemacs on top
+   Documentation for this is here: https://github.com/kubemacs/kubemacs
   
    #+BEGIN_SRC tmate
    # Clone iimacs from github
-   git clone --recursive https://github.com/iimacs/.emacs.d ~/.iimacs.d ~/
-   
-   # This ensures ii tooling is added to emacs
-   cat <<EOF | sudo tee /etc/profile.d/99-iimacs.sh
-   export IIMACS=~/.iimacs.d
-   export PATH=${IIMACS}/bin:${PATH}
-   export EMACSLOADPATH=${IIMACS}:
-   EOF
+   sudo git clone --recursive https://github.com/kubemacs/kubemacs /usr/local/share/emacs/site-lisp/
+  
+   # Ensure permissions are set for the cloned folder
+   sudo chown -R $user:$user /usr/local/share/emacs/site-lisp
    #+END_SRC
   
-   You can now start ~iimacs~ :)
+   You can now start ~emacs~ :)
  
-   One final configuration step specific to wsl is setup custom ~xsel~ bindings for copy/paste.
-   Add the snippet below to your ~~/.iimacs~ user functions at the bottom of the file.
-   Once added you can adjust the key bindings to your preferred keys.   
+   One final configuration step specific to wsl is setup custom ~xsel~ bindings for copy/paste. 
 
-   #+BEGIN_SRC elisp
-   (defun copy-to-clipboard ()
-      "Copies selection to x-clipboard."
-      (interactive)
-      (if (display-graphic-p)
-          (progn
-            (message "Yanked region to x-clipboard!")
-            (call-interactively 'clipboard-kill-ring-save)
-            )
-        (if (region-active-p)
-            (progn
-              (shell-command-on-region (region-beginning) (region-end) "xsel -i -b")
-              (message "Copied region to clipboard.")
-              (deactivate-mark))
-          (message "No region active; can't copy to clipboard!")))
-      )
+   Overwrite the following file:
+   /usr/local/share/emacs/26.3/site-lisp/kubemacs/bin/osc52-tmate.sh
 
-    (defun paste-from-clipboard ()
-      "Pastes from x-clipboard."
-      (interactive)
-      (if (display-graphic-p)
-          (progn
-            (clipboard-yank)
-            (message "graphics active")
-            )
-        (insert (shell-command-to-string "xsel -o -b"))
-        )
-      )
-
-   (evil-leader/set-key "o y" 'copy-to-clipboard)
-   (evil-leader/set-key "o p" 'paste-from-clipboard)
+   With the following contents:
+   #+BEGIN_SRC tmate
+   #!/bin/bash
+   # xtermcontrol --title k8s@iimacs.org
+   tmate display -p "#{tmate_ssh} # #{tmate_web} $(date)  #{client_tty}@#{host}" | xsel -i -b 
    #+END_SRC
-
 
 ** Step 5 - Setup mutt email client
 
