@@ -27,10 +27,10 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # simplify bitwarden cli usage 
-alias bwu='export BW_SESSION=$(bw unlock --raw)'
-function bwgp () { bw get password $1 | xclip; }
-function bwgt () { bw get totp $1 | xclip; }
-function bwgi () { bw get item --pretty $1; }
+alias bwu='export BW_SESSION=$(bw unlock --raw > ~/.bw_session && cat ~/.bw_session)'
+function bwgp () { local test=$(export BW_SESSION=~/.bw_session) && bw get password $1 | xclip; }
+function bwgt () { local test=$(export BW_SESSION=~/.bw_session) && bw get totp $1 | xclip; }
+function bwgi () { local test=$(export BW_SESSION=~/.bw_session) && bw get item --pretty $1; }
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -65,5 +65,14 @@ cd ~/
 # Start ssh-agent
 eval `ssh-agent`
 
-# Start bitwarden
-if [ -z "$BW_SESSION" ] ; then echo "Bitwarden set"; else bwu; fi
+# Remove bitwarden sessions older than a day
+if [[ $(find ~/.bw_session -mtime +1 -print) ]]; then rm ~/.bw_session; fi
+
+# If bitwarden session already set don't overwrite 
+if [ -n "$BW_SESSION" ]; then echo "Bitwarden set";
+
+# Else if there is a session file set from there 
+elif [ -f ~/.bw_session ]; then export BW_SESSION=$(cat ~/.bw_session);
+
+# Otherwise unlock to start new session
+else bwu; fi
