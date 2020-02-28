@@ -261,7 +261,7 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
    One final configuration step specific to wsl is setup custom ~xsel~ bindings for copy/paste. 
 
    Overwrite the following file:
-   /usr/local/share/emacs/26.3/site-lisp/kubemacs/bin/osc52-tmate.sh
+   /usr/local/share/emacs/site-lisp/bin/osc52-tmate.sh
 
    With the following contents:
    #+BEGIN_SRC tmate
