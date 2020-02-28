@@ -223,7 +223,7 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
    #+NAME: Compile and install emacs
    #+BEGIN_SRC tmate
    # Run configure to resolve any dependencies minus x window support
-   ./configure --without-x
+   ./configure --without-x --with-gnutls=no
   
    # Compile the application with make, using all available cpu cores
    sudo make -j `nproc`
@@ -246,6 +246,9 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
    Documentation for this is here: https://github.com/kubemacs/kubemacs
   
    #+BEGIN_SRC tmate
+   # Remove the default site-lisp file
+   sudo rm /usr/local/share/emacs/site-lisp/subdirs.el
+
    # Clone iimacs from github
    sudo git clone --recursive https://github.com/kubemacs/kubemacs /usr/local/share/emacs/site-lisp/
   
@@ -266,6 +269,7 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
    # xtermcontrol --title k8s@iimacs.org
    tmate display -p "#{tmate_ssh} # #{tmate_web} $(date)  #{client_tty}@#{host}" | xsel -i -b 
    #+END_SRC
+
 
 ** Step 5 - Setup mutt email client
 
