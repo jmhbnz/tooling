@@ -253,7 +253,7 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
    sudo git clone --recursive https://github.com/kubemacs/kubemacs /usr/local/share/emacs/site-lisp/
   
    # Ensure permissions are set for the cloned folder
-   sudo chown -R $user:$user /usr/local/share/emacs/site-lisp
+   sudo chown -R $USER:$USER /usr/local/share/emacs/site-lisp
    #+END_SRC
   
    You can now start ~emacs~ :)
