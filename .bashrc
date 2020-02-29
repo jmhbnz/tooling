@@ -62,8 +62,14 @@ color_my_prompt
 # Start from home folder
 cd ~/
 
-# Start ssh-agent
-eval `ssh-agent`
+# Configure ssh-agent
+if [ -z "$(pgrep ssh-agent)" ]; then
+    rm -rf /tmp/ssh-*
+    eval $(ssh-agent -s) > /dev/null
+else
+    export SSH_AGENT_PID=$(pgrep ssh-agent)
+    export SSH_AUTH_SOCK=$(find /tmp/ssh-* -name agent.*)
+fi
 
 # Remove bitwarden sessions older than a day
 if [[ $(find ~/.bw_session -mtime +1 -print) ]]; then rm ~/.bw_session; fi
