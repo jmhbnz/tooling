@@ -71,6 +71,10 @@ else
     export SSH_AUTH_SOCK=$(find /tmp/ssh-* -name agent.*)
 fi
 
+# If ssh-agent has no identities, add mine
+ssh-add -l &>/dev/null
+if [ "$?" == 1 ]; then ssh-add ~/.ssh/$USER; fi
+
 # Remove bitwarden sessions older than a day
 if [[ $(find ~/.bw_session -mtime +1 -print) ]]; then rm ~/.bw_session; fi
 
