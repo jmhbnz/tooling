@@ -190,13 +190,13 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
    #+END_SRC
 
 
-** Step 4 - Install iimacs editor
+** Step 4 - Install kubemacs editor
 
 *** Compile and install vanilla emacs
 
    A key component in our environment is the ii extension of spacemacs. 
    The section below will setup emacs version ~26.3~ and then layer
-   the ii version of spacemacs on top.
+   the ii version of spacemacs called kubemacs on top.
 
    Our first step is to download the base emacs 26.3 source code.
 
@@ -253,7 +253,7 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
    # Remove the default site-lisp file
    sudo rm /usr/local/share/emacs/site-lisp/subdirs.el
 
-   # Clone iimacs from github
+   # Clone kubemacs from github
    sudo git clone --recursive https://github.com/kubemacs/kubemacs /usr/local/share/emacs/site-lisp/
   
    # Ensure permissions are set for the cloned folder
