@@ -192,6 +192,8 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
 
 ** Step 4 - Install iimacs editor
 
+*** Compile and install vanilla emacs
+
    A key component in our environment is the ii extension of spacemacs. 
    The section below will setup emacs version ~26.3~ and then layer
    the ii version of spacemacs on top.
@@ -240,7 +242,9 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
    #+BEGIN_SRC tmate
    emacs --version  
    #+END_SRC
-  
+
+
+*** Overlay kubemacs
 
    Once the right version of emacs is running we can then layer in kubemacs on top
    Documentation for this is here: https://github.com/kubemacs/kubemacs
@@ -256,18 +260,21 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
    sudo chown -R $USER:$USER /usr/local/share/emacs/site-lisp
    #+END_SRC
   
-   You can now start ~emacs~ :)
- 
-   One final configuration step specific to wsl is setup custom ~xsel~ bindings for copy/paste. 
 
-   Overwrite the following file:
-   /usr/local/share/emacs/site-lisp/bin/osc52-tmate.sh
+   One final configuration step specific to wsl is to switch from ~osc52~ to ~xsel~ for clipboard. 
 
-   With the following contents:
+   This is required because copy and paste osc52 sequences are not currently supported in wsl.
+   You can add your voice to this issue to change that [[https://github.com/microsoft/terminal/issues/2946][here]].
+
+   Additionally there is also a bug within the ~ob-tmate~ kubemacs component that we need to fix.
+   This has been fixed upstream and is awaiting merge, refer [[https://github.com/ii/ob-tmate/pull/2][pr #2 here]].
+
    #+BEGIN_SRC tmate
-   #!/bin/bash
-   # xtermcontrol --title k8s@iimacs.org
-   tmate display -p "#{tmate_ssh} # #{tmate_web} $(date)  #{client_tty}@#{host}" | xsel -i -b 
+   # Replace the osc52 command with xsel
+   sed -i -e 's/abc/XYZ/g' /usr/local/share/emacs/site-lisp/bin/osc52-tmate.sh
+
+   # Fix the ob-tmate bug
+   sed -i -e 's/ob-session dir))/ob-session session-dir))/g' /usr/local/share/emacs/site-lisp/spacemacs/elpa/26.3/develop/ob-tmate-20200206.109/ob-tmate.el 
    #+END_SRC
 
 
