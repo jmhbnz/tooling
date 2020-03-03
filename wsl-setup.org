@@ -289,7 +289,7 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
 
    #+NAME: Install mutt
    #+BEGIN_SRC shell
-   sudo apt-get install mutt 
+   sudo apt-get install mutt urlscan 
    #+END_SRC
 
    After installing mutt we then need to create configuration directories 

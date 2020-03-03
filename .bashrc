@@ -62,6 +62,9 @@ color_my_prompt
 # Start from home folder
 cd ~/
 
+# Ensure browser environment variable set
+export BROWSER="explorer.exe"
+
 # Configure ssh-agent
 if [ -z "$(pgrep ssh-agent)" ]; then
     rm -rf /tmp/ssh-*
