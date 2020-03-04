@@ -271,7 +271,7 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
 
    #+BEGIN_SRC tmate
    # Replace the osc52 command with xsel
-   sed -i -e 's/abc/XYZ/g' /usr/local/share/emacs/site-lisp/bin/osc52-tmate.sh
+   sed -i -e 's/osc52.sh/xsel -i -b/g' /usr/local/share/emacs/site-lisp/bin/osc52-tmate.sh
 
    # Fix the ob-tmate bug
    sed -i -e 's/ob-session dir))/ob-session session-dir))/g' /usr/local/share/emacs/site-lisp/spacemacs/elpa/26.3/develop/ob-tmate-20200206.109/ob-tmate.el 
@@ -292,8 +292,7 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
    sudo apt-get install mutt urlscan 
    #+END_SRC
 
-   After installing mutt we then need to create configuration directories 
-   and files.
+   After installing mutt we then need to create configuration directories and files.
 
    #+NAME: Create mutt config files
    #+BEGIN_SRC shell
@@ -335,3 +334,4 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
    #+END_SRC
 
 
+   
