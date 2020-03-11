@@ -8,9 +8,9 @@ This document captures my standard development environment for future replicatio
 and aims to make it as easy as possible to setup and use.
 
 The environment is based on Windows 10 using [[https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux][Windows Subsystem for Linux]] for a 
-command line inter face.
+command line interface.
 
-For pair programming I rely on [[https://www.gnu.org/software/emacs/][emacs]], specifically [[https://github.com/syl20bnr/spacemacs][spacemacs]] with [[https://tmate.io/][tmate]].
+For pair programming I rely on [[https://www.gnu.org/software/emacs/][emacs]], specifically [[https://github.com/kubemacs/kubemacs][kubemacs]] with [[https://tmate.io/][tmate]].
 
 This documentation is split into two main sections:
  - [[windows-setup.org][Windows 10]]

@@ -1,3 +1,4 @@
+# -*- ii: ii; -*-
 #+TITLE: Windows 10 Setup
 #+AUTHOR: James Blair
 #+EMAIL: mail@jamesblair.net
@@ -6,8 +7,7 @@
 
 * Install windows subsystem for linux
 
-  To get underway we need to enable [[https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux][wsl]].  This requires a 64bit installation
-  of Windows 10.
+  To get underway we need to enable [[https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux][wsl]].  This requires a 64bit installation of Windows 10.
 
   #+NAME: Enable the wsl feature
   #+BEGIN_SRC tmate
@@ -15,8 +15,7 @@
   #+END_SRC
 
 
-  After enabling the wsl feature we need to download the debian installer and
-  open it.
+  After enabling the wsl feature we need to download the debian installer and open it.
 
   #+NAME: Download the debian installer
   #+BEGIN_SRC tmate
@@ -24,7 +23,8 @@
   powershell.exe curl.exe -L -o debian.appx https://aka.ms/wsl-debian-gnulinux
   powershell.exe Add-AppxPackage .\debian.appx
   #+END_SRC
-
+ 
+  *Note:* If you encounter an error while adding the package, I have needed to use the ~wsreset~ command in the past to first reset the windows store application.
   
   After the installer runs we need to manually enter a username and password for
   the unix account that wsl will use.
@@ -66,7 +66,7 @@
   cmd.exe /c VcXsrv.xlaunch
   #+END_SRC
 
-
+  
 * Configure windows ten
 
   Enable all tray icons to be visible and restart explorer
@@ -81,6 +81,8 @@
 
 ** Update taskbar layout
 
+I normally take the following steps immediately for a new installtion, I have not found an easy way of automating this as yet:
+
    - Hide the search box.
    - Hide the task view button.
    - Unpin all but explorer.
@@ -88,7 +90,17 @@
 
 ** Update start menu layout
 
-   - Unpin all applications from start.
+I prefer to have no pinned "tiles" in my start menu. The script below will unpin all applications from start.
+
+#+begin_src shell
+ powershell.exe -NoLogo 
+    (New-Object -Com Shell.Application). 
+NameSpace('shell:::{4234d49b-0245-4df3-b780-3893943456e1}'). 
+Items() | 
+%{ $_.Verbs() } | 
+?{$_.Name -match 'Un.*pin from Start'} | 
+%{$_.DoIt()} 
+#+end_src
 
 
 ** Lock screen configuration
