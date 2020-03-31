@@ -31,6 +31,7 @@ alias bwu='export BW_SESSION=$(bw unlock --raw > ~/.bw_session && cat ~/.bw_sess
 function bwgp () { local test=$(export BW_SESSION=~/.bw_session) && bw get password $1 | xclip; }
 function bwgt () { local test=$(export BW_SESSION=~/.bw_session) && bw get totp $1 | xclip; }
 function bwgi () { local test=$(export BW_SESSION=~/.bw_session) && bw get item --pretty $1; }
+function bwli () { local test=$(export BW_SESSION=~/.bw_session) && bw list items --search $1 --pretty | egrep -i 'name|"id":'; }
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
