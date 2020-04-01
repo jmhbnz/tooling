@@ -88,6 +88,6 @@
   "netWhitelist": "about-scheme\nchrome-extension-scheme\nchrome-scheme\nmoz-extension-scheme\nopera-scheme\nvivaldi-scheme\nwyciwyg-scheme",
   "dynamicFilteringString": "behind-the-scene * * noop\nbehind-the-scene * inline-script noop\nbehind-the-scene * 1p-script noop\nbehind-the-scene * 3p-script noop\nbehind-the-scene * 3p-frame noop\nbehind-the-scene * image noop\nbehind-the-scene * 3p noop",
   "urlFilteringString": "",
-  "hostnameSwitchesString": "no-large-media: behind-the-scene false\nno-remote-fonts: * true\nno-scripting: * true\nno-scripting: www.youtube.com false\nno-scripting: app.plex.tv false\nno-scripting: nextcloud.jamma.life false\nno-scripting: gitlab.jamma.life false\nno-scripting: hangouts.google.com false\nno-scripting: app.slack.com false\nno-scripting: webmail.dreamhost.com\n",
+  "hostnameSwitchesString": "no-large-media: behind-the-scene false\nno-remote-fonts: * true\nno-scripting: * true\nno-scripting: www.youtube.com false\nno-scripting: app.plex.tv false\nno-scripting: nextcloud.jamma.life false\nno-scripting: gitlab.jamma.life false\nno-scripting: hangouts.google.com false\nno-scripting: app.slack.com false\nno-scripting: webmail.dreamhost.com false\n",
   "userFilters": "! 9/10/2019 https://www.wish.com\nwww.wish.com##.AtfOT.AuthenticationModal__MainContent-li0874-1\nwww.wish.com##.jOGCy.AuthenticationModal__Wrapper-li0874-0.BaseModal__PlainBackDrop-sc-188teto-0\n"
 }
