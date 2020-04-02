@@ -10,16 +10,16 @@
   To get underway we need to enable [[https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux][wsl]].  This requires a 64bit installation of Windows 10.
 
   #+NAME: Enable the wsl feature
-  #+BEGIN_SRC tmate
+  #+BEGIN_SRC shell
   powershell.exe Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
   #+END_SRC
 
 
   After enabling the wsl feature we need to download the debian installer and open it.
 
-  #+NAME: Download the debian installer
-  #+BEGIN_SRC tmate
-  cd "C:\Users\jmhbnz\Downloads"
+  #+NAME: Download and run the debian installer
+  #+BEGIN_SRC shell
+  cd "%USERPROFILE%\Downloads"
   powershell.exe curl.exe -L -o debian.appx https://aka.ms/wsl-debian-gnulinux
   powershell.exe Add-AppxPackage .\debian.appx
   #+END_SRC
@@ -32,32 +32,27 @@
 
 * Install an x server for wsl
 
-  One of the ways we extend standard wsl functionality is installing an x server
-  on windows to allow graphical applications to be run.
+  One of the ways we extend standard wsl functionality is installing an x server on windows to allow graphical applications to be run.
 
-  This has the added benefit of allowing command line clipboard tools like [[https://github.com/astrand/xclip][xclip]] to
-  be used within wsl.
+  This has the added benefit of allowing command line clipboard tools like [[https://github.com/astrand/xclip][xclip]] to be used within wsl.
 
-  The x server I've found to be rock solid for this purpose is [[https://sourceforge.net/projects/vcxsrv/][VcXsrv]].  Which is also
-  open source.
+  The x server I've found to be rock solid for this purpose is [[https://sourceforge.net/projects/vcxsrv/][VcXsrv]].  Which is also open source.
 
   #+NAME: Download and install VcXsrv
-  #+BEGIN_SRC tmate
-  cd /mnt/c/Users/jmhbnz/Downloads/
+  #+BEGIN_SRC shell
+  cd /mnt/c/Users/$USER/Downloads/
   wget https://sourceforge.net/projects/vcxsrv/files/latest/download
   mv download installer.exe
   cmd.exe /c installer.exe
   #+END_SRC
 
   
-  After following through the installer we want to ensure VcXsrv launches at startup
-  with our desired configuration.
+  After following through the installer we want to ensure VcXsrv launches at startup with our desired configuration.
 
-  To achieve this we can add an xlaunch configuration which is just xml with a fancy
-  extension to our machines startup folder.
+  To achieve this we can add an xlaunch configuration which is just xml with a fancy extension to our machines startup folder.
 
   #+NAME: Apply our VcXsrv configuration
-  #+BEGIN_SRC tmate
+  #+BEGIN_SRC shell
   cd /mnt/c/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Startup
   cat > VcXsrv.xlaunch << EOF
   <?xml version="1.0" encoding="UTF-8"?>
@@ -72,7 +67,7 @@
   Enable all tray icons to be visible and restart explorer
   
   #+NAME: Configure tray icons
-  #+BEGIN_SRC tmate
+  #+BEGIN_SRC shell
   powershell.exe Set-ItemProperty HKLM:\SOFTWARE\Micorosoft\Windows\CurrentVersion\Explorer EnableAutoTray 0  
   powershell.exe ps explorer | kill
   #+END_SRC
@@ -113,3 +108,77 @@ Items() |
 ** Fix inactive window title colors
 
    https://winaero.com/blog/change-color-of-inactive-title-bars-in-windows-10/  
+
+
+* Configure a web browser
+
+My current browser of choice is [[https://www.mozilla.org/en-US/firefox/new/][Firefox]].  This is primarily due to their respect for open source, user privacy and security and customisation.
+
+#+NAME: Download and run firefox installer
+#+begin_src shell
+cd "%USERPROFILE%\Downloads"
+powershell.exe curl.exe -L -o firefox.exe https://download.mozilla.org/?product=firefox-stub&os=win64&lang=en-U
+firefox.exe
+#+end_src
+
+
+One of the customisations we apply is to update the color of the newtab page in firefox to match the rest of the theme we use and prevent white glare. To achieve this we use [[https://superuser.com/questions/1235975/change-firefox-new-tab-background#][usercss]].
+
+#+NAME: Configure usercss
+#+begin_src shell
+cd /mnt/c/Users/jmhbnz/AppData/Roaming/Mozilla/Firefox/Profiles/jamqyxbf.default-release/chrome/
+cat > userContent.css << EOF
+/* https://userstyles.org/styles/90565/firefox-adjust-white-flash-when-opening-new-tab */
+/* https://userstyles.org/styles/142191/remove-new-tab-flash */
+@-moz-document url-prefix(about:preferences), url-prefix(about:blank), url-prefix(about:newtab) {
+  html, body, #newtab-customize-overlay {
+    background: #323232 !important;
+    color: #b2b2b2 !important;
+  } 
+}
+
+@-moz-document url(chrome://browser/content/browser.xul)
+{
+
+  browser[type="content-primary"]
+  {
+    background: #323232 !important;
+    color: #b2b2b2 !important;
+  }
+}
+
+@-moz-document url(chrome://browser/content/browser.xul)
+{
+
+  browser[type="content-primary"], tabbrowser tabpanels, #appcontent > #content
+  {
+    background: #1B1B1B url("chrome://global/skin/media/imagedoc-darknoise.png") repeat fixed !important;
+    color: #b2b2b2 !important;
+  }
+}
+
+@-moz-document url(about:blank),
+               url(about:preferences),
+               url(about:config),
+               url(about:newtab)
+{
+  #newtab-window,
+  html,
+  body, 
+  #newtab-customize-overlay 
+  {
+    background: #1B1B1B url("chrome://global/skin/media/imagedoc-darknoise.png") repeat fixed;
+    color: #b2b2b2 !important;
+  }
+}
+
+html>body {
+  background: #323232 !important;
+  color: #b2b2b2 !important;
+}
+EOF
+#+end_src
+
+#+RESULTS: Configure usercss
+#+begin_example
+#+end_example
