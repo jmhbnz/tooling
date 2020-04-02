@@ -124,6 +124,8 @@ firefox.exe
 
 One of the customisations we apply is to update the color of the newtab page in firefox to match the rest of the theme we use and prevent white glare. To achieve this we use [[https://superuser.com/questions/1235975/change-firefox-new-tab-background#][usercss]].
 
+Note there is an about:config setting that needs to be set to enable these stylesheets to be used ~toolkit.legacyUserProfileCustomizations.stylesheets~
+
 #+NAME: Configure usercss
 #+begin_src shell
 cd /mnt/c/Users/jmhbnz/AppData/Roaming/Mozilla/Firefox/Profiles/jamqyxbf.default-release/chrome/
