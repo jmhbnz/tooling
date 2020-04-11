@@ -334,14 +334,14 @@ Once our keys are available to us we can clone down our dotfiles and get back to
    The first step to setup mutt is to ensure it is installed.
 
    #+NAME: Install mutt
-   #+BEGIN_SRC shell
-   sudo apt-get install mutt urlscan 
+   #+BEGIN_SRC tmate
+   sudo apt-get install -y mutt urlscan 
    #+END_SRC
 
    After installing mutt we then need to create configuration directories and files.
 
    #+NAME: Create mutt config files
-   #+BEGIN_SRC shell
+   #+BEGIN_SRC tmate
    mkdir -p ~/.mutt/cache/headers
    mkdir ~/.mutt/cache/bodies
    touch ~/.mutt/certificates
