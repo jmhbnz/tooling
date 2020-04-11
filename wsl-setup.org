@@ -277,8 +277,7 @@ Once our keys are available to us we can clone down our dotfiles and get back to
 
 *** Overlay kubemacs
 
-   Once the right version of emacs is running we can then layer in kubemacs on top
-   Documentation for this is here: https://github.com/kubemacs/kubemacs
+   Once the right version of emacs is running we can then layer in kubemacs on top. Documentation for this is here: https://github.com/kubemacs/kubemacs
   
    #+BEGIN_SRC shell
    # Remove the default site-lisp file
@@ -317,9 +316,6 @@ Once our keys are available to us we can clone down our dotfiles and get back to
    This is required because copy and paste osc52 sequences are not currently supported in wsl.
    You can add your voice to this issue to change that [[https://github.com/microsoft/terminal/issues/2946][here]].
 
-   Additionally there is also a bug within the ~ob-tmate~ kubemacs component that we need to fix.
-   This has been fixed upstream and is awaiting merge, refer [[https://github.com/ii/ob-tmate/pull/2][pr #2 here]].
-
    #+BEGIN_SRC tmate
    # Replace the osc52 command with xsel
    sed -i -e 's/osc52.sh/xsel -i -b/g' /usr/local/share/emacs/site-lisp/bin/osc52-tmate.sh
@@ -331,8 +327,7 @@ Once our keys are available to us we can clone down our dotfiles and get back to
 
 ** Step 5 - Setup mutt email client
 
-   For reading email we ideally use a cli based client for fast searching
-   and lightweight mail reading.
+   For reading email we ideally use a cli based client for fast searching and lightweight mail reading.
 
    The [[https://gitlab.com/muttmua/mutt/][mutt]] mail client fills these roles well for imap mailboxes.
 
@@ -350,39 +345,9 @@ Once our keys are available to us we can clone down our dotfiles and get back to
    mkdir -p ~/.mutt/cache/headers
    mkdir ~/.mutt/cache/bodies
    touch ~/.mutt/certificates
-   touch ~/.muttrc
    #+END_SRC
 
-   One configuration folders and files exist we just need to populate our
-   user mutt configuration file with a configuration for our particular 
-   mail provider.
+   One configuration folders and files exist we just need to populate our user mutt configuration file with a configuration for our particular mail provider.
 
-   The example below utilises the ~bitwarden~ cli utility for secrets to
-   ensure these are securely gathered at runtime and not stored in the file.
+   The example provided in this repository utilises the ~bitwarden~ cli utility for secrets to ensure these are securely gathered at runtime and not stored in the file.
 
-   #+NAME: Set mutt configuration
-   #+BEGIN_SRC shell
-   cat > ~/.muttrc << EOF
-   set ssl_starttls=yes
-   set ssl_force_tls=yes
-   set imap_user=`bw get username hosted`
-   set imap_pass=`bw get password hosted`
-   set from=`bw get username hosted`
-   set realname='James Blair'
-   set folder=imaps://mail.jamesblair.net
-   set header_cache="~/.mutt/cache/headers"
-   set message_cachedir="~/.mutt/cache/bodies"
-   set certificate_file="~/.mutt/certificates"
-   set smtp_url="smtp://`bw get username hosted`@mail.jamesblair.net:587/"
-   set smtp_pass=`bw get password hosted`
-   set move=no
-   set imap_keepalive=900
-   set postponed="=Drafts"
-   set record="=Sent"
-   set imap_passive=no
-   set spoolfile=imaps://mail.jamesblair.net/INBOX
-   EOF
-   #+END_SRC
-
-
-   

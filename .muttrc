@@ -1,0 +1,53 @@
+#================================================================
+# IMAP Mailbox configuration
+#================================================================
+set imap_user=`bw get username hosted`
+set imap_pass=`bw get password hosted`
+
+# This is the remote server and folder (optional)
+set folder=imaps://mail.jamesblair.net
+
+# This is the folder your mail arrives into
+set spoolfile=+INBOX
+#================================================================
+
+
+
+#================================================================
+# Ensure we are using tls
+#================================================================
+set ssl_starttls=yes
+set ssl_force_tls=yes
+#================================================================
+set from=`bw get username hosted`
+set realname='James Blair'
+set header_cache="~/.mutt/cache/headers"
+set message_cachedir="~/.mutt/cache/bodies"
+set certificate_file="~/.mutt/certificates"
+set smtp_url="smtp://`bw get username hosted`@mail.jamesblair.net:587/"
+set smtp_pass=`bw get password hosted`
+set move=no
+set imap_keepalive=900
+set postponed="=Drafts"
+set record="=Sent"
+unset imap_passive
+
+macro index,pager \cb "<pipe-message> urlscan<Enter>" "call urlscan to extract URLs out of a message"
+
+macro attach,compose \cb "<pipe-entry> urlscan<Enter>" "call urlscan to extract URLs out of a message"
+
+set crypt_use_gpgme=no
+set imap_check_subscribed
+set mail_check=60
+set timeout=10
+
+set sidebar_visible=yes
+# Move the highlight to the previous mailbox
+bind index,pager \Cp sidebar-prev
+
+# Move the highlight to the next mailbox
+bind index,pager \Cn sidebar-next
+
+# Open the highlighted mailbox
+bind index,pager \Co sidebar-open
+
