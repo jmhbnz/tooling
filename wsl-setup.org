@@ -41,8 +41,7 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
    #+END_SRC
 
 
-   Next we install a series of standard packages that form part of our workflow or
-   are dependencies for other tools in our environment.
+   Next we install a series of standard packages that form part of our workflow or are dependencies for other tools in our environment.
 
    #+NAME: Install standard packages 
    #+BEGIN_SRC shell
@@ -100,14 +99,11 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
 
    #+NAME: Install bitwarden and login
    #+BEGIN_SRC shell
-   # Set an environment variable with our login email for bitwarden
-   export account=[BITWARDEN_ACCOUNT]
-
    # Install the bitwarden cli via node package manager
    sudo npm install -g @bitwarden/cli 
 
    # Test login to bitwarden
-   bw login $account
+   bw login mail@jamesblair.net
    #+END_SRC
 
 
@@ -129,10 +125,16 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
 
    #+NAME: Install amazon web services cli
    #+BEGIN_SRC shell
+   # Download the binary
    cd ~/Downloads/
    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-   unzip awscliv2.zip
+   
+   # Install
+   unzip awscliv2.zip 
    sudo ./aws/install 
+   
+   # Clean up
+   rm -rf ~/Downloads/aws*
    #+END_SRC 
 
    For cloud infrastructure deployments we use [[https://www.terraform.io/][terraforms]].
@@ -140,7 +142,7 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
    #+NAME: Install hashicorp terraforms
    #+BEGIN_SRC shell
    # Download the binary
-   wget 'https://releases.hashicorp.com/terraform/0.12.18/terraform_0.12.18_linux_amd64.zip'
+   wget 'https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_amd64.zip'
 
    # Unzip it
    unzip *.zip
@@ -170,15 +172,44 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
 
 ** Step 3 - Setup environment dotfiles
 
-   Within wsl we can use .dotfiles to further customise our environment. The script
-   below restores my versions of key dotfiles automatically.
+   Within wsl we can use .dotfiles to further customise our environment. The script below restores my versions of key dotfiles automatically.
    
-   *Note:* The git clone below relies on having permission to clone the 
-   repository referenced.  For me this means having an ssh key present
-   which has been added to gitlab.
+   *Note:* The git clone below relies on having permission to clone the repository referenced.  For me this means having an ssh key present which has been added to gitlab.
+
+*** Obtain ssh keys from bitwarden
+
+In order to be able to clone the repository in the next step we need to obtain our ssh keys from bitwarden. Given we have installed the bitwarden cli we can mostly automte this process minus the initial login to bitwarden.
+
+   #+NAME: Obtain ssh keys from bitwarden
+   #+begin_src shell
+   # Generate a new blank key to overwrite
+   ssh-keygen -t rsa -f ~/.ssh/james -q -P ""
+   
+   # Ensure we have an active bitwarden session
+   export BW_SESSION=$(bw unlock --raw > ~/.bw_session && cat ~/.bw_session)
+
+   # Export both keys
+   export key=$(bw get item desktop --pretty | grep notes)
+
+   # Extract private key
+   export private=${key:12}
+   export private=${private/END RSA*/END RSA PRIVATE KEY-----} 
+   echo $private | awk '{gsub(/\\n/,"\n")}1' > ~/.ssh/james
+
+   # Extract public key
+   export public=${key/*ssh-rsa/ssh-rsa} && echo ${public::-2} | awk '{gsub(/\\n/,"\n")}1' > ~/.ssh/james.pub
+   #+end_src
+
+
+*** Clone and restore dotfiles
+
+Once our keys are available to us we can clone down our dotfiles and get back to our comfortable normal terminal environment.
 
    #+NAME: Clone and restore the dotfiles
-   #+BEGIN_SRC tmate
+   #+BEGIN_SRC shell
+   # Remove the interactive host prompt
+   ssh-keyscan -p 2224 gitlab.jamma.life >> ~/.ssh/known_hosts
+
    # Clone down this repository
    git clone ssh://git@gitlab.jamma.life:2224/jmhbnz/tooling.git ~/Documents/tooling/
    
@@ -201,7 +232,7 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
    Our first step is to download the base emacs 26.3 source code.
 
    #+NAME: Download and extract emacs source
-   #+BEGIN_SRC tmate
+   #+BEGIN_SRC shell
    # Work from our downloads directory
    cd ~/Downloads/
 
@@ -223,7 +254,7 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
    running within terminal i.e. ~emacs -nw~.
 
    #+NAME: Compile and install emacs
-   #+BEGIN_SRC tmate
+   #+BEGIN_SRC shell
    # Run configure to resolve any dependencies minus x window support
    ./configure --without-x --with-gnutls=no
   
@@ -249,7 +280,7 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
    Once the right version of emacs is running we can then layer in kubemacs on top
    Documentation for this is here: https://github.com/kubemacs/kubemacs
   
-   #+BEGIN_SRC tmate
+   #+BEGIN_SRC shell
    # Remove the default site-lisp file
    sudo rm /usr/local/share/emacs/site-lisp/subdirs.el
 
@@ -260,6 +291,26 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
    sudo chown -R $USER:$USER /usr/local/share/emacs/site-lisp
    #+END_SRC
   
+
+   After cloning down kubemacs we now need to launch emacs and install packages, this can take a while and several iterations may be neccessary before spacemacs will launch fully.
+
+   *Note:* As of <2020-04-11 Sat> there is one package ~org-plus-contrib~ that is refusing to install as normal, a manual install process is included below to work around this.  
+
+   #+NAME: Launch emacs to install packages
+   #+begin_src shell
+   # Ensure the elpa folder is created
+   mkdir -p /usr/local/share/emacs/site-lisp/spacemacs/elpa/26.3/develop
+   cd /usr/local/share/emacs/site-lisp/spacemacs/elpa/26.3/develop
+
+   # Manually install org-plus-contrib
+   wget 'https://orgmode.org/elpa/org-plus-contrib-20200406.tar'
+   tar xf org-plus-contrib-20200406.tar 
+   rm org-plus-contrib-20200406.tar
+
+   # Start emacs and download packages
+   emacs --insecure
+   #+end_src
+
 
    One final configuration step specific to wsl is to switch from ~osc52~ to ~xsel~ for clipboard. 
 
@@ -274,7 +325,7 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
    sed -i -e 's/osc52.sh/xsel -i -b/g' /usr/local/share/emacs/site-lisp/bin/osc52-tmate.sh
 
    # Fix the ob-tmate bug
-   sed -i -e 's/ob-session dir))/ob-session session-dir))/g' /usr/local/share/emacs/site-lisp/spacemacs/elpa/26.3/develop/ob-tmate-20200206.109/ob-tmate.el 
+   #sed -i -e 's/ob-session dir))/ob-session session-dir))/g' /usr/local/share/emacs/site-lisp/spacemacs/elpa/26.3/develop/ob-tmate-20200206.109/ob-tmate.el 
    #+END_SRC
 
 
