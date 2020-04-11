@@ -324,8 +324,8 @@ Once our keys are available to us we can clone down our dotfiles and get back to
    # Replace the osc52 command with xsel
    sed -i -e 's/osc52.sh/xsel -i -b/g' /usr/local/share/emacs/site-lisp/bin/osc52-tmate.sh
 
-   # Fix the ob-tmate bug
-   #sed -i -e 's/ob-session dir))/ob-session session-dir))/g' /usr/local/share/emacs/site-lisp/spacemacs/elpa/26.3/develop/ob-tmate-20200206.109/ob-tmate.el 
+   # Provide custom xclipboard functions
+   # https://github.com/syl20bnr/spacemacs/issues/2222
    #+END_SRC
 
 
