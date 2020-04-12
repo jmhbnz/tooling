@@ -28,8 +28,8 @@ set smtp_url="smtp://`bw get username hosted`@mail.jamesblair.net:587/"
 set smtp_pass=`bw get password hosted`
 set move=no
 set imap_keepalive=900
-set postponed="=Drafts"
-set record="=Sent"
+set postponed="=INBOX.Drafts"
+set record="=INBOX.Sent"
 unset imap_passive
 
 macro index,pager \cb "<pipe-message> urlscan<Enter>" "call urlscan to extract URLs out of a message"
