@@ -46,7 +46,7 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
    #+NAME: Install standard packages 
    #+BEGIN_SRC shell
    # Install basic utilities
-    sudo apt-get install -y git locales curl wget xclip xsel tmux tmate net-tools less wget htop screenfetch zip openssh-client dictd
+    sudo apt-get install -y git locales curl wget xclip xsel tmux tmate net-tools less wget htop screenfetch zip openssh-client dictd knockd
   
    # Install pre-requisites for compiling emacs
    sudo apt-get install -y make gcc libgnutls28-dev libtinfo-dev
@@ -169,7 +169,7 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
    sudo apt-get update && sudo apt-get install -y ansible
    #+END_SRC
 
-
+   
 ** Step 3 - Setup environment dotfiles
 
    Within wsl we can use .dotfiles to further customise our environment. The script below restores my versions of key dotfiles automatically.
