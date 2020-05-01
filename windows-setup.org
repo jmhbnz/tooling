@@ -174,10 +174,6 @@ cat > userContent.css << EOF
   }
 }
 
-html>body {
-  background: #323232 !important;
-  color: #b2b2b2 !important;
-}
 EOF
 #+end_src
 
