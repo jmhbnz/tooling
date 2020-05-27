@@ -40,7 +40,7 @@
 
   #+NAME: Download and install VcXsrv
   #+BEGIN_SRC shell
-  cd /mnt/c/Users/$USER/Downloads/
+  cd /c/Users/$USER/Downloads/
   wget https://sourceforge.net/projects/vcxsrv/files/latest/download
   mv download installer.exe
   cmd.exe /c installer.exe
@@ -53,7 +53,7 @@
 
   #+NAME: Apply our VcXsrv configuration
   #+BEGIN_SRC shell
-  cd /mnt/c/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Startup
+  cd /c/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Startup
   cat > VcXsrv.xlaunch << EOF
   <?xml version="1.0" encoding="UTF-8"?>
   <XLaunch WindowMode="MultiWindow" ClientMode="NoClient" LocalClient="False" Display="-1" LocalProgram="xcalc" RemoteProgram="xterm" RemotePassword="" PrivateKey="" RemoteHost="" RemoteUser="" XDMCPHost="" XDMCPBroadcast="False" XDMCPIndirect="False" Clipboard="True" ClipboardPrimary="True" ExtraParams="" Wgl="True" DisableAC="False" XDMCPTerminate="False"/>
@@ -128,7 +128,7 @@ Note there is an about:config setting that needs to be set to enable these style
 
 #+NAME: Configure usercss
 #+begin_src shell
-cd /mnt/c/Users/jmhbnz/AppData/Roaming/Mozilla/Firefox/Profiles/jamqyxbf.default-release/chrome/
+cd /c/Users/jmhbnz/AppData/Roaming/Mozilla/Firefox/Profiles/jamqyxbf.default-release/chrome/
 cat > userContent.css << EOF
 /* https://userstyles.org/styles/90565/firefox-adjust-white-flash-when-opening-new-tab */
 /* https://userstyles.org/styles/142191/remove-new-tab-flash */

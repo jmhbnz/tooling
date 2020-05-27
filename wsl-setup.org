@@ -80,11 +80,17 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
 
    # Allow your user to access the Docker CLI without needing root access.
    sudo usermod -aG docker $USER
-   #+end_src 
 
-   #+RESULTS: Install docker
-   #+begin_example
-   #+end_example
+   # Configure wsl to mount at / for docker volumes
+   sudo su 
+   cat > /etc/wsl.conf << EOF
+   [automount]
+   root = /
+   options = "metadata"
+   
+   EOF
+   exit
+   #+end_src 
 
 
    We use [[https://pandoc.org/][pandoc]] for documentation export from spacemacs and other markup conversion tasks.
