@@ -59,6 +59,34 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
    #+END_SRC
 
 
+   We use [[https://docker.io][docker]] to run containers or kind (kubernetes in docker) locally.
+   
+   #+NAME: Install docker
+   #+begin_src shell
+   # Download and add Docker's official public PGP key.
+   curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+   # Add the `stable` channel's Docker upstream repository.
+   sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/debian \
+   $(lsb_release -cs) \
+   stable"
+
+   # Update the apt package list (for the new apt repo).
+   sudo apt-get update -y
+   
+   # Install the latest version of Docker CE.
+   sudo apt-get install -y docker-ce
+
+   # Allow your user to access the Docker CLI without needing root access.
+   sudo usermod -aG docker $USER
+   #+end_src 
+
+   #+RESULTS: Install docker
+   #+begin_example
+   #+end_example
+
+
    We use [[https://pandoc.org/][pandoc]] for documentation export from spacemacs and other markup conversion tasks.
 
    #+NAME: Install pandoc
@@ -223,106 +251,114 @@ Once our keys are available to us we can clone down our dotfiles and get back to
 
 ** Step 4 - Install kubemacs editor
 
-*** Compile and install vanilla emacs
+An integral part of our pair development workflow is [[https://github.com/kubemacs/kubemacs][kubemacs]]. Below are options to install this either manually from source, or automatically via docker.
 
-   A key component in our environment is the ii extension of spacemacs. 
-   The section below will setup emacs version ~26.3~ and then layer
-   the ii version of spacemacs called kubemacs on top.
+*** Option 1 - Install from source
 
-   Our first step is to download the base emacs 26.3 source code.
+**** Compile and install vanilla emacs
 
-   #+NAME: Download and extract emacs source
-   #+BEGIN_SRC shell
-   # Work from our downloads directory
-   cd ~/Downloads/
+    A key component in our environment is the ii extension of spacemacs. 
+    The section below will setup emacs version ~26.3~ and then layer
+    the ii version of spacemacs called kubemacs on top.
 
-   # Download the tarball for emacs 26.3 source code
-   wget https://mirror.ossplanet.net/gnu/emacs/emacs-26.3.tar.xz
+    Our first step is to download the base emacs 26.3 source code.
+
+    #+NAME: Download and extract emacs source
+    #+BEGIN_SRC shell
+    # Work from our downloads directory
+    cd ~/Downloads/
+
+    # Download the tarball for emacs 26.3 source code
+    wget https://mirror.ossplanet.net/gnu/emacs/emacs-26.3.tar.xz
    
-   # Untar the source code archive
-   tar xf emacs-26.3.tar.xz
+    # Untar the source code archive
+    tar xf emacs-26.3.tar.xz
 
-   # Change to the extracted directory
-   cd emacs-26.3
-   #+END_SRC
+    # Change to the extracted directory
+    cd emacs-26.3
+    #+END_SRC
 
 
-   After downloading and untarring the source code we are ready to
-   attempt resolving dependencies and compiling.
+    After downloading and untarring the source code we are ready to
+    attempt resolving dependencies and compiling.
 
-   We configure without-x as this environment is solely focussed on 
-   running within terminal i.e. ~emacs -nw~.
+    We configure without-x as this environment is solely focussed on 
+    running within terminal i.e. ~emacs -nw~.
 
-   #+NAME: Compile and install emacs
-   #+BEGIN_SRC shell
-   # Run configure to resolve any dependencies minus x window support
-   ./configure --without-x --with-gnutls=no
+    #+NAME: Compile and install emacs
+    #+BEGIN_SRC shell
+    # Run configure to resolve any dependencies minus x window support
+    ./configure --without-x --with-gnutls=no
   
-   # Compile the application with make, using all available cpu cores
-   sudo make -j `nproc`
+    # Compile the application with make, using all available cpu cores
+    sudo make -j `nproc`
 
-   # Run make install to move/install compiled binaries
-   sudo make install
-   #+END_SRC
-
-
-   After compiling and installing emacs we should verify that version ~26.3~ is
-   installed.
-
-   #+NAME: Verify correct emacs version is installed
-   #+BEGIN_SRC tmate
-   emacs --version  
-   #+END_SRC
+    # Run make install to move/install compiled binaries
+    sudo make install
+    #+END_SRC
 
 
-*** Overlay kubemacs
+    After compiling and installing emacs we should verify that version ~26.3~ is
+    installed.
 
-   Once the right version of emacs is running we can then layer in kubemacs on top. Documentation for this is here: https://github.com/kubemacs/kubemacs
+    #+NAME: Verify correct emacs version is installed
+    #+BEGIN_SRC tmate
+    emacs --version  
+    #+END_SRC
+
+
+**** Overlay kubemacs
+
+    Once the right version of emacs is running we can then layer in kubemacs on top. Documentation for this is here: https://github.com/kubemacs/kubemacs
   
-   #+BEGIN_SRC shell
-   # Remove the default site-lisp file
-   sudo rm /usr/local/share/emacs/site-lisp/subdirs.el
+    #+BEGIN_SRC shell
+    # Remove the default site-lisp file
+    sudo rm /usr/local/share/emacs/site-lisp/subdirs.el
 
-   # Clone kubemacs from github
-   sudo git clone --recursive https://github.com/kubemacs/kubemacs /usr/local/share/emacs/site-lisp/
+    # Clone kubemacs from github
+    sudo git clone --recursive https://github.com/kubemacs/kubemacs /usr/local/share/emacs/site-lisp/
   
-   # Ensure permissions are set for the cloned folder
-   sudo chown -R $USER:$USER /usr/local/share/emacs/site-lisp
-   #+END_SRC
+    # Ensure permissions are set for the cloned folder
+    sudo chown -R $USER:$USER /usr/local/share/emacs/site-lisp
+    #+END_SRC
   
 
-   After cloning down kubemacs we now need to launch emacs and install packages, this can take a while and several iterations may be neccessary before spacemacs will launch fully.
+    After cloning down kubemacs we now need to launch emacs and install packages, this can take a while and several iterations may be neccessary before spacemacs will launch fully.
 
-   *Note:* As of <2020-04-11 Sat> there is one package ~org-plus-contrib~ that is refusing to install as normal, a manual install process is included below to work around this.  
+    *Note:* As of <2020-04-11 Sat> there is one package ~org-plus-contrib~ that is refusing to install as normal, a manual install process is included below to work around this.  
 
-   #+NAME: Launch emacs to install packages
-   #+begin_src shell
-   # Ensure the elpa folder is created
-   mkdir -p /usr/local/share/emacs/site-lisp/spacemacs/elpa/26.3/develop
-   cd /usr/local/share/emacs/site-lisp/spacemacs/elpa/26.3/develop
+    #+NAME: Launch emacs to install packages
+    #+begin_src shell
+    # Ensure the elpa folder is created
+    mkdir -p /usr/local/share/emacs/site-lisp/spacemacs/elpa/26.3/develop
+    cd /usr/local/share/emacs/site-lisp/spacemacs/elpa/26.3/develop
 
-   # Manually install org-plus-contrib
-   wget 'https://orgmode.org/elpa/org-plus-contrib-20200406.tar'
-   tar xf org-plus-contrib-20200406.tar 
-   rm org-plus-contrib-20200406.tar
+    # Manually install org-plus-contrib
+    wget 'https://orgmode.org/elpa/org-plus-contrib-20200406.tar'
+    tar xf org-plus-contrib-20200406.tar 
+    rm org-plus-contrib-20200406.tar
 
-   # Start emacs and download packages
-   emacs --insecure
-   #+end_src
+    # Start emacs and download packages
+    emacs --insecure
+    #+end_src
 
 
-   One final configuration step specific to wsl is to switch from ~osc52~ to ~xsel~ for clipboard. 
+    One final configuration step specific to wsl is to switch from ~osc52~ to ~xsel~ for clipboard. 
 
-   This is required because copy and paste osc52 sequences are not currently supported in wsl.
-   You can add your voice to this issue to change that [[https://github.com/microsoft/terminal/issues/2946][here]].
+    This is required because copy and paste osc52 sequences are not currently supported in wsl.
+    You can add your voice to this issue to change that [[https://github.com/microsoft/terminal/issues/2946][here]].
 
-   #+BEGIN_SRC tmate
-   # Replace the osc52 command with xsel
-   sed -i -e 's/osc52.sh/xsel -i -b/g' /usr/local/share/emacs/site-lisp/bin/osc52-tmate.sh
+    #+BEGIN_SRC tmate
+    # Replace the osc52 command with xsel
+    sed -i -e 's/osc52.sh/xsel -i -b/g' /usr/local/share/emacs/site-lisp/bin/osc52-tmate.sh
 
-   # Provide custom xclipboard functions
-   # https://github.com/syl20bnr/spacemacs/issues/2222
-   #+END_SRC
+    # Provide custom xclipboard functions
+    # https://github.com/syl20bnr/spacemacs/issues/2222
+    #+END_SRC
+
+
+*** Option 2 - Install via docker
+
 
 
 ** Step 5 - Setup mutt email client
