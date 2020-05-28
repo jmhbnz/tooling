@@ -365,6 +365,36 @@ An integral part of our pair development workflow is [[https://github.com/kubema
 
 *** Option 2 - Install via docker
 
+For this method we need to set some variables in the included ~kubemacs.env~ file, then run the included ~kubemacs.sh~ script.
+
+#+NAME: Update environment file
+#+begin_src shell
+sed -i 's/KUBEMACS_GIT_EMAIL.*/KUBEMACS_GIT_EMAIL="mail@jamesblair.net"/g' kubemacs/kubemacs.env
+sed -i 's/KUBEMACS_GIT_NAME.*/KUBEMACS_GIT_NAME="James Blair"/g' kubemacs/kubemacs.env
+#+end_src
+
+Next we create a folder ~.kube~ folder in windows that can be mounted through into docker for windows. Currently we cannot mount wsl folders into docker for windows.
+
+#+NAME: Setup kubeconfig mount
+#+begin_src shell
+# Make the windows folder for out kubeconfig
+mkdir -p /c/Users/$USER/.kube
+
+# Set that folder to the volume mount
+sed -i 's|^.*[.]kube|       -v "/c/Users/$USER/.kube:/tmp/.kube|g' kubemacs/kubemacs.sh
+
+# Export that folder for kubeconfig
+export KUBECONFIG=$KUBECONFIG:/c/Users/$USER/.kube/config
+#+end_src
+
+After updating the environment file and preparing the kubeconfig mount we are ready to launch kubemacs in a kind cluster by running the script :)
+
+Do this in your left eye terminal as this will pop you straight into kubemacs.
+
+#+NAME: Launch kubemacs left eye
+#+begin_src shell
+./kubemacs/kubemacs.sh
+#+end_src
 
 
 ** Step 5 - Setup mutt email client
