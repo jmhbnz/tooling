@@ -128,8 +128,8 @@ Note there is an about:config setting that needs to be set to enable these style
 
 #+NAME: Configure usercss
 #+begin_src shell
-cd /c/Users/jmhbnz/AppData/Roaming/Mozilla/Firefox/Profiles/jamqyxbf.default-release/chrome/
-cat > userContent.css << EOF
+cd /c/Users/jmhbnz/AppData/Roaming/Mozilla/Firefox/Profiles/f7lryukb.default-release-1591505157037/chrome/
+cat > userContent.css << EOF 
 /* https://userstyles.org/styles/90565/firefox-adjust-white-flash-when-opening-new-tab */
 /* https://userstyles.org/styles/142191/remove-new-tab-flash */
 @-moz-document url-prefix(about:preferences), url-prefix(about:blank), url-prefix(about:newtab) {
@@ -176,7 +176,3 @@ cat > userContent.css << EOF
 
 EOF
 #+end_src
-
-#+RESULTS: Configure usercss
-#+begin_example
-#+end_example
