@@ -121,6 +121,10 @@ powershell.exe curl.exe -L -o firefox.exe https://download.mozilla.org/?product=
 firefox.exe
 #+end_src
 
+#+RESULTS: Download and run firefox installer
+#+begin_example
+#+end_example
+
 
 One of the customisations we apply is to update the color of the newtab page in firefox to match the rest of the theme we use and prevent white glare. To achieve this we use [[https://superuser.com/questions/1235975/change-firefox-new-tab-background#][usercss]].
 
