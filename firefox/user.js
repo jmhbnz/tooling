@@ -135,7 +135,7 @@ user_pref("browser.newtabpage.activity-stream.feeds.discoverystreamfeed", false)
  * [SETTING] Privacy & Security>History>Custom Settings>Always use private browsing mode
  * [1] https://wiki.mozilla.org/Private_Browsing
  * [2] https://spreadprivacy.com/is-private-browsing-really-private/ ***/
-   // user_pref("browser.privatebrowsing.autostart", true);
+user_pref("browser.privatebrowsing.autostart", false);
 
 /*** [SECTION 0200]: GEOLOCATION / LANGUAGE / LOCALE ***/
 user_pref("_user.js.parrot", "0200 syntax error: the parrot's definitely deceased!");
@@ -583,7 +583,7 @@ user_pref("_user.js.parrot", "1000 syntax error: the parrot's gone to meet 'is m
  * [SETUP-PERF] If you think disk cache may help (heavy tab user, high-res video),
  * or you use a hardened Temporary Containers, then feel free to override this
  * [NOTE] We also clear cache on exiting Firefox (see 2803) ***/
-user_pref("browser.cache.disk.enable", false);
+user_pref("browser.cache.disk.enable", true);
 /* 1003: disable memory cache
 /* capacity: -1=determine dynamically (default), 0=none, n=memory capacity in kilobytes ***/
    // user_pref("browser.cache.memory.enable", false);
@@ -870,10 +870,10 @@ user_pref("privacy.donottrackheader.enabled", true);
 user_pref("_user.js.parrot", "1700 syntax error: the parrot's bit the dust!");
 /* 1701: enable Container Tabs setting in preferences (see 1702) [FF50+]
  * [1] https://bugzilla.mozilla.org/1279029 ***/
-user_pref("privacy.userContext.ui.enabled", true);
+user_pref("privacy.userContext.ui.enabled", false);
 /* 1702: enable Container Tabs [FF50+]
  * [SETTING] General>Tabs>Enable Container Tabs ***/
-user_pref("privacy.userContext.enabled", true);
+user_pref("privacy.userContext.enabled", false);
 /* 1703: set behaviour on "+ Tab" button to display container menu on left click [FF74+]
  * [NOTE] The menu is always shown on long press and right click
  * [SETTING] General>Tabs>Enable Container Tabs>Settings>Select a container for each new tab ***/
@@ -1317,7 +1317,7 @@ user_pref("privacy.sanitize.sanitizeOnShutdown", true);
  * However, this may not always be the case. The interface combines and syncs these
  * prefs when set from there, and the sanitize code may change at any time
  * [SETTING] Privacy & Security>History>Custom Settings>Clear history when Firefox closes>Settings ***/
-user_pref("privacy.clearOnShutdown.cache", true);
+user_pref("privacy.clearOnShutdown.cache", false);
 user_pref("privacy.clearOnShutdown.cookies", false);
 user_pref("privacy.clearOnShutdown.downloads", true); // see note above
 user_pref("privacy.clearOnShutdown.formdata", true); // Form & Search History
@@ -1331,13 +1331,13 @@ user_pref("privacy.clearOnShutdown.siteSettings", false); // Site Preferences
  * [NOTE] Regardless of what you set privacy.cpd.downloads to, as soon as the dialog
  * for "Clear Recent History" is opened, it is synced to the same as 'history' ***/
 user_pref("privacy.cpd.cache", true);
-user_pref("privacy.cpd.cookies", true);
+user_pref("privacy.cpd.cookies", false);
    // user_pref("privacy.cpd.downloads", true); // not used, see note above
 user_pref("privacy.cpd.formdata", true); // Form & Search History
 user_pref("privacy.cpd.history", true); // Browsing & Download History
 user_pref("privacy.cpd.offlineApps", true); // Offline Website Data
 user_pref("privacy.cpd.passwords", false); // this is not listed
-user_pref("privacy.cpd.sessions", true); // Active Logins
+user_pref("privacy.cpd.sessions", false); // Active Logins
 user_pref("privacy.cpd.siteSettings", false); // Site Preferences
 /* 2805: clear Session Restore data when sanitizing on shutdown or manually [FF34+]
  * [NOTE] Not needed if Session Restore is not used (see 0102) or is already cleared with history (see 2803)
@@ -1377,7 +1377,7 @@ user_pref("_user.js.parrot", "4000 syntax error: the parrot's pegged out");
 /* 4001: enable First Party Isolation [FF51+]
  * [SETUP-WEB] May break cross-domain logins and site functionality until perfected
  * [1] https://bugzilla.mozilla.org/1260931 ***/
-user_pref("privacy.firstparty.isolate", true);
+user_pref("privacy.firstparty.isolate", false);
 /* 4002: enforce FPI restriction for window.opener [FF54+]
  * [NOTE] Setting this to false may reduce the breakage in 4001
  * FF65+ blocks postMessage with targetOrigin "*" if originAttributes don't match. But
@@ -1634,7 +1634,7 @@ user_pref("_user.js.parrot", "5000 syntax error: this is an ex-parrot!");
 /* APPEARANCE ***/
    // user_pref("browser.download.autohideButton", false); // [FF57+]
    // user_pref("toolkit.cosmeticAnimations.enabled", false); // [FF55+]
-   // user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true); // [FF68+] allow userChrome/userContent
+   user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true); // [FF68+] allow userChrome/userContent
 /* CONTENT BEHAVIOR ***/
    // user_pref("accessibility.typeaheadfind", true); // enable "Find As You Type"
    // user_pref("clipboard.autocopy", false); // disable autocopy default [LINUX]
