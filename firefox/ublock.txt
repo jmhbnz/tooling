@@ -1,6 +1,6 @@
 {
-  "timeStamp": 1583900023400,
-  "version": "1.25.2",
+  "timeStamp": 1596949021400,
+  "version": "1.28.4",
   "userSettings": {
     "advancedUserEnabled": true,
     "alwaysDetachLogger": true,
@@ -10,12 +10,13 @@
     "colorBlindFriendly": false,
     "contextMenuEnabled": true,
     "dynamicFilteringEnabled": true,
-    "externalLists": [],
+    "externalLists": "https://gitcdn.xyz/repo/NanoMeow/MDLMirror/master/hosts.txt\nhttps://mirror.cedia.org.ec/malwaredomains/justdomains",
     "firewallPaneMinimized": true,
     "hyperlinkAuditingDisabled": true,
     "ignoreGenericCosmeticFilters": false,
     "largeMediaSize": 50,
     "parseAllABPHideFilters": true,
+    "popupPanelSections": 15,
     "prefetchingDisabled": true,
     "requestLogMaxEntries": 1000,
     "showIconBadge": true,
@@ -23,6 +24,9 @@
     "webrtcIPAddressHidden": false
   },
   "selectedFilterLists": [
+    "https://mirror.cedia.org.ec/malwaredomains/justdomains",
+    "https://gitcdn.xyz/repo/NanoMeow/MDLMirror/master/hosts.txt",
+    "urlhaus-1",
     "user-filters",
     "assets.json",
     "public_suffix_list.dat",
@@ -57,6 +61,7 @@
     "cnameMaxTTL": 120,
     "cnameReplayFullURL": false,
     "cnameUncloak": true,
+    "cnameUncloakProxied": false,
     "consoleLogLevel": "unset",
     "debugScriptlets": false,
     "debugScriptletInjector": false,
@@ -68,11 +73,16 @@
     "loggerPopupType": "popup",
     "manualUpdateAssetFetchPeriod": 500,
     "popupFontSize": "unset",
+    "popupPanelDisabledSections": 0,
+    "popupPanelLockedSections": 0,
+    "popupPanelHeightMode": 0,
     "requestJournalProcessPeriod": 1000,
     "selfieAfter": 3,
     "strictBlockingBypassDuration": 120,
     "suspendTabsUntilReady": "unset",
+    "uiPopupConfig": "undocumented",
     "uiFlavor": "unset",
+    "uiStyles": "unset",
     "updateAssetBypassBrowserCache": false,
     "userResourcesLocation": "unset"
   },
@@ -83,10 +93,12 @@
     "moz-extension-scheme",
     "opera-scheme",
     "vivaldi-scheme",
+    "www.vipleague.lc",
     "wyciwyg-scheme"
   ],
-  "netWhitelist": "about-scheme\nchrome-extension-scheme\nchrome-scheme\nmoz-extension-scheme\nopera-scheme\nvivaldi-scheme\nwyciwyg-scheme",
+  "netWhitelist": "about-scheme\nchrome-extension-scheme\nchrome-scheme\nmoz-extension-scheme\nopera-scheme\nvivaldi-scheme\nwww.vipleague.lc\nwyciwyg-scheme",
   "dynamicFilteringString": "behind-the-scene * * noop\nbehind-the-scene * inline-script noop\nbehind-the-scene * 1p-script noop\nbehind-the-scene * 3p-script noop\nbehind-the-scene * 3p-frame noop\nbehind-the-scene * image noop\nbehind-the-scene * 3p noop",
   "urlFilteringString": "",
-  "hostnameSwitchesString": "no-large-media: behind-the-scene false\nno-remote-fonts: * true\nno-scripting: * true\nno-scripting: www.youtube.com false\nno-scripting: app.plex.tv false\nno-scripting: nextcloud.jamma.life false\nno-scripting: gitlab.jamma.life false\nno-scripting: grocy.jamma.life false\nno-scripting: accounts.google.com false\nno-scripting: hangouts.google.com false\nno-scripting: admin.google.com false\nno-scripting: app.slack.com false\nno-scripting: webmail.dreamhost.com false\n"
+  "hostnameSwitchesString": "no-large-media: behind-the-scene false\nno-remote-fonts: * true\nno-scripting: * true\nno-scripting: www.youtube.com false\nno-scripting: nextcloud.jamma.life false\nno-scripting: gitlab.jamma.life false\nno-scripting: grocy.jamma.life false\nno-scripting: app.plex.tv false\nno-scripting: accounts.google.com false\nno-scripting: hangouts.google.com false\nno-scripting: admin.google.com false\nno-scripting: app.slack.com false\nno-scripting: webmail.dreamhost.com false",
+  "userFilters": ""
 }
