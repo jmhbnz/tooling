@@ -45,7 +45,7 @@ if ! shopt -oq posix; then
 fi
 
 # Configure display for vcxsrv
-export DISPLAY=:0.0
+export DISPLAY=`grep -oP "(?<=nameserver ).+" /etc/resolv.conf`:0.0
 
 # Configure docker host
 export DOCKER_HOST=tcp://localhost:2375
