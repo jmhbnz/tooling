@@ -1,4 +1,13 @@
 # -*- ii: ii; -*-
+
+#+NAME: Download and install VcXsrv
+#+BEGIN_SRC shell
+# Download the vcxsrv installer
+powershell.exe curl.exe -L -0 $env:TEMP\installer.exe  https://sourceforge.net/projects/vcxsrv/files/latest/download
+
+# Install vcxsrv
+powershell.exe $env:TEMP\installer.exe
+#+END_SRC
 #+TITLE: Windows 10 Setup
 #+AUTHOR: James Blair
 #+EMAIL: mail@jamesblair.net
@@ -63,60 +72,66 @@ You can use the following command to verify the distribution and version you now
 
 * Install an x server for wsl
 
-  One of the ways we extend standard wsl functionality is installing an x server on windows to allow graphical applications to be run.
+One of the ways we extend standard wsl functionality is installing an x server on windows to allow graphical applications to be run.
 
-  This has the added benefit of allowing command line clipboard tools like [[https://github.com/astrand/xclip][xclip]] to be used within wsl.
+This has the added benefit of allowing command line clipboard tools like [[https://github.com/astrand/xclip][xclip]] to be used within wsl.
 
-  The x server I've found to be rock solid for this purpose is [[https://sourceforge.net/projects/vcxsrv/][VcXsrv]].  Which is also open source.
+The x server I've found to be rock solid for this purpose is [[https://sourceforge.net/projects/vcxsrv/][VcXsrv]].  Which is also open source.
 
-  #+NAME: Download and install VcXsrv
-  #+BEGIN_SRC shell
-  cd /c/Users/$USER/Downloads/
-  wget https://sourceforge.net/projects/vcxsrv/files/latest/download
-  mv download installer.exe
-  cmd.exe /c installer.exe
-  #+END_SRC
+#+NAME: Download and install VcXsrv
+#+BEGIN_SRC shell
+# Download the vcxsrv installer
+powershell.exe curl.exe -L -0 $env:TEMP\installer.exe  https://sourceforge.net/projects/vcxsrv/files/latest/download
+
+# Install vcxsrv
+powershell.exe $env:TEMP\installer.exe
+#+END_SRC
 
   
-  After following through the installer we want to ensure VcXsrv launches at startup with our desired configuration.
+After following through the installer we want to ensure VcXsrv launches at startup with our desired configuration.
 
-  To achieve this we can add an xlaunch configuration which is just xml with a fancy extension to our machines startup folder.
+To achieve this we can add an xlaunch configuration which is just xml with a fancy extension to our machines startup folder.
 
-  #+NAME: Apply our VcXsrv configuration
-  #+BEGIN_SRC shell
-  cd /c/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Startup
-  cat > VcXsrv.xlaunch << EOF
-  <?xml version="1.0" encoding="UTF-8"?>
-  <XLaunch WindowMode="MultiWindow" ClientMode="NoClient" LocalClient="False" Display="-1" LocalProgram="xcalc" RemoteProgram="xterm" RemotePassword="" PrivateKey="" RemoteHost="" RemoteUser="" XDMCPHost="" XDMCPBroadcast="False" XDMCPIndirect="False" Clipboard="True" ClipboardPrimary="True" ExtraParams="" Wgl="True" DisableAC="False" XDMCPTerminate="False"/>
-  EOF
-  cmd.exe /c VcXsrv.xlaunch
-  #+END_SRC
+#+NAME: Apply our VcXsrv configuration
+#+BEGIN_SRC shell
+cd /c/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Startup
+cat > VcXsrv.xlaunch << EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<XLaunch WindowMode="MultiWindow" ClientMode="NoClient" LocalClient="False" Display="-1" LocalProgram="xcalc" RemoteProgram="xterm" RemotePassword="" PrivateKey="" RemoteHost="" RemoteUser="" XDMCPHost="" XDMCPBroadcast="False" XDMCPIndirect="False" Clipboard="True" ClipboardPrimary="True" ExtraParams="" Wgl="True" DisableAC="True" XDMCPTerminate="False"/>
+EOF
+cmd.exe /c VcXsrv.xlaunch
+#+END_SRC
 
   
 * Configure windows ten
 
-  Enable all tray icons to be visible and restart explorer
-  
-  #+NAME: Configure tray icons
-  #+BEGIN_SRC shell
-  powershell.exe Set-ItemProperty HKLM:\SOFTWARE\Micorosoft\Windows\CurrentVersion\Explorer EnableAutoTray 0  
-  powershell.exe ps explorer | kill
-  #+END_SRC
+Enable all tray icons to be visible and restart explorer
 
-  Additionally I normally take the following actions:
+#+NAME: Configure tray icons
+#+BEGIN_SRC shell
+# Ensure all tray icons are visible
+powershell.exe Set-ItemProperty HKLM:\SOFTWARE\Micorosoft\Windows\CurrentVersion\Explorer EnableAutoTray 0
+
+# Restart explorer
+powershell.exe ps explorer | kill
+#+END_SRC
+
+Additionally I normally take the following actions:
 
 ** Update taskbar layout
 
 I normally take the following steps immediately for a new installtion, I have not found an easy way of automating this as yet:
 
-   - Hide the search box.
-   - Hide the task view button.
-   - Unpin all but explorer.
+ - Hide the search box.
+ - Hide the task view button.
+ - Unpin all but explorer.
 
 
 ** Update start menu layout
 
 I prefer to have no pinned "tiles" in my start menu. The script below will unpin all applications from start.
+
+*Note:* In subsequent versions of Windows 10 this script seems to fail so I am back to doing this manually for now...
 
 #+begin_src shell
  powershell.exe -NoLogo 
@@ -131,14 +146,21 @@ Items() |
 
 ** Lock screen configuration
 
-   - Untick show tips
-   - Set background to be picture and use in folder
-   - Remove status detailed or otherwise for apps on lock screen
+I prefer a simple lock screen with no clutter so normally take the following steps:
+
+ - Untick show tips
+ - Set background to be picture and use in folder
+ - Remove status detailed or otherwise for apps on lock screen
 
 
 ** Fix inactive window title colors
 
-   https://winaero.com/blog/change-color-of-inactive-title-bars-in-windows-10/  
+One of the annoyances I have in windows ten is after setting a title bar color for windows as part of standard theming any inactive windows have an awful white glare instead of retaining that color. Thankfully there is a [[ https://winaero.com/blog/change-color-of-inactive-title-bars-in-windows-10][registry tweak]] we can do to fix this.
+
+#+NAME: Configure inactive window title color
+#+BEGIN_SRC shell
+powershell.exe Set-ItemProperty HKCU:\SOFTWARE\Micorosoft\Windows\DWM AccentColorInactive ff484a4c
+#+END_SRC
 
 
 * Configure a web browser
@@ -147,14 +169,12 @@ My current browser of choice is [[https://www.mozilla.org/en-US/firefox/new/][Fi
 
 #+NAME: Download and run firefox installer
 #+begin_src shell
-cd "%USERPROFILE%\Downloads"
-powershell.exe curl.exe -L -o firefox.exe https://download.mozilla.org/?product=firefox-stub&os=win64&lang=en-U
-firefox.exe
-#+end_src
+# Download the firefox installer
+powershell.exe curl.exe -L -o $env:TEMP\firefox.exe https://download.mozilla.org/?product=firefox
 
-#+RESULTS: Download and run firefox installer
-#+begin_example
-#+end_example
+# Launch the installer
+#env:TEMP\firefox.exe
+#+end_src
 
 
 One of the customisations we apply is to update the color of the newtab page in firefox to match the rest of the theme we use and prevent white glare. To achieve this we use [[https://superuser.com/questions/1235975/change-firefox-new-tab-background#][usercss]].
@@ -163,7 +183,7 @@ Note there is an about:config setting that needs to be set to enable these style
 
 #+NAME: Configure usercss
 #+begin_src shell
-cd /c/Users/jmhbnz/AppData/Roaming/Mozilla/Firefox/Profiles/f7lryukb.default-release-1591505157037/chrome/
+cd /c/Users/$USER/AppData/Roaming/Mozilla/Firefox/Profiles/[Default Profile]/chrome/
 cat > userContent.css << EOF 
 /* https://userstyles.org/styles/90565/firefox-adjust-white-flash-when-opening-new-tab */
 /* https://userstyles.org/styles/142191/remove-new-tab-flash */
