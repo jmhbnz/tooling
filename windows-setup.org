@@ -2,32 +2,63 @@
 #+TITLE: Windows 10 Setup
 #+AUTHOR: James Blair
 #+EMAIL: mail@jamesblair.net
-#+DATE: 1st September 2019
+#+DATE: <2020-09-26 Sat 06:45>
 
 
 * Install windows subsystem for linux
 
-  To get underway we need to enable [[https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux][wsl]].  This requires a 64bit installation of Windows 10.
+To get underway we need to enable [[https://docs.microsoft.com/en-us/windows/wsl/install-win10][WSL2]].  This requires a 64bit installation of Windows 10 professional, build 18362 or higher.
 
-  #+NAME: Enable the wsl feature
-  #+BEGIN_SRC shell
-  powershell.exe Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
-  #+END_SRC
+#+NAME: Enable the wsl features
+#+BEGIN_SRC shell
+# The vritual machine platform optional feature is required for wsl2
+dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+
+# Once the virtual machine platform is enabled we can enable wsl2
+dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+#+END_SRC
 
 
-  After enabling the wsl feature we need to download the debian installer and open it.
+Once the wsl feature is enabled it is recommended to update the linux kernel package for wsl2.
 
-  #+NAME: Download and run the debian installer
-  #+BEGIN_SRC shell
-  cd "%USERPROFILE%\Downloads"
-  powershell.exe curl.exe -L -o debian.appx https://aka.ms/wsl-debian-gnulinux
-  powershell.exe Add-AppxPackage .\debian.appx
-  #+END_SRC
- 
-  *Note:* If you encounter an error while adding the package, I have needed to use the ~wsreset~ command in the past to first reset the windows store application.
+#+NAME: Update the linux kernel
+#+BEGIN_SRC shell
+# Download the update
+powershell.exe curl.exe -L -o $env:TEMP\wsl_update_x64.msi https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi
+
+# Install the update automatically
+Start-Process msiexec.exe -Wait -ArgumentList '/I $env:TEMP\wsl_update_x64.msi /quiet'
+#+END_SRC
+
+
+Before we install a specific distribution of wsl we need to set the default version of wsl to version 2.
+
+*Note:* you may need to reboot your machine before this command will complete successfully.
+
+#+NAME: Set default wsl version
+#+BEGIN_SRC 
+powershell.exe wsl --set-default-version 2
+#+END_SRC
+
+
+After enabling the wsl feature we need to download the distribution installer and open it.
+
+For my tooling setup I currently use the Ubuntu distribution after historically preferring Debian. The reason for the shift is the native apt installation for an up to date ~emacs~ installation available in Ubuntu.
+
+#+NAME: Download and run the debian installer
+#+BEGIN_SRC shell
+# Download the appx package for ubuntu distribution.
+powershell.exe curl.exe -L -o $env:TEMP\ubuntu.appx https://aka.ms/wslubuntu2004
+
+# Install the appx package
+powershell.exe Add-AppxPackage $env:TEMP\ubuntu.appx
+#+END_SRC
+
+*Note:* If you encounter an error while adding the package, I have needed to use the ~wsreset~ command in the past to first reset the windows store application.
   
-  After the installer runs we need to manually enter a username and password for
-  the unix account that wsl will use.
+After the installer runs we need to manually enter a username and password for the unix account that wsl will use.
+
+You can use the following command to verify the distribution and version you now have installed ~powershell.exe wsl --list --verbose~.
 
 
 * Install an x server for wsl
