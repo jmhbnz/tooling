@@ -2,424 +2,257 @@
 #+TITLE: Windows Subsystem for Linux Setup
 #+AUTHOR: James Blair
 #+EMAIL: mail@jamesblair.net
-#+DATE: 1st September 2019
+#+DATE: <2020-09-26 Sat 08:20>
 
 
 This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux][Windows Subsystem for Linux]] on Windows 10.  This particular setup contains my opinionated view of a good foundation and layers on some pairing and development orientated tooling over top.
 
-*Caveats:* Please note this guide is written for the [[https://www.microsoft.com/en-us/p/debian/9msvkqc78pk6][Debian WSL distribution]].
+*Caveats:* Please note this guide is written for the [[https://www.microsoft.com/store/productId/9NBLGGH4MSV6][Ubuntu WSL distribution].
 
 *Acknowledgements:* Large elements of this wsl setup came about through collaboration with the great people at [[https://ii.coop][ii.coop]].  I encourage you to explore and contribute to their work on [[https://gitlab.ii.coop][gitlab]] as many elements form a core part of this setup and workflow.
 
 
 ** Step 1 - Setup home folder structure
 
-   After installing the Debian WSL distribution no folders are present in your home folder.
+After installing the Debian WSL distribution no folders are present in your home folder.
    
-   In this section we create some quick standard folders to keep our home folder somewhat organised.
+In this section we create some quick standard folders to keep our home folder somewhat organised.
 
-   #+NAME: Setup home folder strucuture
-   #+BEGIN_SRC shell
-   # Ensure we are in our home folder
-   cd ~/
+#+NAME: Setup home folder strucuture
+#+BEGIN_SRC shell
+# Ensure we are in our home folder
+cd ~/
    
-   # Create a documents folder for our git repositories
-   mkdir Documents
+# Create a documents folder for our git repositories
+mkdir Documents
 
-   # Create a downloads folder for temporary objects
-   mkdir Downloads
-   #+END_SRC
+# Create a downloads folder for temporary objects
+mkdir Downloads
+#+END_SRC
 
 
 ** Step 2 - Update and install packages
 
-   To get started we ensure the package manager is up to date.
+To get started we ensure the package manager is up to date.
 
-   #+NAME: Update system packages
-   #+BEGIN_SRC shell
-   sudo apt-get update && sudo apt-get upgrade
-   #+END_SRC
-
-
-   Next we install a series of standard packages that form part of our workflow or are dependencies for other tools in our environment.
-
-   #+NAME: Install standard packages 
-   #+BEGIN_SRC shell
-   # Install basic utilities
-    sudo apt-get install -y git locales curl wget xclip xsel tmux tmate net-tools less wget htop screenfetch zip openssh-client dictd knockd
-  
-   # Install pre-requisites for compiling emacs
-   sudo apt-get install -y make gcc libgnutls28-dev libtinfo-dev
-  
-   # Install dpkg and apt management tools
-   sudo apt-get install -y software-properties-common apt-transport-https ca-certificates dirmngr
-
-   # Install terminal customisation packages
-   sudo apt install -y xterm xtermcontrol
-   #+END_SRC
+#+NAME: Update system packages
+#+BEGIN_SRC shell
+sudo apt-get update && sudo apt-get upgrade
+#+END_SRC
 
 
-   We use [[https://docker.io][docker]] to run containers or kind (kubernetes in docker) locally.
+Next we install a series of standard packages that form part of our workflow or are dependencies for other tools in our environment.
+
+#+NAME: Install standard packages
+#+BEGIN_SRC shell
+sudo apt-get install -y git locales curl wget xclip xsel tmux tmate net-tools less wget htop screenfetch zip openssh-client dictd knockd python3-pip emacs apt-transport-https software-properties-common ca-certificates dirmngr xterm xtermcontrol
+#+END_SRC
+
+
+We use [[https://docker.io][docker]] to run containers or kind (kubernetes in docker) locally.
+
+#+NAME: Install docker
+#+begin_src shell
+# Download and add Docker's official public PGP key.
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+# Add the `stable` channel's Docker upstream repository.
+sudo add-apt-repository \
+"deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+$(lsb_release -cs) \
+stable"
+
+# Update the apt package list and install docker packages.
+sudo apt-get update -y && sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+
+# Allow your user to access the Docker CLI without needing root access.
+sudo usermod -aG docker $USER
+
+# Ensure the docker service is started
+sudo service docker start
+#+end_src
+
+
+For additional package management namely ~bitwarden~ we use [[https://www.npmjs.com/][node package manager]]. The code below installs node ~12~.
+
+#+NAME: Install node
+#+BEGIN_SRC shell
+# Curl down the shell script for adding version 12 of nodejs to apt
+sudo curl  -sL https://deb.nodesource.com/setup_12.x | sudo bash -
    
-   #+NAME: Install docker
-   #+begin_src shell
-   # Download and add Docker's official public PGP key.
-   curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-
-   # Add the `stable` channel's Docker upstream repository.
-   sudo add-apt-repository \
-   "deb [arch=amd64] https://download.docker.com/linux/debian \
-   $(lsb_release -cs) \
-   stable"
-
-   # Update the apt package list (for the new apt repo).
-   sudo apt-get update -y
-   
-   # Install the latest version of Docker CE.
-   sudo apt-get install -y docker-ce
-
-   # Allow your user to access the Docker CLI without needing root access.
-   sudo usermod -aG docker $USER
-
-   # Configure wsl to mount at / for docker volumes
-   sudo su 
-   cat > /etc/wsl.conf << EOF
-   [automount]
-   root = /
-   options = "metadata"
-   
-   EOF
-   exit
-   #+end_src 
-
-
-   We use [[https://pandoc.org/][pandoc]] for documentation export from spacemacs and other markup conversion tasks.
-
-   #+NAME: Install pandoc
-   #+BEGIN_SRC shell
-   # Work from our downloads folder
-   cd ~/Downloads
-
-   # Download the latest release from github
-   curl -s https://api.github.com/repos/jgm/pandoc/releases/latest \
-   | grep "browser_download_url.*deb" \
-   | cut -d : -f 2,3 \
-   | tr -d \" \
-   | wget -i -
-   
-   # Install the package with dpkg
-   sudo dpkg -i pandoc*
-   
-   # Remove the package file after install
-   rm pandoc*
-   #+END_SRC
-
-
-   For additional package management we use [[https://www.npmjs.com/][node package manager]]. The code below installs node ~12~.
-
-   #+NAME: Install node
-   #+BEGIN_SRC shell 
-   # Curl down the shell script for adding version 12 of nodejs to apt
-   sudo curl  -sL https://deb.nodesource.com/setup_12.x | sudo bash -
-   
-   # Install the nodejs package via apt
-   sudo apt-get install -y nodejs
-   #+END_SRC
+# Install the nodejs package via apt
+sudo apt-get install -y nodejs
+#+END_SRC
 
   
-   For managing secrets we use [[https://bitwarden.com/][bitwarden]] which provides a great [[https://github.com/bitwarden/cli][cli utility]].
+For managing secrets we use [[https://bitwarden.com/][bitwarden]] which provides a great [[https://github.com/bitwarden/cli][cli utility]].
 
-   This section should be expanded in future to cover setting alias for common bitwarden tasks.
+This section should be expanded in future to cover setting alias for common bitwarden tasks.
 
-   #+NAME: Install bitwarden and login
-   #+BEGIN_SRC shell
-   # Install the bitwarden cli via node package manager
-   sudo npm install -g @bitwarden/cli 
+#+NAME: Install bitwarden and login
+#+BEGIN_SRC shell
+# Install the bitwarden cli via node package manager
+sudo npm install -g @bitwarden/cli
 
-   # Test login to bitwarden
-   bw login mail@jamesblair.net
-   #+END_SRC
-
-
-   For working with google cloud platform we use the [[https://cloud.google.com/sdk/][GCP SDK]], which provides our cli tools.
-
-   #+NAME: Install google cloud sdk
-   #+BEGIN_SRC shell
-   # Add the Cloud SDK distribution URI as a package source: 
-   echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-
-   # Import the Google Cloud public key: 
-   curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
-
-   # Update then install the Google Cloud SDK & kubectl: 
-   sudo apt-get update && sudo apt-get install -y google-cloud-sdk kubectl
-   #+END_SRC
-   
-   For working with [[https://aws.com][Amazon Web Services]] we need the [[https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html][AWS CLI]].
-
-   #+NAME: Install amazon web services cli
-   #+BEGIN_SRC shell
-   # Download the binary
-   cd ~/Downloads/
-   curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-   
-   # Install
-   unzip awscliv2.zip 
-   sudo ./aws/install 
-   
-   # Clean up
-   rm -rf ~/Downloads/aws*
-   #+END_SRC 
-
-   For cloud infrastructure deployments we use [[https://www.terraform.io/][terraforms]].
-
-   #+NAME: Install hashicorp terraforms
-   #+BEGIN_SRC shell
-   # Download the binary
-   wget 'https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_amd64.zip'
-
-   # Unzip it
-   unzip *.zip
-
-   # Move the binary to path
-   sudo mv terraform /usr/local/bin/
-
-   # Clean up
-   rm *amd64.zip 
-   #+END_SRC
+# Test login to bitwarden
+bw login mail@jamesblair.net
+#+END_SRC
 
 
-   For ad-hoc system administration we use [[https://deb.nodesource.com/setup_12.x ][ansible]].
+For working with google cloud platform we use the [[https://cloud.google.com/sdk/][GCP SDK]], which provides our cli tools.
 
-   #+NAME: Install ansible
-   #+BEGIN_SRC shell
-   # Add a source entry to apt sources
-   echo 'deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main' | sudo tee -a /etc/apt/sources.list
-   
-   # Add the required key
-   sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367
-   
-   # Install ansible via apt package manager
-   sudo apt-get update && sudo apt-get install -y ansible
-   #+END_SRC
+#+NAME: Install google cloud sdk
+#+BEGIN_SRC shell
+# Download the sdk archive
+curl -o gcpsdk.tar -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-311.0.0-linux-x86_64.tar.gz
 
-   
+# Extract to a folder in path
+sudo tar xvf gcpsdk.tar -C /usr/local/
+
+# Correct folder permissions
+sudo chown -R $USER:$USER /usr/local/google-cloud-sdk
+
+# Run the install script
+/usr/local/google-cloud-sdk/install.sh
+#+END_SRC
+
+
+
+For working with [[https://aws.com][Amazon Web Services]] we need the [[https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html][AWS CLI]].
+
+#+NAME: Install amazon web services cli
+#+BEGIN_SRC shell
+# Download the binary
+cd ~/Downloads/
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+
+# Install
+unzip awscliv2.zip
+sudo ./aws/install
+
+# Clean up
+rm -rf ~/Downloads/aws*
+#+END_SRC
+
+
+For cloud infrastructure deployments we use [[https://www.terraform.io/][terraforms]].
+
+#+NAME: Install hashicorp terraforms
+#+BEGIN_SRC shell
+# Download the binary
+wget 'https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_amd64.zip'
+
+# Unzip it
+unzip *.zip
+
+# Move the binary to path
+sudo mv terraform /usr/local/bin/
+
+# Clean up
+rm *amd64.zip
+#+END_SRC
+
+
+For ad-hoc system administration we use [[https://deb.nodesource.com/setup_12.x ][ansible]]. We install ansible via ~pip~ to ensure any modules or additional packages required at a later date can be easily managed.
+
+For significant ansible or python projects a virtual environment for python is suggested to keep project packages separate from system python packages.
+
+#+NAME: Install ansible via pip
+#+BEGIN_SRC shell
+pip3 install ansible
+#+END_SRC
+
+
 ** Step 3 - Setup environment dotfiles
 
-   Within wsl we can use .dotfiles to further customise our environment. The script below restores my versions of key dotfiles automatically.
+Within wsl we can use .dotfiles to further customise our environment. The script below restores my versions of key dotfiles automatically.
    
-   *Note:* The git clone below relies on having permission to clone the repository referenced.  For me this means having an ssh key present which has been added to gitlab.
+*Note:* The git clone below relies on having permission to clone the repository referenced.  For me this means having an ssh key present which has been added to gitlab.
 
 *** Obtain ssh keys from bitwarden
 
 In order to be able to clone the repository in the next step we need to obtain our ssh keys from bitwarden. Given we have installed the bitwarden cli we can mostly automte this process minus the initial login to bitwarden.
 
-   #+NAME: Obtain ssh keys from bitwarden
-   #+begin_src shell
-   # Generate a new blank key to overwrite
-   ssh-keygen -t rsa -f ~/.ssh/james -q -P ""
-   
-   # Ensure we have an active bitwarden session
-   export BW_SESSION=$(bw unlock --raw > ~/.bw_session && cat ~/.bw_session)
+#+NAME: Obtain ssh keys from bitwarden
+#+begin_src shell
+# Ensure we have an ssh-agent running
+eval `ssh-agent`
 
-   # Export both keys
-   export key=$(bw get item desktop --pretty | grep notes)
+# Generate a new blank key to overwrite
+ssh-keygen -t rsa -f ~/.ssh/james -q -P ""
 
-   # Extract private key
-   export private=${key:12}
-   export private=${private/END RSA*/END RSA PRIVATE KEY-----} 
-   echo $private | awk '{gsub(/\\n/,"\n")}1' > ~/.ssh/james
+# Ensure we have an active bitwarden session
+export BW_SESSION=$(bw unlock --raw > ~/.bw_session && cat ~/.bw_session)
 
-   # Extract public key
-   export public=${key/*ssh-rsa/ssh-rsa} && echo ${public::-2} | awk '{gsub(/\\n/,"\n")}1' > ~/.ssh/james.pub
-   #+end_src
+# Export both keys
+export key=$(bw get item desktop --pretty | grep notes)
+
+# Extract private key
+export private=${key:12}
+export private=${private/END RSA*/END RSA PRIVATE KEY-----}
+echo $private | awk '{gsub(/\\n/,"\n")}1' > ~/.ssh/james
+
+# Extract public key
+export public=${key/*ssh-rsa/ssh-rsa} && echo ${public::-2} | awk '{gsub(/\\n/,"\n")}1' > ~/.ssh/james.pub
+#+end_src
 
 
 *** Clone and restore dotfiles
 
 Once our keys are available to us we can clone down our dotfiles and get back to our comfortable normal terminal environment.
 
-   #+NAME: Clone and restore the dotfiles
-   #+BEGIN_SRC shell
-   # Remove the interactive host prompt
-   ssh-keyscan -p 2224 gitlab.jamma.life >> ~/.ssh/known_hosts
+#+NAME: Clone and restore the dotfiles
+#+BEGIN_SRC shell
+# Remove the interactive host prompt
+ssh-keyscan -p 2224 gitlab.jamma.life >> ~/.ssh/known_hosts
 
-   # Clone down this repository
-   git clone ssh://git@gitlab.jamma.life:2224/jmhbnz/tooling.git ~/Documents/tooling/
+# Clone down this repository
+git clone ssh://git@gitlab.jamma.life:2224/jmhbnz/tooling.git ~/Documents/tooling/
    
-   # Restore all dotfiles
-   cp ~/Documents/tooling/.* ~/
+# Restore all dotfiles
+cp ~/Documents/tooling/.* ~/
    
-   # Reload bashrc with updated version
-   source ~/.bashrc
-   #+END_SRC
+# Reload bashrc with updated version
+source ~/.bashrc
+#+END_SRC
 
 
-** Step 4 - Install kubemacs editor
+** Step 4 - Install humacs editor
 
-An integral part of our pair development workflow is [[https://github.com/kubemacs/kubemacs][kubemacs]]. Below are options to install this either manually from source, or automatically via docker.
+An integral part of our pair development workflow is [[https://github.com/humacs/humacs][humacs]]. Below are the instructions to install this directly in WSL, note there are other options to install in the documentation linked above.
 
-*** Option 1 - Install from source
-
-**** Compile and install vanilla emacs
-
-    A key component in our environment is the ii extension of spacemacs. 
-    The section below will setup emacs version ~26.3~ and then layer
-    the ii version of spacemacs called kubemacs on top.
-
-    Our first step is to download the base emacs 26.3 source code.
-
-    #+NAME: Download and extract emacs source
-    #+BEGIN_SRC shell
-    # Work from our downloads directory
-    cd ~/Downloads/
-
-    # Download the tarball for emacs 26.3 source code
-    wget https://mirror.ossplanet.net/gnu/emacs/emacs-26.3.tar.xz
-   
-    # Untar the source code archive
-    tar xf emacs-26.3.tar.xz
-
-    # Change to the extracted directory
-    cd emacs-26.3
-    #+END_SRC
+#+NAME: Install and configure humacs
+#+BEGIN_SRC shell
+# Clone down humacs
+git clone --recursive https://github.com/humacs/humacs /home/$USER/Downloads/
 
 
-    After downloading and untarring the source code we are ready to
-    attempt resolving dependencies and compiling.
-
-    We configure without-x as this environment is solely focussed on 
-    running within terminal i.e. ~emacs -nw~.
-
-    #+NAME: Compile and install emacs
-    #+BEGIN_SRC shell
-    # Run configure to resolve any dependencies minus x window support
-    ./configure --without-x --with-gnutls=no
-  
-    # Compile the application with make, using all available cpu cores
-    sudo make -j `nproc`
-
-    # Run make install to move/install compiled binaries
-    sudo make install
-    #+END_SRC
-
-
-    After compiling and installing emacs we should verify that version ~26.3~ is
-    installed.
-
-    #+NAME: Verify correct emacs version is installed
-    #+BEGIN_SRC tmate
-    emacs --version  
-    #+END_SRC
-
-
-**** Overlay kubemacs
-
-    Once the right version of emacs is running we can then layer in kubemacs on top. Documentation for this is here: https://github.com/kubemacs/kubemacs
-  
-    #+BEGIN_SRC shell
-    # Remove the default site-lisp file
-    sudo rm /usr/local/share/emacs/site-lisp/subdirs.el
-
-    # Clone kubemacs from github
-    sudo git clone --recursive https://github.com/kubemacs/kubemacs /usr/local/share/emacs/site-lisp/
-  
-    # Ensure permissions are set for the cloned folder
-    sudo chown -R $USER:$USER /usr/local/share/emacs/site-lisp
-    #+END_SRC
-  
-
-    After cloning down kubemacs we now need to launch emacs and install packages, this can take a while and several iterations may be neccessary before spacemacs will launch fully.
-
-    *Note:* As of <2020-04-11 Sat> there is one package ~org-plus-contrib~ that is refusing to install as normal, a manual install process is included below to work around this.  
-
-    #+NAME: Launch emacs to install packages
-    #+begin_src shell
-    # Ensure the elpa folder is created
-    mkdir -p /usr/local/share/emacs/site-lisp/spacemacs/elpa/26.3/develop
-    cd /usr/local/share/emacs/site-lisp/spacemacs/elpa/26.3/develop
-
-    # Manually install org-plus-contrib
-    wget 'https://orgmode.org/elpa/org-plus-contrib-20200406.tar'
-    tar xf org-plus-contrib-20200406.tar 
-    rm org-plus-contrib-20200406.tar
-
-    # Start emacs and download packages
-    emacs --insecure
-    #+end_src
-
-
-    One final configuration step specific to wsl is to switch from ~osc52~ to ~xsel~ for clipboard. 
-
-    This is required because copy and paste osc52 sequences are not currently supported in wsl.
-    You can add your voice to this issue to change that [[https://github.com/microsoft/terminal/issues/2946][here]].
-
-    #+BEGIN_SRC tmate
-    # Replace the osc52 command with xsel
-    sed -i -e 's/osc52.sh/xsel -i -b/g' /usr/local/share/emacs/site-lisp/bin/osc52-tmate.sh
-
-    # Provide custom xclipboard functions
-    # https://github.com/syl20bnr/spacemacs/issues/2222
-    #+END_SRC
-
-
-*** Option 2 - Install via docker
-
-For this method we need to set some variables in the included ~kubemacs.env~ file, then run the included ~kubemacs.sh~ script.
-
-#+NAME: Update environment file
-#+begin_src shell
-sed -i 's/KUBEMACS_GIT_EMAIL.*/KUBEMACS_GIT_EMAIL="mail@jamesblair.net"/g' kubemacs/kubemacs.env
-sed -i 's/KUBEMACS_GIT_NAME.*/KUBEMACS_GIT_NAME="James Blair"/g' kubemacs/kubemacs.env
-#+end_src
-
-Next we create a folder ~.kube~ folder in windows that can be mounted through into docker for windows. Currently we cannot mount wsl folders into docker for windows.
-
-#+NAME: Setup kubeconfig mount
-#+begin_src shell
-# Make the windows folder for out kubeconfig
-mkdir -p /c/Users/$USER/.kube
-
-# Set that folder to the volume mount
-sed -i 's|^.*[.]kube|       -v "/c/Users/$USER/.kube:/tmp/.kube|g' kubemacs/kubemacs.sh
-
-# Export that folder for kubeconfig
-export KUBECONFIG=$KUBECONFIG:/c/Users/$USER/.kube/config
-#+end_src
-
-After updating the environment file and preparing the kubeconfig mount we are ready to launch kubemacs in a kind cluster by running the script :)
-
-Do this in your left eye terminal as this will pop you straight into kubemacs.
-
-#+NAME: Launch kubemacs left eye
-#+begin_src shell
-./kubemacs/kubemacs.sh
-#+end_src
-
+# Need to ensure environment variables are set for load path
+export EMACSLOADPATH=/home/$USER/Downloads/humacs
+#+END_SRC
 
 ** Step 5 - Setup mutt email client
 
-   For reading email we ideally use a cli based client for fast searching and lightweight mail reading.
+For reading email we ideally use a cli based client for fast searching and lightweight mail reading.
 
-   The [[https://gitlab.com/muttmua/mutt/][mutt]] mail client fills these roles well for imap mailboxes.
+The [[https://gitlab.com/muttmua/mutt/][mutt]] mail client fills these roles well for imap mailboxes.
 
-   The first step to setup mutt is to ensure it is installed.
+The first step to setup mutt is to ensure it is installed.
 
-   #+NAME: Install mutt
-   #+BEGIN_SRC tmate
-   sudo apt-get install -y mutt urlscan 
-   #+END_SRC
+#+NAME: Install mutt
+#+BEGIN_SRC tmate
+sudo apt-get install -y mutt urlscan
+#+END_SRC
 
-   After installing mutt we then need to create configuration directories and files.
+After installing mutt we then need to create configuration directories and files.
 
-   #+NAME: Create mutt config files
-   #+BEGIN_SRC tmate
-   mkdir -p ~/.mutt/cache/headers
-   mkdir ~/.mutt/cache/bodies
-   touch ~/.mutt/certificates
-   #+END_SRC
+#+NAME: Create mutt config files
+#+BEGIN_SRC tmate
+mkdir -p ~/.mutt/cache/headers
+mkdir ~/.mutt/cache/bodies
+touch ~/.mutt/certificates
+#+END_SRC
 
-   One configuration folders and files exist we just need to populate our user mutt configuration file with a configuration for our particular mail provider.
+One configuration folders and files exist we just need to populate our user mutt configuration file with a configuration for our particular mail provider.
 
-   The example provided in this repository utilises the ~bitwarden~ cli utility for secrets to ensure these are securely gathered at runtime and not stored in the file.
-
+The example provided in this repository utilises the ~bitwarden~ cli utility for secrets to ensure these are securely gathered at runtime and not stored in the file.
