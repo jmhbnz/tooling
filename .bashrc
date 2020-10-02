@@ -47,6 +47,9 @@ fi
 # Configure display for vcxsrv
 export DISPLAY=`grep -oP "(?<=nameserver ).+" /etc/resolv.conf`:0.0
 
+# Configure emacs location
+export EMACSLOADPATH=~/Downloads/humacs:
+
 # Configure docker host
 export DOCKER_HOST=tcp://localhost:2375
 
