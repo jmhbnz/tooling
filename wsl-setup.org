@@ -224,11 +224,11 @@ An integral part of our pair development workflow is [[https://github.com/humacs
 #+NAME: Install and configure humacs
 #+BEGIN_SRC shell
 # Clone down humacs
-git clone --recursive https://github.com/humacs/humacs /home/$USER/Downloads/
+git clone --recursive https://github.com/humacs/humacs /home/$USER/
 
 
 # Need to ensure environment variables are set for load path
-export EMACSLOADPATH=/home/$USER/Downloads/humacs
+export EMACSLOADPATH=/home/$USER/humacs
 #+END_SRC
 
 ** Step 5 - Setup mutt email client
