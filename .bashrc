@@ -50,8 +50,8 @@ export DISPLAY=`grep -oP "(?<=nameserver ).+" /etc/resolv.conf`:0.0
 # Configure emacs location
 export EMACSLOADPATH=~/humacs:
 
-# Configure docker host
-export DOCKER_HOST=tcp://localhost:2375
+# Configure docker host (only needed on wsl 1)
+#export DOCKER_HOST=tcp://localhost:2375
 
 # Configure kubeconfig default
 export KUBECONFIG=$KUBECONFIG:/c/Users/$USER/.kube/config
