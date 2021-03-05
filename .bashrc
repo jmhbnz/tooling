@@ -99,3 +99,13 @@ elif [ -f ~/.bw_session ]; then export BW_SESSION=$(cat ~/.bw_session);
 
 # Otherwise unlock to start new session
 else bwu; fi
+
+# Try connect to my default tmate socket
+if ! tmate -S /tmp/$USER.tmate.tmate attach; then
+
+    tmate -S /tmp/$USER.tmate.tmate new-session -s $USER -n $USER -d
+    tmate -S /tmp/$USER.tmate.tmate set-window-option -t $USER automatic-rename off
+    tmate -S /tmp/$USER.tmate.tmate set-window-option -t $USER allow-rename off
+    tmate -S /tmp/$USER.tmate.tmate attach
+
+fi
