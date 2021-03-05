@@ -48,7 +48,7 @@ fi
 export DISPLAY=`grep -oP "(?<=nameserver ).+" /etc/resolv.conf`:0.0
 
 # Configure emacs location
-export EMACSLOADPATH=~/humacs:
+export EMACSLOADPATH=~/Downloads/humacs:
 
 # Configure docker host (only needed on wsl 1)
 #export DOCKER_HOST=tcp://localhost:2375
