@@ -30,6 +30,14 @@ dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux 
 
 Once the wsl feature is enabled it is recommended to update the linux kernel package for wsl2.
 
+*Note:* Before proceeding with the installation of WSL 2, you will need to have CPU virtualisation enabled on your machine. Depending on your CPU architecture this may involve updating your bios settings:
+
+ - For AMD CPUs, you will look for a feature called: "AMD (AMD Secure Virtual Machine, AMD SVM)"
+
+ - For Intel CPUs, you will look for a feature called: "Intel (Intel Virtualization Technology, Intel VT-x)"
+
+Finally, for AMD CPUs you may need to update [[https://www.reddit.com/r/AMDHelp/comments/d4l462/enabling_svm_on_laptop_leads_to_black_boot_screen/][UMA Framebuffer size]] to auto.
+
 #+NAME: Update the linux kernel
 #+BEGIN_SRC shell
 # Download the update
