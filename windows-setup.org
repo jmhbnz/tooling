@@ -62,7 +62,7 @@ After enabling the wsl feature we need to download the distribution installer an
 
 For my tooling setup I currently use the Ubuntu distribution after historically preferring Debian. The reason for the shift is the native apt installation for an up to date ~emacs~ installation available in Ubuntu.
 
-#+NAME: Download and run the debian installer
+#+NAME: Download and run the ubuntu installer
 #+BEGIN_SRC shell
 # Download the appx package for ubuntu distribution.
 powershell.exe curl.exe -L -o $env:TEMP\ubuntu.appx https://aka.ms/wslubuntu2004
@@ -102,7 +102,7 @@ To achieve this we can add an xlaunch configuration which is just xml with a fan
 
 #+NAME: Apply our VcXsrv configuration
 #+BEGIN_SRC shell
-cd /c/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Startup
+cd /mnt/c/ProgramData/Microsoft/Windows/Start\ Menu/Programs/Startup
 cat > VcXsrv.xlaunch << EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <XLaunch WindowMode="MultiWindow" ClientMode="NoClient" LocalClient="False" Display="-1" LocalProgram="xcalc" RemoteProgram="xterm" RemotePassword="" PrivateKey="" RemoteHost="" RemoteUser="" XDMCPHost="" XDMCPBroadcast="False" XDMCPIndirect="False" Clipboard="True" ClipboardPrimary="True" ExtraParams="" Wgl="True" DisableAC="True" XDMCPTerminate="False"/>
