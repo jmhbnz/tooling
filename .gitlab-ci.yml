@@ -18,6 +18,6 @@ push_github:
 
     # Push to the new remote
     - git push github master
-  when:
+  only:
     refs:
       - master
