@@ -9,8 +9,9 @@ before_script:
 
 push_github:
   type: deploy
-  environment: github
-  url: github.com/jmhbnz/tooling
+  environment:
+    name: github
+    url: github.com/jmhbnz/tooling
   script:
     # Add a new remote for github
     - git remote add github git@github.com:jmhbnz/tooling.git
