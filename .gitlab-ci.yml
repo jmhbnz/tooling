@@ -18,7 +18,7 @@ push_github:
     url: github.com/jmhbnz/tooling
   script:
     # Output git status
-    - git checkout master && git status
+    - git checkout master && git pull && git status
 
     # Add a new remote for github
     - git remote add github git@github.com:jmhbnz/tooling.git || true
