@@ -53,9 +53,6 @@ export EMACSLOADPATH=~/Downloads/humacs:
 # Configure docker host (only needed on wsl 1)
 #export DOCKER_HOST=tcp://localhost:2375
 
-# Configure kubeconfig default
-export KUBECONFIG=$KUBECONFIG:/c/Users/$USER/.kube/config
-
 # Setup prompt
 function color_my_prompt {
     local __user_and_host="\[\033[01;32m\]\u@\h"
