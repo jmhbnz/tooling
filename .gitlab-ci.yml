@@ -8,8 +8,8 @@ before_script:
   - echo "${SSH_PRIVATE_KEY}" | tr -d '\r' | ssh-add - > /dev/null
 
   # Ensure known hosts exists and is populated
-  mkdir ~/.ssh && chmod 700 ~/.ssh
-  ssh-keyscan -p 2224 gitlab.jamma.life >> ~/.ssh/known_hosts
+  - mkdir ~/.ssh && chmod 700 ~/.ssh
+  - ssh-keyscan -p 2224 gitlab.jamma.life >> ~/.ssh/known_hosts
 
 push_github:
   type: deploy
