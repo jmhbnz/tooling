@@ -1,0 +1,22 @@
+before_script:
+
+  # Ensure prerequisites are installed
+  - 'which ssh-agent || (apk update && apk add openssh-client git)'
+
+  # Launch ssh agent and add our key
+  - eval $(ssh-agent -s)
+  - echo "${SSH_PRIVATE_KEY}" | tr -d '\r' | ssh-add - > /dev/null
+
+push_github:
+  type: deploy
+  environment: github
+  url: github.com/jmhbnz/tooling
+  script:
+    # Add a new remote for github
+    - git remote add github git@github.com:jmhbnz/tooling.git
+
+    # Push to the new remote
+    - git push github master
+  when:
+    refs:
+      - master
