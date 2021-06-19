@@ -13,6 +13,8 @@ push_github:
     name: github
     url: github.com/jmhbnz/tooling
   script:
+    - git status
+    - git remote -v
     # Add a new remote for github
     - git remote add github git@github.com:jmhbnz/tooling.git
 
