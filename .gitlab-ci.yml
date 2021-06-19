@@ -9,7 +9,7 @@ before_script:
 
   # Ensure known hosts exists and is populated
   - mkdir ~/.ssh && chmod 700 ~/.ssh
-  - ssh-keyscan -p 2224 gitlab.jamma.life >> ~/.ssh/known_hosts && chmod 644 ~/.ssh/known_hosts
+  - ssh-keyscan -p 2224 github.com >> ~/.ssh/known_hosts && chmod 644 ~/.ssh/known_hosts
 
 push_github:
   type: deploy
