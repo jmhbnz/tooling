@@ -117,6 +117,22 @@ sudo chown -R $USER:$USER /usr/local/google-cloud-sdk
 #+END_SRC
 
 
+For working with [[https://azure.microsoft.com/en-us/][Microsoft Azure]] we need the [[https://docs.microsoft.com/en-us/cli/azure/][Azure CLI]].
+
+#+NAME: Install azure cli
+#+begin_src shell
+# Modify your sources list so that the Microsoft repository is registered
+AZ_REPO=$(lsb_release -cs)
+echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | \
+sudo tee /etc/apt/sources.list.d/azure-cli.list
+
+# Import the encryption key for the Microsoft Ubuntu repository.
+curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+
+# Install the Azure CLI.
+sudo apt-get update && sudo apt-get install azure-cli
+#+end_src
+
 
 For working with [[https://aws.com][Amazon Web Services]] we need the [[https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html][AWS CLI]].
 
@@ -230,6 +246,7 @@ git clone --recursive https://github.com/humacs/humacs /home/$USER/
 # Need to ensure environment variables are set for load path
 export EMACSLOADPATH=/home/$USER/humacs
 #+END_SRC
+
 
 ** Step 5 - Setup mutt email client
 
