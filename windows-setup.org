@@ -89,7 +89,7 @@ The x server I've found to be rock solid for this purpose is [[https://sourcefor
 #+NAME: Download and install VcXsrv
 #+BEGIN_SRC shell
 # Download the vcxsrv installer
-powershell.exe curl.exe -L -0 $env:TEMP\installer.exe  https://sourceforge.net/projects/vcxsrv/files/latest/download
+powershell.exe curl.exe -L -o $env:TEMP\installer.exe  https://sourceforge.net/projects/vcxsrv/files/latest/download
 
 # Install vcxsrv
 powershell.exe $env:TEMP\installer.exe
