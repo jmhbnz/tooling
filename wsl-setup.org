@@ -14,7 +14,7 @@ This guide will walk through setting up [[https://en.wikipedia.org/wiki/Windows_
 
 ** Step 1 - Setup home folder structure
 
-After installing the Debian WSL distribution no folders are present in your home folder.
+After installing the Ubuntu WSL distribution no folders are present in your home folder.
    
 In this section we create some quick standard folders to keep our home folder somewhat organised.
 

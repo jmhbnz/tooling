@@ -1,17 +1,15 @@
-#+TITLE: Development environment setup
+#+TITLE: Tooling setup
 #+AUTHOR: James Blair
 #+EMAIL: mail@jamesblair.net
-#+DATE: <2020-09-26 Sat 06:30>
+#+DATE: <2021-09-27 Mon 06:16>
 
 
-This document captures my standard development environment for future replication
-and aims to make it as easy as possible to setup and use.
+This document captures my standard tooling for future replication and aims to make it as easy as possible to setup and use.
 
-The environment is based on Windows 10 using [[https://devblogs.microsoft.com/commandline/announcing-wsl-2/][Windows Subsystem for Linux 2]] for a
-command line development interface.
+The environment is based on Windows 10 using [[https://devblogs.microsoft.com/commandline/announcing-wsl-2/][Windows Subsystem for Linux 2]] for a [[https://ubuntu.com/][Ubuntu]] based command line development interface.
 
-For development I rely on [[https://www.gnu.org/software/emacs/][emacs]], specifically [[https://github.com/humacs/humacs][humacs]]. To pair and share my terminals with others I rely on [[https://tmate.io/][tmate]].
+For an editor I rely on [[https://www.gnu.org/software/emacs/][emacs]], specifically [[https://github.com/humacs/humacs][humacs]]. To pair and share my terminals with others I rely on [[https://tmate.io/][tmate]].
 
 This documentation is split into two main sections:
  - [[windows-setup.org][Windows 10 Config]]
- - [[wsl-setup.org][Windows Subsystem for Linux Config]]
+ - [[wsl-setup.org][Ubuntu Config]]
