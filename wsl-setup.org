@@ -73,12 +73,12 @@ sudo service docker start
 #+end_src
 
 
-For additional package management namely ~bitwarden~ we use [[https://www.npmjs.com/][node package manager]]. The code below installs node ~12~.
+For additional package management namely ~bitwarden~ we use [[https://www.npmjs.com/][node package manager]]. The code below installs node ~16.x~, which is the latest stable release as of <2021-10-02 Sat>.
 
 #+NAME: Install node
 #+BEGIN_SRC shell
 # Curl down the shell script for adding version 12 of nodejs to apt
-sudo curl  -sL https://deb.nodesource.com/setup_12.x | sudo bash -
+sudo curl  -sL https://deb.nodesource.com/setup_16.x | sudo bash -
    
 # Install the nodejs package via apt
 sudo apt-get install -y nodejs
