@@ -1,3 +1,5 @@
 [user]
 	email = mail@jamesblair.net
 	name = James Blair
+[pull]
+	rebase = false
