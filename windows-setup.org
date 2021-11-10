@@ -1,13 +1,5 @@
 # -*- ii: ii; -*-
 
-#+NAME: Download and install VcXsrv
-#+BEGIN_SRC shell
-# Download the vcxsrv installer
-powershell.exe curl.exe -L -0 $env:TEMP\installer.exe  https://sourceforge.net/projects/vcxsrv/files/latest/download
-
-# Install vcxsrv
-powershell.exe $env:TEMP\installer.exe
-#+END_SRC
 #+TITLE: Windows 10 Setup
 #+AUTHOR: James Blair
 #+EMAIL: mail@jamesblair.net
