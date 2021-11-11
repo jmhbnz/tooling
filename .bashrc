@@ -32,6 +32,7 @@ function bwgp () { local test=$(export BW_SESSION=~/.bw_session) && bw get passw
 function bwgt () { local test=$(export BW_SESSION=~/.bw_session) && bw get totp $1 | xclip; }
 function bwgi () { local test=$(export BW_SESSION=~/.bw_session) && bw get item --pretty $1; }
 function bwli () { local test=$(export BW_SESSION=~/.bw_session) && bw list items --search $1 --pretty | egrep -i 'name|"id":'; }
+function bwol () { local test=$(export BW_SESSION=~/.bw_session) && bw get item --pretty $1 | grep https | awk '{print $2}' | xclip; }
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -49,9 +50,6 @@ export DISPLAY=`grep -oP "(?<=nameserver ).+" /etc/resolv.conf`:0.0
 
 # Configure emacs location
 export EMACSLOADPATH=~/Downloads/humacs:
-
-# Configure docker host (only needed on wsl 1)
-#export DOCKER_HOST=tcp://localhost:2375
 
 # Setup prompt
 function color_my_prompt {
