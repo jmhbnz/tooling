@@ -45,7 +45,7 @@ Next we install a series of standard packages that form part of our workflow or 
 
 #+NAME: Install standard packages
 #+BEGIN_SRC shell
-sudo apt-get install -y git locales curl wget xclip xsel tmux tmate net-tools less wget htop screenfetch zip openssh-client dictd knockd python3-pip emacs apt-transport-https software-properties-common ca-certificates dirmngr xterm xtermcontrol
+sudo apt-get install -y git locales curl wget xclip xsel tmux tmate net-tools less wget htop screenfetch zip openssh-client dictd knockd python3-pip emacs apt-transport-https software-properties-common ca-certificates dirmngr xterm xtermcontrol jq
 #+END_SRC
 
 
