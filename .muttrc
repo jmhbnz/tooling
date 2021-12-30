@@ -51,3 +51,7 @@ bind index,pager \Cn sidebar-next
 # Open the highlighted mailbox
 bind index,pager \Co sidebar-open
 
+# Configure html emails
+alternative_order text/plain text/html
+auto_view text/html
+set mailcap_path = ~/.mutt/mailcap
