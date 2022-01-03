@@ -28,11 +28,11 @@ fi
 
 # simplify bitwarden cli usage 
 alias bwu='export BW_SESSION=$(bw unlock --raw > ~/.bw_session && cat ~/.bw_session)'
-function bwgp () { local test=$(export BW_SESSION=~/.bw_session) && bw get password $1 | xclip; }
-function bwgt () { local test=$(export BW_SESSION=~/.bw_session) && bw get totp $1 | xclip; }
+function bwgp () { local test=$(export BW_SESSION=~/.bw_session) && bw get password $1 | xclip -selection c; }
+function bwgt () { local test=$(export BW_SESSION=~/.bw_session) && bw get totp $1 | xclip -selection c; }
 function bwgi () { local test=$(export BW_SESSION=~/.bw_session) && bw get item --pretty $1; }
 function bwli () { local test=$(export BW_SESSION=~/.bw_session) && bw list items --search $1 --pretty | egrep -i 'name|"id":'; }
-function bwol () { local test=$(export BW_SESSION=~/.bw_session) && bw get item --pretty $1 | grep https | awk '{print $2}' | xclip; }
+function bwol () { local test=$(export BW_SESSION=~/.bw_session) && bw get item --pretty $1 | grep https | awk '{print $2}' | xclip -selection c; }
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
