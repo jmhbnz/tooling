@@ -17,8 +17,20 @@ Before diving into the technical details, below is a brief summary of how I get 
 
 For an editor I primarily rely on [[https://www.gnu.org/software/emacs/][emacs]], specifically [[https://github.com/humacs/humacs][humacs]]. To pair and share my terminals with others I rely on [[https://tmate.io/][tmate]].
 
-The main feature that I rely on in emacs is [[https://orgmode.org/][~org-mode~]].
+The main feature that I rely on in emacs is [[https://orgmode.org/][org-mode]]. This allows me to do literate programming, writing my documenation with embedded code blocks that are actually executable or exportable via [[https://orgmode.org/worg/org-contrib/babel/intro.html][babel]].
 
-
+Working with some clients I also use [[https://code.visualstudio.com/][visual studio code]].
 
 ** Browsing the web
+
+My primary browser is [[https://www.mozilla.org/en-GB/firefox/new/][firefox]]. The addons I use are:
+  - u-block origin
+  - https everywhere
+  - privacy badger
+
+For monitoring traffic, blocking connections, enforcing secure dns and routing connections through other servers vpn style I rely on [[https://safing.io/portmaster/][Portmaster]] + [[https://safing.io/spn/][SPN]].
+
+** Reading email
+
+
+For reading email I rely on the [[http://www.mutt.org][mutt]] terminal email client.
