@@ -45,8 +45,10 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# Configure display for vcxsrv
-export DISPLAY=`grep -oP "(?<=nameserver ).+" /etc/resolv.conf`:0.0
+# Configure display for vcxsrv in wsl
+if [ $(uname -r | sed -n 's/.*\( *Microsoft *\).*/\1/ip') ]; then
+    export DISPLAY=`grep -oP "(?<=nameserver ).+" /etc/resolv.conf`:0.0
+fi
 
 # Configure emacs location
 export EMACSLOADPATH=~/Downloads/humacs:
@@ -97,8 +99,6 @@ else bwu; fi
 
 # Try connect to my default tmate socket
 if ! tmate -S /tmp/default.tmate attach; then
-
     tmate -S /tmp/default.tmate.tmate new-session -s default -n default -d
     tmate -S /tmp/default.tmate.tmate attach
-
 fi
