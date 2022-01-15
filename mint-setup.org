@@ -1,0 +1,25 @@
+# -*- ii: ii; -*-
+#+TITLE: Linux Mint Setup
+#+AUTHOR: James Blair
+#+EMAIL: mail@jamesblair.net
+#+DATE: <2022-01-16 Sun 11:00>
+
+
+This guide will walk through how I setup fresh installations of [[https://linuxmint.com/][Linux Mint]]. Linux Mint is an operating system for desktop and laptop computers. It is designed to work 'out of the box' and comes fully equipped with the apps most people need.
+
+I use Linux Mint as my daily driver operating system on a variety of different machines. The intent of this guide is to make it easy for me to get back up and running quickly whenver I do a fresh installation.
+
+
+* Setup home directory structure
+
+* Configure apt to use a local mirror
+
+* Install base packages
+
+* Restore ssh keys and dotfiles
+
+* Optional - Install hardware drivers
+
+* Optional - Setup humacs editor
+
+* Optional - Setup mutt mail client
