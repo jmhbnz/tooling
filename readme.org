@@ -33,4 +33,16 @@ For monitoring traffic, blocking connections, enforcing secure dns and routing c
 ** Reading email
 
 
-For reading email I rely on the [[http://www.mutt.org][mutt]] terminal email client.
+For reading email I rely on the [[http://www.mutt.org][mutt]] terminal email client. Included in this repository are the configuration dotfiles I use.
+
+I've configured mutt to be able to display html emails via ~lynx~ and open links with ~urlscan~.
+
+The thing I like most about mutt is the caching which means I can traverse or scan through my entire email history in seconds. In a browser this would be a painfully slow process.
+
+** Managing secrets
+
+[[https://bitwarden.com/][Bitwarden]] is my secrets manager of choice. Primarily due to the emphasis they place on open source and excellent ~bw~ cli utility. Use of the bitwarden cli is incorporated into many of my workflows.
+
+One of the things I really like and use daily is leveraging bitwarden for my one time passwords. I can run something like ~bw get totp <thing> | xclip~ in a terminal and have a two factor auth code copied straight onto my clipboard ready to paste where it is required.
+
+The [[./.bashrc][.bashrc]] file in this repository includes helper functions to make bitwarden workflows even faster.
