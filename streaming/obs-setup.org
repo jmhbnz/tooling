@@ -1,0 +1,62 @@
+#+TITLE: Open broadcast studio setup
+#+AUTHOR: James Blair
+#+EMAIL: mail@jamesblair.net
+#+DATE: 25th January 2022
+
+
+I use [[https://obsproject.com][Open Broadcast Studio]] in Linux Mint to manage my audio and video devices for virtual meetings which drastically improves my video and audio quality. This page documents how I set up and the configuration I use.
+
+To get started install obs using the steps below:
+
+#+NAME: Install open broadcast studio
+#+begin_src tmate
+# Install dependencies first
+sudo apt install ffmpeg v4l2loopback-dkms
+
+# Load the v4l2loopback module for virtual cam
+sudo modprobe v4l2loopback exclusive_caps=1
+
+# Add package repository
+sudo add-apt-repository ppa:obsproject/obs-studio
+
+# Install open broadcast studio
+sudo apt update && sudo apt install obs-studio
+#+end_src
+
+
+Before we get underway we also install the StreamFX plugin for OBS so we can blur backgrounds without a greenscreen. Follow the steps below to install the plugin:
+
+#+NAME: Install streamfx plugin
+#+begin_src tmate
+# Ensure the plugin directory exists
+mkdir --parents ~/.config/obs-studio && cd ~/.config/obs-studio
+
+# Download latest plugin release archive from github
+curl -s https://api.github.com/repos/Xaymar/obs-StreamFX/releases/latest \
+  | grep "browser_download_url.*zip" \
+  | grep "ubuntu" \
+  | grep -v "clang" \
+  | cut -d : -f 2,3 \
+  | tr -d \" \
+  | wget -O streamfx.zip -i -
+
+# Extract the archive then remove it
+unzip streamfx.zip && rm streamfx.zip
+#+end_src
+
+
+To control improve the quality of our audio we use a virtual audio output device, this allows us to take raw audio input from a microphone, apply filters and enhancements in obs, then output the enhanced audio to the virtual meeting.
+
+#+begin_src tmate
+pactl load-module module-null-sink sink_name=Source
+pactl load-module module-virtual-source source_name=VirtualMic master=Source.monitor
+#+end_src
+
+Once obs is installed we can launch it with the command below. The setup wizard should open and you should see an option to optimize your configuration for using the Virtual Camera.
+
+If you see that option, select it; once you get to the main OBS Studio screen, you should now see a button in the bottom right, "Start Virtual Camera".
+
+#+NAME: Run open broadcast studio
+#+begin_src tmate
+obs&
+#+end_src
