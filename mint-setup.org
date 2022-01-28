@@ -23,8 +23,10 @@ To speed up how quickly our system can install new or updated packages we should
 sudo cp /etc/apt/sources.list.d/official-package-repositories.list /etc/apt/sources.list.d/official-package-repositories.list.bak
 
 # Replace packages repo with local
-cat /etc/apt/sources.list.d/official-package-repositories.list
-sed -i 's|oldurl|http://ucmirror.canterbury.ac.nz|g' /etc/apt/sources.list.d/official-package-repositories.list
+sudo sed -i 's|https://packages.linuxmint.com|http://ucmirror.canterbury.ac.nz/linux/mint/packages|g' /etc/apt/sources.list.d/official-package-repositories.list
+
+# Replace base repo with local
+sudo sed -i 's|https://archive.ubuntu.com/ubuntu|http://ucmirror.canterbury.ac.nz/ubuntu|g' /etc/apt/sources.list.d/official-package-repositories.list
 #+end_src
 
 
@@ -33,11 +35,59 @@ sed -i 's|oldurl|http://ucmirror.canterbury.ac.nz|g' /etc/apt/sources.list.d/off
 Now that we have our ~apt~ package manager configured let's install the standard packages we use.
 
 #+begin_src tmate
-sudo apt install --yes htop screenfetch git curl wget xclip emacs xterm xtermcontrol jq
+sudo apt install --yes htop screenfetch git curl wget xclip emacs xterm xtermcontrol jq tmux tmate apt-transport-https
+#+end_src
+
+For working with container images locally outside of kubernetes clusters we use [[https://podman.io/][~podman~]] so that we can avoid the security problems of a standard docker daemon. Follow the steps below to install podman:
+
+#+begin_src tmate
+# Add the repositories to our apt sources
+echo "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/ /" | sudo tee /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list
+
+# Add the repository key
+curl -L "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/Release.key" | sudo apt-key add -
+
+sudo apt update && sudo apt --yes install podman
 #+end_src
 
 
+For additional package management namely ~bitwarden~ we use [[https://www.npmjs.com/][node package manager]]. The code below installs node ~16.x~, which is the latest stable release as of <2021-10-02 Sat>.
+
+#+NAME: Install node
+#+BEGIN_SRC shell
+# Curl down the shell script for adding version 16 of nodejs to apt
+sudo curl  -sL https://deb.nodesource.com/setup_16.x | sudo bash -
+
+# Install the nodejs package via apt
+sudo apt-get install -y nodejs
+#+END_SRC
+
+
+For managing secrets we use [[https://bitwarden.com/][bitwarden]] which provides a great [[https://github.com/bitwarden/cli][cli utility]]. Additionally in our [[.bashrc][bashrc]] file included in this repository there are a number of helper functions to make working with ~bw~ easier.
+
+#+NAME: Install bitwarden and login
+#+BEGIN_SRC tmate
+# Install the bitwarden cli via node package manager
+sudo npm install -g @bitwarden/cli
+
+# Test login to bitwarden
+bw login mail@jamesblair.net
+#+END_SRC
+
+
+For ad-hoc system administration we use [[https://deb.nodesource.com/setup_12.x ][ansible]]. We install ansible via ~pip3~ to ensure any modules or additional packages required at a later date can be easily managed.
+
+For significant ansible or python projects a virtual environment for python is suggested to keep project packages separate from system python packages.
+
+#+NAME: Install ansible via pip
+#+BEGIN_SRC tmate
+pip3 install ansible
+#+END_SRC
+
+
 * Restore ssh keys and dotfiles
+
+
 
 * Optional - Install hardware drivers
 
