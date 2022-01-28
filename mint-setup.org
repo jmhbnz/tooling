@@ -12,9 +12,30 @@ I use Linux Mint as my daily driver operating system on a variety of different m
 
 * Setup home directory structure
 
+
+
 * Configure apt to use a local mirror
 
+To speed up how quickly our system can install new or updated packages we should tell ~apt~ to use a mirror here in New Zealand.
+
+#+begin_src tmate
+# Backup our apt sources configuration before we make changes
+sudo cp /etc/apt/sources.list.d/official-package-repositories.list /etc/apt/sources.list.d/official-package-repositories.list.bak
+
+# Replace packages repo with local
+cat /etc/apt/sources.list.d/official-package-repositories.list
+sed -i 's|oldurl|http://ucmirror.canterbury.ac.nz|g' /etc/apt/sources.list.d/official-package-repositories.list
+#+end_src
+
+
 * Install base packages
+
+Now that we have our ~apt~ package manager configured let's install the standard packages we use.
+
+#+begin_src tmate
+sudo apt install --yes htop screenfetch git curl wget xclip emacs xterm xtermcontrol jq
+#+end_src
+
 
 * Restore ssh keys and dotfiles
 
