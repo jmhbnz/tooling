@@ -1,0 +1,418 @@
+{
+  "AuxAudioDevice1": {
+    "balance": 0.5,
+    "deinterlace_field_order": 0,
+    "deinterlace_mode": 0,
+    "enabled": true,
+    "filters": [
+      {
+        "balance": 0.5,
+        "deinterlace_field_order": 0,
+        "deinterlace_mode": 0,
+        "enabled": true,
+        "flags": 0,
+        "hotkeys": {},
+        "id": "noise_gate_filter",
+        "mixers": 255,
+        "monitoring_type": 0,
+        "muted": false,
+        "name": "Noise Gate",
+        "prev_ver": 453050371,
+        "private_settings": {},
+        "push-to-mute": false,
+        "push-to-mute-delay": 0,
+        "push-to-talk": false,
+        "push-to-talk-delay": 0,
+        "settings": {
+          "close_threshold": -40,
+          "open_threshold": -28
+        },
+        "sync": 0,
+        "versioned_id": "noise_gate_filter",
+        "volume": 1
+      },
+      {
+        "balance": 0.5,
+        "deinterlace_field_order": 0,
+        "deinterlace_mode": 0,
+        "enabled": true,
+        "flags": 0,
+        "hotkeys": {},
+        "id": "noise_suppress_filter",
+        "mixers": 255,
+        "monitoring_type": 0,
+        "muted": false,
+        "name": "Noise Suppression",
+        "prev_ver": 453050371,
+        "private_settings": {},
+        "push-to-mute": false,
+        "push-to-mute-delay": 0,
+        "push-to-talk": false,
+        "push-to-talk-delay": 0,
+        "settings": {},
+        "sync": 0,
+        "versioned_id": "noise_suppress_filter_v2",
+        "volume": 1
+      }
+    ],
+    "flags": 0,
+    "hotkeys": {
+      "libobs.mute": [],
+      "libobs.push-to-mute": [],
+      "libobs.push-to-talk": [],
+      "libobs.unmute": []
+    },
+    "id": "pulse_input_capture",
+    "mixers": 255,
+    "monitoring_type": 1,
+    "muted": false,
+    "name": "Yeti Nano Raw Input",
+    "prev_ver": 453050371,
+    "private_settings": {},
+    "push-to-mute": false,
+    "push-to-mute-delay": 0,
+    "push-to-talk": false,
+    "push-to-talk-delay": 0,
+    "settings": {
+      "device_id": "alsa_input.usb-Blue_Microphones_Yeti_Nano_1945SG000RD8_888-000154040606-00.analog-stereo"
+    },
+    "sync": 0,
+    "versioned_id": "pulse_input_capture",
+    "volume": 1
+  },
+  "DesktopAudioDevice1": {
+    "balance": 0.5,
+    "deinterlace_field_order": 0,
+    "deinterlace_mode": 0,
+    "enabled": true,
+    "flags": 0,
+    "hotkeys": {
+      "libobs.mute": [],
+      "libobs.push-to-mute": [],
+      "libobs.push-to-talk": [],
+      "libobs.unmute": []
+    },
+    "id": "pulse_output_capture",
+    "mixers": 255,
+    "monitoring_type": 0,
+    "muted": false,
+    "name": "Headphone Output",
+    "prev_ver": 453050371,
+    "private_settings": {},
+    "push-to-mute": false,
+    "push-to-mute-delay": 0,
+    "push-to-talk": false,
+    "push-to-talk-delay": 0,
+    "settings": {
+      "device_id": "bluez_sink.CC_98_8B_B6_F0_8E.a2dp_sink.monitor"
+    },
+    "sync": 0,
+    "versioned_id": "pulse_output_capture",
+    "volume": 1
+  },
+  "current_program_scene": "Standard",
+  "current_scene": "Standard",
+  "current_transition": "Fade",
+  "groups": [],
+  "modules": {
+    "auto-scene-switcher": {
+      "active": false,
+      "interval": 300,
+      "non_matching_scene": "",
+      "switch_if_not_matching": false,
+      "switches": []
+    },
+    "decklink_captions": {
+      "source": ""
+    },
+    "output-timer": {
+      "autoStartRecordTimer": false,
+      "autoStartStreamTimer": false,
+      "pauseRecordTimer": true,
+      "recordTimerHours": 0,
+      "recordTimerMinutes": 0,
+      "recordTimerSeconds": 30,
+      "streamTimerHours": 0,
+      "streamTimerMinutes": 0,
+      "streamTimerSeconds": 30
+    },
+    "scripts-tool": []
+  },
+  "name": "James",
+  "preview_locked": false,
+  "quick_transitions": [
+    {
+      "duration": 300,
+      "fade_to_black": false,
+      "hotkeys": [],
+      "id": 1,
+      "name": "Cut"
+    },
+    {
+      "duration": 300,
+      "fade_to_black": false,
+      "hotkeys": [],
+      "id": 2,
+      "name": "Fade"
+    },
+    {
+      "duration": 300,
+      "fade_to_black": true,
+      "hotkeys": [],
+      "id": 3,
+      "name": "Fade"
+    }
+  ],
+  "saved_projectors": [],
+  "scaling_enabled": false,
+  "scaling_level": 0,
+  "scaling_off_x": 0,
+  "scaling_off_y": 0,
+  "scene_order": [
+    {
+      "name": "Standard"
+    }
+  ],
+  "sources": [
+    {
+      "balance": 0.5,
+      "deinterlace_field_order": 0,
+      "deinterlace_mode": 0,
+      "enabled": true,
+      "flags": 0,
+      "hotkeys": {
+        "libobs.mute": [],
+        "libobs.push-to-mute": [],
+        "libobs.push-to-talk": [],
+        "libobs.unmute": []
+      },
+      "id": "pulse_input_capture",
+      "mixers": 255,
+      "monitoring_type": 0,
+      "muted": false,
+      "name": "VirtualMic",
+      "prev_ver": 453050371,
+      "private_settings": {},
+      "push-to-mute": false,
+      "push-to-mute-delay": 0,
+      "push-to-talk": false,
+      "push-to-talk-delay": 0,
+      "settings": {
+        "device_id": "VirtualMic"
+      },
+      "sync": 0,
+      "versioned_id": "pulse_input_capture",
+      "volume": 1
+    },
+    {
+      "balance": 0.5,
+      "deinterlace_field_order": 0,
+      "deinterlace_mode": 0,
+      "enabled": true,
+      "flags": 0,
+      "hotkeys": {
+        "OBSBasic.SelectScene": [],
+        "libobs.hide_scene_item.Browser Webcam": [],
+        "libobs.hide_scene_item.VirtualMic": [],
+        "libobs.show_scene_item.Browser Webcam": [],
+        "libobs.show_scene_item.VirtualMic": []
+      },
+      "id": "scene",
+      "mixers": 0,
+      "monitoring_type": 0,
+      "muted": false,
+      "name": "Standard",
+      "prev_ver": 453050371,
+      "private_settings": {},
+      "push-to-mute": false,
+      "push-to-mute-delay": 0,
+      "push-to-talk": false,
+      "push-to-talk-delay": 0,
+      "settings": {
+        "custom_size": false,
+        "id_counter": 3,
+        "items": [
+          {
+            "align": 5,
+            "bounds": {
+              "x": 0,
+              "y": 0
+            },
+            "bounds_align": 0,
+            "bounds_type": 0,
+            "crop_bottom": 0,
+            "crop_left": 0,
+            "crop_right": 0,
+            "crop_top": 0,
+            "group_item_backup": false,
+            "hide_transition": {
+              "duration": 0
+            },
+            "id": 1,
+            "locked": false,
+            "name": "Browser Webcam",
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "private_settings": {},
+            "rot": 0,
+            "scale": {
+              "x": 1,
+              "y": 1
+            },
+            "scale_filter": "disable",
+            "show_transition": {
+              "duration": 0
+            },
+            "visible": false
+          },
+          {
+            "align": 5,
+            "bounds": {
+              "x": 0,
+              "y": 0
+            },
+            "bounds_align": 0,
+            "bounds_type": 0,
+            "crop_bottom": 0,
+            "crop_left": 0,
+            "crop_right": 0,
+            "crop_top": 0,
+            "group_item_backup": false,
+            "hide_transition": {
+              "duration": 0
+            },
+            "id": 3,
+            "locked": false,
+            "name": "VirtualMic",
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "private_settings": {},
+            "rot": 0,
+            "scale": {
+              "x": 1,
+              "y": 1
+            },
+            "scale_filter": "disable",
+            "show_transition": {
+              "duration": 0
+            },
+            "visible": true
+          }
+        ]
+      },
+      "sync": 0,
+      "versioned_id": "scene",
+      "volume": 1
+    },
+    {
+      "balance": 0.5,
+      "deinterlace_field_order": 0,
+      "deinterlace_mode": 0,
+      "enabled": true,
+      "filters": [
+        {
+          "balance": 0.5,
+          "deinterlace_field_order": 0,
+          "deinterlace_mode": 0,
+          "enabled": true,
+          "flags": 0,
+          "hotkeys": {},
+          "id": "streamfx-filter-blur",
+          "mixers": 0,
+          "monitoring_type": 0,
+          "muted": false,
+          "name": "Blur",
+          "prev_ver": 453050371,
+          "private_settings": {},
+          "push-to-mute": false,
+          "push-to-mute-delay": 0,
+          "push-to-talk": false,
+          "push-to-talk-delay": 0,
+          "settings": {
+            "Commit": "g31d56703",
+            "Filter.Blur.Mask": true,
+            "Filter.Blur.Mask.Region.Bottom": 0,
+            "Filter.Blur.Mask.Region.Feather": 5,
+            "Filter.Blur.Mask.Region.Feather.Shift": -20,
+            "Filter.Blur.Mask.Region.Invert": true,
+            "Filter.Blur.Mask.Region.Left": 14,
+            "Filter.Blur.Mask.Region.Right": 18,
+            "Filter.Blur.Mask.Region.Top": 1,
+            "Filter.Blur.Size": 4,
+            "Filter.Blur.Type": "dual_filtering",
+            "Version": 47244640256
+          },
+          "sync": 0,
+          "versioned_id": "streamfx-filter-blur",
+          "volume": 1
+        },
+        {
+          "balance": 0.5,
+          "deinterlace_field_order": 0,
+          "deinterlace_mode": 0,
+          "enabled": true,
+          "flags": 0,
+          "hotkeys": {},
+          "id": "color_filter",
+          "mixers": 0,
+          "monitoring_type": 0,
+          "muted": false,
+          "name": "Colour Correction",
+          "prev_ver": 453050371,
+          "private_settings": {},
+          "push-to-mute": false,
+          "push-to-mute-delay": 0,
+          "push-to-talk": false,
+          "push-to-talk-delay": 0,
+          "settings": {
+            "brightness": 0,
+            "contrast": 0.2,
+            "gamma": -0.05
+          },
+          "sync": 0,
+          "versioned_id": "color_filter_v2",
+          "volume": 1
+        }
+      ],
+      "flags": 0,
+      "hotkeys": {
+        "libobs.mute": [],
+        "libobs.push-to-mute": [],
+        "libobs.push-to-talk": [],
+        "libobs.unmute": []
+      },
+      "id": "browser_source",
+      "mixers": 255,
+      "monitoring_type": 0,
+      "muted": false,
+      "name": "Browser Webcam",
+      "prev_ver": 453050371,
+      "private_settings": {},
+      "push-to-mute": false,
+      "push-to-mute-delay": 0,
+      "push-to-talk": false,
+      "push-to-talk-delay": 0,
+      "settings": {
+        "css": "body { background-color: rgba(0, 0, 0, 0); margin: 0px auto; overflow: hidden; }",
+        "fps": 60,
+        "fps_custom": true,
+        "height": 1080,
+        "reroute_audio": false,
+        "restart_when_active": true,
+        "shutdown": false,
+        "url": "http://192.168.1.119:8080/video",
+        "webpage_control_level": 1,
+        "width": 1920
+      },
+      "sync": 0,
+      "versioned_id": "browser_source",
+      "volume": 1
+    }
+  ],
+  "transition_duration": 300,
+  "transitions": []
+}
