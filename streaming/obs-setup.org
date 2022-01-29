@@ -6,6 +6,9 @@
 
 I use [[https://obsproject.com][Open Broadcast Studio]] in Linux Mint to manage my audio and video devices for virtual meetings which drastically improves my video and audio quality. This page documents how I set up and the configuration I use.
 
+Note: For audio hardware I generally rely on [[https://www.bluemic.com/en-us/products/yeti-nano/][Blue Yeti Nano]] microphones and [[https://electronics.sony.com/audio/headphones/headband/p/wh1000xm4-b][Sony WH-1000XM]] bluetooth headphones.
+
+
 * Install obs
 
 To get started install obs including all dependencies required using the steps below:
@@ -79,7 +82,9 @@ obs&
 
 * Configure obs scene
 
-Our final step to get up and running is to restore our "Profile" and "Scene Collection" via the OBS *Profile > Import* and *Scene Collection > Import* menu options, using the files included in this repository.
+Our final step to get up and running is to restore our "Profile" and "Scene Collection" via the OBS *Profile > Import* and *Scene Collection > Import* menu options, using the [[./basic.ini][profile.ini]] and [[./scene.json][scene.json]] files included in this repository.
+
+You can use the snippet below to check the contents of the files.
 
 #+NAME: Show included configuration files
 #+begin_src tmate
