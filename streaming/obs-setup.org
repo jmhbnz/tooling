@@ -67,14 +67,33 @@ Once obs is installed we can launch it with the command below. The setup wizard 
 If you see that option, select it; once you get to the main OBS Studio screen, you should now see a button in the bottom right, "Start Virtual Camera".
 
 
-* Configure obs scene
-
-
 * Launch obs
 
-Now that we have finished installing and configuring obs we can launch it using the command below, enjoy! 🙂
+Now that we have finished installing obs we can launch it using the command below.
 
 #+NAME: Run open broadcast studio
 #+begin_src tmate
 obs&
 #+end_src
+
+
+* Configure obs scene
+
+Our final step to get up and running is to restore our "Profile" and "Scene Collection" via the OBS *Profile > Import* and *Scene Collection > Import* menu options, using the files included in this repository.
+
+#+NAME: Show included configuration files
+#+begin_src tmate
+# Show contents of profile ini file
+cat ~/Documents/tooling/streaming/basic.ini
+
+# Show contents of scene collection json
+cat ~/Documents/tooling/streaming/scene.json | jq
+#+end_src
+
+With the imports done you may need to revist the *Profile* and *Scene Collection* menus to ensure the right profile and scene collection are now selected. Once finished it should look like the image below:
+
+#+CAPTION: Obs screenshot
+#+NAME: fig:obs-screenshot
+[[./obs.png]]
+
+Congratulations, you should now have a robust obs configuration in place for video calling! :)
