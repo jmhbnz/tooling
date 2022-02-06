@@ -58,21 +58,38 @@ unzip streamfx.zip && rm streamfx.zip
 
 * Setup virtual audio devices
 
-To control improve the quality of our audio we use a virtual audio output device, this allows us to take raw audio input from a microphone, apply filters and enhancements in obs, then output the enhanced audio to the virtual meeting.
+To control improve the quality of our audio we use a virtual audio output device, this allows us to take raw audio input from a microphone, apply filters and enhancements in obs, then output the enhanced audio to the virtual meeting software as a virtual microphone.
 
+#+NAME: Create virtual audio devices
 #+begin_src tmate
+# Create the virtual speaker
 pactl load-module module-null-sink sink_name=Source
+
+# Create the virtual microphone
 pactl load-module module-virtual-source source_name=VirtualMic master=Source.monitor
 #+end_src
 
-Once obs is installed we can launch it with the command below. The setup wizard should open and you should see an option to optimize your configuration for using the Virtual Camera.
 
-If you see that option, select it; once you get to the main OBS Studio screen, you should now see a button in the bottom right, "Start Virtual Camera".
+The code snippet above sets up virtual audio devices for our current session only with ~pactl~, if we restart our machine or session those devices will no longer exist.
+
+To make it permanent we need to save the configuration to a file in our home directory.
+
+#+NAME: Save virtual audio device configuration
+#+begin_src tmate
+# Ensure required directory exists
+mkdir --parents ~/.config/pulse
+
+# Create configuration file
+echo "load-module module-null-sink sink_name=Source" >> ~/.config/pulse/default.pa
+echo "load-module module-virtual-source source_name=VirtualMic master=Source.monitor" >> ~/.config/pulse/default.pa
+#+end_src
 
 
 * Launch obs
 
-Now that we have finished installing obs we can launch it using the command below.
+Once obs is installed we can launch it with the command below. The setup wizard should open and you should see an option to optimize your configuration for using the Virtual Camera.
+
+If you see that option, select it; once you get to the main OBS Studio screen, you should now see a button in the bottom right, "Start Virtual Camera".
 
 #+NAME: Run open broadcast studio
 #+begin_src tmate
