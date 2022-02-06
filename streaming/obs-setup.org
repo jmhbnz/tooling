@@ -90,7 +90,7 @@ echo "load-module module-virtual-source source_name=VirtualMic master=Source.mon
 If all devices created successfully you should see them listed after running the code block below:
 
 #+NAME: Check virtual audio devices
-#+begin_src shell :results output
+#+begin_src shell
 pacmd list-modules | grep -i "VirtualSpeaker"
 pacmd list-modules | grep -i "VirtualMic"
 #+end_src
