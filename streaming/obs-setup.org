@@ -1,3 +1,4 @@
+# -*- ii: ii; -*-
 #+TITLE: Open broadcast studio setup
 #+AUTHOR: James Blair
 #+EMAIL: mail@jamesblair.net
@@ -63,10 +64,10 @@ To control improve the quality of our audio we use a virtual audio output device
 #+NAME: Create virtual audio devices
 #+begin_src tmate
 # Create the virtual speaker
-pactl load-module module-null-sink sink_name=Source
+pactl load-module module-null-sink sink_name=Source sink_properties=device.description=VirtualSpeaker
 
 # Create the virtual microphone
-pactl load-module module-virtual-source source_name=VirtualMic master=Source.monitor
+pactl load-module module-virtual-source source_name=VirtualMic master=Source.monitor source_properties=device.description=VirtualMic
 #+end_src
 
 
@@ -80,9 +81,25 @@ To make it permanent we need to save the configuration to a file in our home dir
 mkdir --parents ~/.config/pulse
 
 # Create configuration file
-echo "load-module module-null-sink sink_name=Source" >> ~/.config/pulse/default.pa
-echo "load-module module-virtual-source source_name=VirtualMic master=Source.monitor" >> ~/.config/pulse/default.pa
+echo ".include /etc/pulse/default.pa" > ~/.config/pulse/default.pa
+echo "load-module module-null-sink sink_name=Source sink_properties=device.description=VirtualSpeaker" >> ~/.config/pulse/default.pa
+echo "load-module module-virtual-source source_name=VirtualMic master=Source.monitor source_properties=device.description=VirtualMic" >> ~/.config/pulse/default.pa
 #+end_src
+
+
+If all devices created successfully you should see them listed after running the code block below:
+
+#+NAME: Check virtual audio devices
+#+begin_src shell :results output
+pacmd list-modules | grep -i "VirtualSpeaker"
+pacmd list-modules | grep -i "VirtualMic"
+#+end_src
+
+#+RESULTS: Check virtual audio devices
+#+begin_example
+	argument: <sink_name=Source sink_properties=device.description=VirtualSpeaker>
+	argument: <source_name=VirtualMic master=Source.monitor source_properties=device.description=VirtualMic>
+#+end_example
 
 
 * Launch obs
