@@ -34,6 +34,10 @@ function bwgi () { local test=$(export BW_SESSION=~/.bw_session) && bw get item 
 function bwli () { local test=$(export BW_SESSION=~/.bw_session) && bw list items --search "$1" --pretty | egrep -i 'name|"id":'; }
 function bwol () { local test=$(export BW_SESSION=~/.bw_session) && bw get item --pretty "$1" | grep https | awk '{print $2}' | xclip -selection c; }
 
+# automate multimonitor command
+alias hdmioff='xrandr --output HDMI-0 --off'
+alias hdmion='xrandr --output HDMI-0 --auto --rate 144.00 --left-of DVI-I-0 --primary'
+
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
@@ -45,9 +49,10 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# Configure display for vcxsrv in wsl
+# Configure display and browser for wsl
 if [ $(uname -r | sed -n 's/.*\( *Microsoft *\).*/\1/ip') ]; then
     export DISPLAY=`grep -oP "(?<=nameserver ).+" /etc/resolv.conf`:0.0
+    export BROWSER="explorer.exe"
 fi
 
 # Configure emacs location
@@ -69,8 +74,6 @@ color_my_prompt
 # Start from home folder
 cd ~/
 
-# Ensure browser environment variable set
-export BROWSER="explorer.exe"
 
 # Configure ssh-agent
 if [ -z "$(pgrep ssh-agent)" ]; then
