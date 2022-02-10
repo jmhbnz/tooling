@@ -1,1 +1,6 @@
 text/html; lynx -assume_charset=%{charset} -display_charset=utf-8 -collapse_br_tags -dump %s; nametemplate=%s.html; copiousoutput
+application/pdf; firefox %s
+application/vnd.openxmlformats-officedocument.wordprocessingml.document; libreoffice %s
+application/vnd.openxmlformats-officedocument.wordprocessingml.document; libreoffice --nologo %s; nametemplate=%s.docx; test=test -n "$DISPLAY"
+# application/vnd.openxmlformats-officedocument.wordprocessingml.document;   pandoc --from=docx --to=plain %s | cat --squeeze-blank; nametemplate=%s.docx; copiousoutput
+application/vnd.openxmlformats-officedocument.wordprocessingml.template; libreoffice --nologo %s; nametemplate=%s.docm; test=test -n "$DISPLAY"
