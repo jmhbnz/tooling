@@ -50,6 +50,12 @@ curl -L "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:
 sudo apt update && sudo apt --yes install podman
 #+end_src
 
+Finally, we should upgrade the python package manger ~pip~ that we installed, before using it to install [[https://github.com/containers/podman-compose][podman-compose]].
+
+#+NAME: Upgrade pip
+#+BEGIN_SRC tmate
+sudo pip install --upgrade pip && sudo pip3 install podman-compose
+#+END_SRC
 
 For additional package management namely ~bitwarden~ we use [[https://www.npmjs.com/][node package manager]]. The code below installs node ~16.x~, which is the latest stable release as of <2021-10-02 Sat>.
 
