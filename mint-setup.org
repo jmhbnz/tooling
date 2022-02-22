@@ -97,6 +97,29 @@ pip3 install ansible
 
 * Optional - Install hardware drivers
 
+
 * Optional - Setup humacs editor
 
+
 * Optional - Setup mutt mail client
+
+
+* Optional - Install rust
+
+I've been tinkering with learning the Rust programming language lately, to set that up follow these steps:
+
+#+NAME: Install rust
+#+begin_src tmate
+# Ensure pre-requisites are installed
+sudo apt install curl build-essential gcc make -y
+
+# Install rust via setup script
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+#+end_src
+
+Once installed you can check if the rust compiler is installed with the code block below:
+
+#+NAME: Verify installation
+#+begin_src tmate
+rustc -V && cargo -V
+#+end_src
