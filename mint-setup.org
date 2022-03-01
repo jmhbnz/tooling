@@ -91,6 +91,17 @@ pip3 install ansible
 #+END_SRC
 
 
+We use [[https://helm.sh][helm]] for packaging applications for kubernetes so let's install that now. Unfortunately we need an extra repository for this so let's separate this into a new step:
+
+#+NAME: Install helm
+#+BEGIN_SRC tmate
+curl https://baltocdn.com/helm/signing.asc | sudo apt-key add -
+echo "deb https://baltocdn.com/helm/stable/debidan/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
+
+sudo apt-get update && sudo apt install -y helm
+#+END_SRC
+
+
 * Restore ssh keys and dotfiles
 
 
