@@ -52,8 +52,9 @@ curl -s https://api.github.com/repos/Xaymar/obs-StreamFX/releases/latest \
   | tr -d \" \
   | wget -O streamfx.zip -i -
 
+
 # Extract the archive then remove it
-unzip streamfx.zip && rm streamfx.zip
+unzip -o streamfx.zip && rm streamfx.zip
 #+end_src
 
 
