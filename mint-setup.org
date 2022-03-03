@@ -106,16 +106,37 @@ sudo apt-get update && sudo apt install -y helm
 
 
 
-* Optional - Install hardware drivers
+* Optional configuration
+
+** Optional - Cloud provider tools
+
+For working with [[https://aws.com][Amazon Web Services]] we need the [[https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html][AWS CLI]].
+
+#+NAME: Install amazon web services cli
+#+BEGIN_SRC tmate
+# Download the binary
+cd ~/Downloads/
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+
+# Install
+unzip awscliv2.zip
+sudo ./aws/install
+
+# Clean up
+rm -rf ~/Downloads/aws*
+#+END_SRC
 
 
-* Optional - Setup humacs editor
+** Optional - Install hardware drivers
 
 
-* Optional - Setup mutt mail client
+** Optional - Setup humacs editor
 
 
-* Optional - Install rust
+** Optional - Setup mutt mail client
+
+
+** Optional - Install rust
 
 I've been tinkering with learning the Rust programming language lately, to set that up follow these steps:
 
