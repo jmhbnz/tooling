@@ -110,6 +110,43 @@ sudo apt-get update && sudo apt install -y helm
 
 ** Optional - Cloud provider tools
 
+Currently ~kubectl~ is packaged separately to ~gcloud~ and other cloud provider tools so let's install that first.
+
+#+NAME: Install kubectl
+#+begin_src tmate
+sudo apt-get update && sudo apt-get install -y apt-transport-https ca-certificates curl
+
+sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
+
+echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
+sudo apt-get update && sudo apt-get install -y kubectl
+#+end_src
+
+
+
+For working with google cloud platform we use the [[https://cloud.google.com/sdk/][GCP SDK]], which provides our cli tools.
+
+#+NAME: Install google cloud sdk
+#+BEGIN_SRC tmate
+# Download the sdk archive
+curl -o gcpsdk.tar -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-375.0.0-linux-x86_64.tar.gz
+
+# Extract to a folder in path
+sudo tar xvf gcpsdk.tar -C /usr/local/
+
+# Correct folder permissions
+sudo chown -R $USER:$USER /usr/local/google-cloud-sdk
+
+# Run the install script
+/usr/local/google-cloud-sdk/install.sh
+#+END_SRC
+
+#+RESULTS: Install google cloud sdk
+#+begin_example
+#+end_example
+
+
 For working with [[https://aws.com][Amazon Web Services]] we need the [[https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html][AWS CLI]].
 
 #+NAME: Install amazon web services cli
