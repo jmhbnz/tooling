@@ -132,8 +132,8 @@ For working with google cloud platform we use the [[https://cloud.google.com/sdk
 # Download the sdk archive
 curl -o gcpsdk.tar -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-375.0.0-linux-x86_64.tar.gz
 
-# Extract to a folder in path
-sudo tar xvf gcpsdk.tar -C /usr/local/
+# Extract to a folder in path then remove archive
+sudo tar xvf gcpsdk.tar -C /usr/local/ && rm gcpsdk.tar
 
 # Correct folder permissions
 sudo chown -R $USER:$USER /usr/local/google-cloud-sdk
