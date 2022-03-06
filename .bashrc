@@ -100,6 +100,11 @@ elif [ -f ~/.bw_session ]; then export BW_SESSION=$(cat ~/.bw_session);
 # Otherwise unlock to start new session
 else bwu; fi
 
+# Helper function for tmate pane renaming
+function renamepane {
+    printf '\033]2;%s\033\\' "${1}"
+}
+
 # Try connect to my default tmate socket
 if ! tmate -S /tmp/default.tmate attach; then
     tmate -S /tmp/default.tmate.tmate new-session -s default -n default -d
