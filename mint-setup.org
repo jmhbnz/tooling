@@ -50,6 +50,18 @@ curl -L "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:
 sudo apt update && sudo apt --yes install podman
 #+end_src
 
+
+When working with kubernetes applications we often use [[https://helm.sh][helm]], unfortunately we need an extra ~apt~ repository for this so let's add that now and install.
+
+#+NAME: Install helm
+#+BEGIN_SRC tmate
+curl https://baltocdn.com/helm/signing.asc | sudo apt-key add -
+echo "deb https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
+sudo apt-get update && sudo apt install -y helm
+#+END_SRC
+
+
+
 Finally, we should upgrade the python package manger ~pip~ that we installed, before using it to install [[https://github.com/containers/podman-compose][podman-compose]].
 
 #+NAME: Upgrade pip
@@ -132,8 +144,8 @@ For working with google cloud platform we use the [[https://cloud.google.com/sdk
 # Download the sdk archive
 curl -o gcpsdk.tar -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-375.0.0-linux-x86_64.tar.gz
 
-# Extract to a folder in path
-sudo tar xvf gcpsdk.tar -C /usr/local/
+# Extract to a folder in path then remove archive
+sudo tar xvf gcpsdk.tar -C /usr/local/ && rm gcpsdk.tar
 
 # Correct folder permissions
 sudo chown -R $USER:$USER /usr/local/google-cloud-sdk
