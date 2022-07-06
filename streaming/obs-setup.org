@@ -67,8 +67,12 @@ To control improve the quality of our audio we use a virtual audio output device
 # Create the virtual speaker
 pactl load-module module-null-sink sink_name=Source sink_properties=device.description=VirtualSpeaker
 
-# Create the virtual microphone
-pactl load-module module-virtual-source source_name=VirtualMic master=Source.monitor source_properties=device.description=VirtualMic
+# Check if we are on pulseaudio or pipewire and use appropriate module
+audio_system_module="module-virtual-source"
+if [[ "$(pactl info | grep -i "pipewire")" ]]; then audio_system_module="module-remap-source"; fi
+
+# create the virtual microphone
+pactl load-module "${audio_system_module}" source_name=VirtualMic master=Source.monitor source_properties=device.description=VirtualMic
 #+end_src
 
 
@@ -81,10 +85,14 @@ To make it permanent we need to save the configuration to a file in our home dir
 # Ensure required directory exists
 mkdir --parents ~/.config/pulse
 
+# Check if we are on pulseaudio or pipewire and use appropriate module
+audio_system_module="module-virtual-source"
+if [[ "$(pactl info | grep -i "pipewire")" ]]; then audio_system_module="module-remap-source"; fi
+
 # Create configuration file
 echo ".include /etc/pulse/default.pa" > ~/.config/pulse/default.pa
 echo "load-module module-null-sink sink_name=Source sink_properties=device.description=VirtualSpeaker" >> ~/.config/pulse/default.pa
-echo "load-module module-virtual-source source_name=VirtualMic master=Source.monitor source_properties=device.description=VirtualMic" >> ~/.config/pulse/default.pa
+echo "load-module ${audio_system_module} source_name=VirtualMic master=Source.monitor source_properties=device.description=VirtualMic" >> ~/.config/pulse/default.pa
 #+end_src
 
 
