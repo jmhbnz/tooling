@@ -3,3 +3,5 @@
 	name = James Blair
 [pull]
 	rebase = false
+[credential]
+  helper = cache --timeout=21600
