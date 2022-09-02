@@ -35,7 +35,7 @@ sudo sed -i 's|https://archive.ubuntu.com/ubuntu|http://ucmirror.canterbury.ac.n
 Now that we have our ~apt~ package manager configured let's install the standard packages we use.
 
 #+begin_src tmate
-sudo apt install --yes htop screenfetch git curl wget xclip emacs xterm xtermcontrol jq tmux tmate apt-transport-https
+sudo apt install --yes htop screenfetch git curl wget xclip emacs xterm xtermcontrol jq tmux tmate apt-transport-https dict
 #+end_src
 
 For working with container images locally outside of kubernetes clusters we use [[https://podman.io/][~podman~]] so that we can avoid the security problems of a standard docker daemon. Follow the steps below to install podman:
