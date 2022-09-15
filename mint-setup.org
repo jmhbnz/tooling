@@ -178,6 +178,9 @@ sudo curl  -sL https://deb.nodesource.com/setup_16.x | sudo bash -
 
 # Install the nodejs package via apt
 sudo apt-get install -y nodejs
+
+# Install yarn dependency manager
+sudo npm install --global yarn
 #+END_SRC
 
 
