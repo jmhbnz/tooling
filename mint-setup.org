@@ -167,6 +167,20 @@ rm -rf ~/Downloads/aws*
 #+END_SRC
 
 
+** Optional - Nodejs dev tooling
+
+Some of my project work involves working with [[https://nodejs.org/en][nodejs]] and for package management namely we sometimes use [[https://www.npmjs.com/][node package manager]]. The code below installs node ~16.x~, which is the latest stable release as of <2022-09-16 Fri>.
+
+#+NAME: Install nodejs
+#+BEGIN_SRC tmate
+# Curl down the shell script for adding version 16 of nodejs to apt
+sudo curl  -sL https://deb.nodesource.com/setup_16.x | sudo bash -
+
+# Install the nodejs package via apt
+sudo apt-get install -y nodejs
+#+END_SRC
+
+
 ** Optional - Install hardware drivers
 
 
