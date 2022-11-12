@@ -33,6 +33,7 @@ function bwgt () { local test=$(export BW_SESSION=~/.bw_session) && bw get totp 
 function bwgi () { local test=$(export BW_SESSION=~/.bw_session) && bw get item --pretty "$1"; }
 function bwli () { local test=$(export BW_SESSION=~/.bw_session) && bw list items --search "$1" --pretty | egrep -i 'name|"id":'; }
 function bwol () { local test=$(export BW_SESSION=~/.bw_session) && bw get item --pretty "$1" | grep https | awk '{print $2}' | xclip -selection c; }
+function bwgu () { local test=$(export BW_SESSION=~/.bw_session) && bw get username "$1" | xclip -selection c; }
 
 # automate multimonitor command
 alias hdmioff='xrandr --output HDMI-0 --off'
