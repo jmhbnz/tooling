@@ -1,23 +1,32 @@
-# -*- ii: ii; -*-
 #+TITLE: Linux Mint Setup
 #+AUTHOR: James Blair
 #+EMAIL: mail@jamesblair.net
-#+DATE: <2022-01-16 Sun 11:00>
+#+DATE: <2022-11-15 Tue 09:15>
 
 
-This guide will walk through how I setup fresh installations of [[https://linuxmint.com/][Linux Mint]]. Linux Mint is an operating system for desktop and laptop computers. It is designed to work 'out of the box' and comes fully equipped with the apps most people need.
+This guide will walk through how I setup fresh installations of [[https://pop.system76.com/][POP!_OS]]. Pop!_OS is a free and open-source Linux distribution, based upon Ubuntu, and featuring a customized GNOME desktop environment known as COSMIC. The distribution is developed by American Linux computer manufacturer System76. Pop!_OS is primarily built to be bundled with the computers built by System76, but can also be downloaded and installed on most computers.
 
-I use Linux Mint as my daily driver operating system on a variety of different machines. The intent of this guide is to make it easy for me to get back up and running quickly whenver I do a fresh installation.
+Pop!_OS provides full out-of-the-box support for both AMD and Nvidia GPUs. It is regarded as an easy distribution to set up for gaming, mainly due to its built-in GPU support. Pop!_OS provides default disk encryption, streamlined window and workspace management, keyboard shortcuts for navigation as well as built-in power management profiles.
+
+I use POP!_OS as my daily driver operating system on a variety of different machines. The intent of this guide is to make it easy for me to get back up and running quickly whenver I do a fresh installation.
 
 
 * Setup home directory structure
 
+After installing the distribution I ensure the following directories are present in my home folder as they are relied on by other automated steps in this setup process:
+
+#+NAME: Setup home folder strucuture
+#+begin_src shell
+# Ensure we are in our home folder and create required directories
+cd ~/ && mkdir Documents Downloads
+#+end_src
 
 
 * Configure apt to use a local mirror
 
 To speed up how quickly our system can install new or updated packages we should tell ~apt~ to use a mirror here in New Zealand.
 
+#+NAME: Configure local apt mirror
 #+begin_src tmate
 # Backup our apt sources configuration before we make changes
 sudo cp /etc/apt/sources.list.d/official-package-repositories.list /etc/apt/sources.list.d/official-package-repositories.list.bak
@@ -61,13 +70,13 @@ sudo apt-get update && sudo apt install -y helm
 #+END_SRC
 
 
-
 Finally, we should upgrade the python package manger ~pip~ that we installed, before using it to install [[https://github.com/containers/podman-compose][podman-compose]].
 
 #+NAME: Upgrade pip
 #+BEGIN_SRC tmate
 sudo pip install --upgrade pip && sudo pip3 install podman-compose
 #+END_SRC
+
 
 For managing secrets we use [[https://bitwarden.com/][bitwarden]] which provides a great [[https://github.com/bitwarden/cli][cli utility]]. Additionally in our [[.bashrc][bashrc]] file included in this repository there are a number of helper functions to make working with ~bw~ easier.
 
@@ -94,18 +103,54 @@ pip3 install ansible
 #+END_SRC
 
 
-We use [[https://helm.sh][helm]] for packaging applications for kubernetes so let's install that now. Unfortunately we need an extra repository for this so let's separate this into a new step:
+* Restore ssh keys and dotfiles
 
-#+NAME: Install helm
-#+BEGIN_SRC tmate
-curl https://baltocdn.com/helm/signing.asc | sudo apt-key add -
-echo "deb https://baltocdn.com/helm/stable/debidan/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
+I make extensive use of ~.dotfiles~ to further customise my environment. The script below restores my versions of key dotfiles automatically.
 
-sudo apt-get update && sudo apt install -y helm
+*** Obtain ssh key from bitwarden
+
+In order to be able to clone the repository in the next step we need to obtain our ssh keys from bitwarden. Given we have installed the bitwarden cli we can mostly automte this process minus the initial login to bitwarden.
+
+#+NAME: Obtain ssh keys from bitwarden
+#+begin_src shell
+# Ensure we have an ssh-agent running
+eval `ssh-agent`
+
+# Generate a new blank key to overwrite
+ssh-keygen -t rsa -f ~/.ssh/james -q -P ""
+
+# Ensure we have an active bitwarden session
+export BW_SESSION=$(bw unlock --raw > ~/.bw_session && cat ~/.bw_session)
+
+# Export both keys
+export key=$(bw get item desktop --pretty | grep notes)
+
+# Extract private key
+export private=${key:12}
+export private=${private/END RSA*/END RSA PRIVATE KEY-----}
+echo $private | awk '{gsub(/\\n/,"\n")}1' > ~/.ssh/james
+
+# Extract public key
+export public=${key/*ssh-rsa/ssh-rsa} && echo ${public::-2} | awk '{gsub(/\\n/,"\n")}1' > ~/.ssh/james.pub
+#+end_src
+
+
+*** Clone and restore dotfiles
+
+Once our keys are available to us we can clone down our dotfiles and get back to our comfortable normal terminal environment.
+
+#+NAME: Clone and restore the dotfiles
+#+BEGIN_SRC shell
+# Clone down this repository
+git clone https://jmhbnz@gitea.jamma.life/jmhbnz/tooling.git ~/Documents/tooling/
+
+# Restore all dotfiles
+cp ~/Documents/tooling/.* ~/
+
+# Reload bashrc with updated version
+source ~/.bashrc
 #+END_SRC
 
-
-* Restore ssh keys and dotfiles
 
 
 
@@ -193,7 +238,7 @@ An integral part of our pair development workflow is [[https://github.com/humacs
 
 #+NAME: Install and configure humacs
 #+BEGIN_SRC tmate
-# Clone down humacs
+# Clone down humac[s
 git clone --recursive https://github.com/jmhbnz/humacs /home/$USER/Downloads/
 
 # Need to ensure environment variables are set for load path
@@ -202,6 +247,30 @@ export EMACSLOADPATH=/home/$USER/Downloads/humacs
 
 
 ** Optional - Setup mutt mail client
+
+For reading email we ideally use a cli based client for fast searching and lightweight mail reading.
+
+The [[https://gitlab.com/muttmua/mutt/][mutt]] mail client fills these roles well for imap mailboxes.
+
+The first step to setup mutt is to ensure it is installed.
+
+#+NAME: Install mutt
+#+BEGIN_SRC tmate
+sudo apt-get install -y mutt urlscan
+#+END_SRC
+
+After installing mutt we then need to create configuration directories and files.
+
+#+NAME: Create mutt config files
+#+BEGIN_SRC tmate
+mkdir -p ~/.mutt/cache/headers
+mkdir ~/.mutt/cache/bodies
+touch ~/.mutt/certificates
+#+END_SRC
+
+One configuration folders and files exist we just need to populate our user mutt configuration file with a configuration for our particular mail provider.
+
+The example provided in this repository utilises the ~bitwarden~ cli utility for secrets to ensure these are securely gathered at runtime and not stored in the file.
 
 
 ** Optional - Install rust
@@ -227,7 +296,7 @@ rustc -V && cargo -V
 
 ** Optional - Bluetooth manual pairing
 
-Using linux mint across all my devices has been pretty smooth however I have one annoyance with bluetooth on my HP Envy x360 ultrabook (model 13-ag0015AU). On that device I can't pair my Logitech k380 keyboard with the user interface, via either ~blueberry~ or ~blueman~.
+Using linux across all my devices has been pretty smooth however I have one annoyance with bluetooth on my HP Envy x360 ultrabook (model 13-ag0015AU). On that device I can't pair my Logitech k380 keyboard with the user interface, via either ~blueberry~ or ~blueman~.
 
 To work around this I found some excellent documentation on the Arch Linux wiki for [[https://wiki.archlinux.org/title/Bluetooth#Pairing][manually pairing]] with ~bluetoothctl~.
 
