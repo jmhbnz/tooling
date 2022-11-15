@@ -1,4 +1,4 @@
-#+TITLE: Tooling setup
+#+TITLE: Tooling overview
 #+AUTHOR: James Blair
 #+EMAIL: mail@jamesblair.net
 #+DATE: <2022-11-15 Tue 09:15>

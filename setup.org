@@ -1,4 +1,4 @@
-#+TITLE: Linux Mint Setup
+#+TITLE: Tooling setup
 #+AUTHOR: James Blair
 #+EMAIL: mail@jamesblair.net
 #+DATE: <2022-11-15 Tue 09:15>
