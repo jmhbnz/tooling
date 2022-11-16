@@ -246,6 +246,15 @@ export EMACSLOADPATH=/home/$USER/Downloads/humacs
 #+END_SRC
 
 
+** Optional - Setup sbp powerline prompt
+
+Having an informative bash prompt can ease cognitive burden and make development more pleasant. Below is an example of my terminal prompt which is based on [[https://github.com/powerline/fonts/][powerline fonts]] for symbols and [[https://github.com/brujoand/sbp][simple bash prompt]] for the overall presentation.
+
+As you can see in the screenshot, contextual "segments" are presented in the prompt to provide information like directory, current user and detailed git status.
+
+[[./images/powerline-prompt.png]]
+
+
 ** Optional - Setup mutt mail client
 
 For reading email we ideally use a cli based client for fast searching and lightweight mail reading.
