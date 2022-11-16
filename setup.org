@@ -255,6 +255,78 @@ As you can see in the screenshot, contextual "segments" are presented in the pro
 [[./images/powerline-prompt.png]]
 
 
+To set up this prompt the first thing we need to do is install powerline fonts:
+
+#+NAME: Install powerline fonts
+#+begin_src tmate
+# Install the powerline fonts package
+sudo apt-get install fonts-powerline
+
+# Refresh the system font cache
+sudo fc-cache --force --verbose
+#+end_src
+
+
+Once powerline fonts are installed we need to install simple bash prompt:
+
+#+NAME: Install simple bash prompt
+#+begin_src tmate
+# Clone the repository
+git clone https://github.com/jmhbnz/sbp ~/Downloads/sbp/
+
+# Run the install script
+./home/$USER/Downloads/sbp/bin/install
+
+# Ensure config directory exists
+mkdir --parents /home/$USER/.config/sbp/
+
+# Write the config file
+cat << EOF >
+#!/usr/bin/env bash
+SBP_THEME_COLOR='apathy'
+SBP_THEME_LAYOUT='powerline'
+
+# Hooks will run once before every prompt
+# Run 'sbp list hooks' to list all available hooks
+SBP_HOOKS=('alert')
+
+# Segments are generated before each prompt and can
+# be added, removed and reordered
+# Run 'sbp list segments' to list all available segments
+# Maybe you don't want to run all segments when in
+# a small window?
+
+if [[ "$COLUMNS" -le 120 ]]; then
+  # Let's adjust to the smaller screen
+  SBP_THEME_LAYOUT='powerline'
+  SBP_SEGMENTS_LEFT=('path' 'python_env' 'git' 'command')
+else
+  SBP_SEGMENTS_LEFT=('host' 'path' 'python_env' 'k8s' 'git' 'nix')
+  SBP_SEGMENTS_RIGHT=('command' 'timestamp')
+  SBP_SEGMENTS_LINE_TWO=('prompt_ready')
+fi
+
+# Segment specific settings
+SEGMENTS_K8S_DEFAULT_USER="$USER"
+SEGMENTS_K8S_HIDE_CLUSTER=1
+SEGMENTS_LOAD_THRESHOLD=50
+SEGMENTS_LOAD_THRESHOLD_HIGH=80
+SEGMENTS_RESCUETIME_REFRESH_RATE=600
+SEGMENTS_TIMESTAMP_FORMAT="%H:%M:%S"
+SEGMENTS_WTTR_LOCATION='Oslo'
+SEGMENTS_WTTR_FORMAT='%p;%t;%w'
+EOF
+
+# Reload the prompt
+sbp reload
+
+# Disable the k8s segment (it's a bit too long when working with openshift)
+sbp toggle peekaboo k8s
+#+end_src
+
+Congratulations - you should now have a functional, good looking and informative bash prompt! 🎉
+
+
 ** Optional - Setup mutt mail client
 
 For reading email we ideally use a cli based client for fast searching and lightweight mail reading.

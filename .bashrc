@@ -111,3 +111,5 @@ if ! tmate -S /tmp/default.tmate attach; then
     tmate -S /tmp/default.tmate.tmate new-session -s default -n default -d
     tmate -S /tmp/default.tmate.tmate attach
 fi
+SBP_PATH=/home/james/Downloads/sbp
+source /home/james/Downloads/sbp/sbp.bash
