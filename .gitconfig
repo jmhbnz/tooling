@@ -1,7 +1,12 @@
 [user]
 	email = mail@jamesblair.net
 	name = James Blair
+	signingkey = ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCsYhu2xE5cxq+sA7bNyHjZUk9IHKXHsd58ZCFLfCHbK5nnWLgJwxFnF1NzBylyOJviJ2v54VYQoXvsWLTbehlyH/kqJS8icmo0iu2mUFcp09n/3NcGw2BJefwMbK+mofxBBR78RRNI8DG3yk7Apa19BrLpFWaL/VljGidgR61WhPH7FbXjTh5NuQR494LG3yBRn16yIPNN+xZhf0TW7uoVCiSr77kFELgrTqjpPyoYiYLZZdKqJZ7PDgOEcLq5oDEZfYME8sGRPyufGByH7tnK9fgFaZ9wW747wTNN2naUIhCNzJLxKgr8fMMRBXuqeUjk+5/EzxGFXjxE+4a+dhD51OO5mSN1ctG/061HIQjJwZ2Zk6CACypBEv6nLVREaMqKQtcEPPooZ2SK4SdiMtwC8XLCZ6wRQDVskMentI1uy3bbCwV9AG0auiLA3sfbyKI8093p5NLsLEiR+BScu4/tLx7kzPetl89QOKzTI60GXzBaSnBXhAtQTijZZFrOGbQ1NQ1deWb6pT8foOPOs3P2F0a4Y/nY/xlomBuNqTI48Vi8MZJjhTvAe8BF+Y7C8HlSaCZeH1DrnymkbLhpXvVH7Tuir/DLOyhrwnXqNuxpMyWsfy5UrTfe67GP2+jzriFxteTMbvZjmgbF2UDMYs5U59NaYPdAYxjwdzH5nHoIWw== james@james-desktop
 [pull]
 	rebase = false
 [credential]
   helper = cache --timeout=21600
+[commit]
+	gpgsign = true
+[gpg]
+	format = ssh
