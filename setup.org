@@ -275,7 +275,7 @@ Once powerline fonts are installed we need to install simple bash prompt:
 git clone https://github.com/jmhbnz/sbp ~/Downloads/sbp/
 
 # Run the install script
-./home/$USER/Downloads/sbp/bin/install
+/home/$USER/Downloads/sbp/bin/install
 
 # Ensure config directory exists
 mkdir --parents /home/$USER/.config/sbp/
