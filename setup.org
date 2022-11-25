@@ -354,16 +354,19 @@ One configuration folders and files exist we just need to populate our user mutt
 The example provided in this repository utilises the ~bitwarden~ cli utility for secrets to ensure these are securely gathered at runtime and not stored in the file.
 
 
-** Optional - Install rust
+** Optional - Rust dev tooling
 
-I've been tinkering with learning the Rust programming language lately, to set that up follow these steps:
+I've been tinkering with learning the [[https://www.rust-lang.org/][Rust]] programming language lately, to set that up follow these steps:
 
-#+NAME: Install rust
+#+NAME: Install pre-requisites
 #+begin_src tmate
 # Ensure pre-requisites are installed
 sudo apt install curl build-essential gcc make -y
+#+end_src
 
-# Install rust via setup script
+#+NAME: Install rust via helper script
+#+begin_src tmate
+# Install rust via helper script
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 #+end_src
 
