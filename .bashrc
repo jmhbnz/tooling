@@ -22,8 +22,8 @@ shopt -s checkwinsize
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls -l --color=auto'
-    alias ll='ls -l --color=auto'
+    alias ls='ls -l --color=auto -h --group-directories-first'
+    alias ll='ls -l --color=auto -h --group-directories-first'
 fi
 
 # simplify bitwarden cli usage 
