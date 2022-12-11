@@ -1,0 +1,60 @@
+#+TITLE: Pinephone setup
+#+AUTHOR: James Blair
+#+EMAIL: mail@jamesblair.net
+#+DATE: <2022-12-11 Sun 16:00>
+
+
+Below are the steps I follow post standard installation of mobian on my pinephone.
+
+* Start temporary terminal session
+
+The first thing I do once the operating system is installed and up to date is to install ~tmate~ so that I can start a temporary remotely accessible terminal session on the device.
+
+This will give us a terminal session we can use to complete the remainder of this setup.
+
+#+NAME: Install tmate
+#+begin_src tmate
+sudo apt install --yes tmate
+#+end_src
+
+
+* Setup ssh server
+
+Once we have a foothold on the device via tmate we need to setup ~ssh~ server which we will use to securely connect to the device.
+
+#+NAME: Setup ssh server[
+#+begin_src tmate
+sudo apt install --yes openssh-server
+#+end_src
+
+
+* Setup access tunnel
+
+We want to be able to drop into a terminal on the device from anywhere provided it is powered on and has an internet connection. We can achieve this using a [[https://www.cloudflare.com/products/tunnel/][cloudflare access tunnel]].
+
+There are many similar projects that can achieve a similar outcome however I currently use cloudflare for dns for my domains and want to keep control plane sprawl down currently. In future I might move to a self hosted tunnel solution.
+
+To install the ~cloudflared~ daemon on the phone go to the control plane at https://one.dash.cloudflare.com, select the ~james-pinephone-pro~ tunnel, then run the given command on the pinephone terminal to install the service.
+
+Note: Ensure to select the ~arm64-bit~ architecture rather than the default ~64-bit~.
+
+The command will look something like this:
+
+#+NAME: Install cloudflared
+#+begin_src tmate
+curl -L --output cloudflared.deb https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64.deb &&
+
+sudo dpkg -i cloudflared.deb &&
+
+sudo cloudflared service install <token>
+#+end_src
+
+
+* Bluetooth audio fix
+
+To pair a wireless headset we first need to install the pa bluetooth module.
+
+#+NAME: Install pa bt module
+#+begin_src tmate
+sudo apt install pulseaudio-module-bluetooth
+#+end_src

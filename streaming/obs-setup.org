@@ -1,4 +1,3 @@
-# -*- ii: ii; -*-
 #+TITLE: Open broadcast studio setup
 #+AUTHOR: James Blair
 #+EMAIL: mail@jamesblair.net
