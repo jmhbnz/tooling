@@ -1,12 +1,14 @@
 #+TITLE: Tooling overview
 #+AUTHOR: James Blair
 #+EMAIL: mail@jamesblair.net
-#+DATE: <2022-11-15 Tue 09:15>
+#+DATE: <2022-12-11 Sun 16:00>
 
 
-This document captures my standard tooling for future replication and aims to make it as easy as possible to setup and use.
+This document captures my standard tooling for future replication and aims to make it as easy as possible to setup and use a new device with my workflows.
 
-The environment is based on [[https://pop.system76.com/][Pop!_OS]] ~22.04~ primarily, although guides for Windows 11 with [[https://docs.microsoft.com/en-us/windows/wsl/about][Window Subsystem for Linux]] are available in git history for legacy purposes.
+For the purposes of this repository I broadly refer to tooling as the "standard" way devices are configured and which things are installed that are non-standard to the operating system.
+
+The environment is based on [[https://pop.system76.com/][Pop!_OS]] ~22.04 LTS~ for my primary work device which is a 2021 Razer Blade 14". Additionally a subdirectory is included for my smartphone which is a [[https://www.pine64.org/pinephonepro/][PinePhone Pro]] from Pine64 running [[https://mobian-project.org/][Mobian]] ~12~.
 
 
 * How I get things done
@@ -16,7 +18,7 @@ Before diving into the technical details, below is a brief summary of how I get 
 
 ** Code editing
 
-For an editor I primarily rely on [[https://www.gnu.org/software/emacs/][emacs]], specifically [[https://github.com/humacs/humacs][humacs]]. To pair and share my terminals with others I rely on [[https://tmate.io/][tmate]]. My current primary device is a 2021 Razer Blade 14".
+For an editor I primarily rely on [[https://www.gnu.org/software/emacs/][emacs]], specifically [[https://github.com/humacs/humacs][humacs]]. To pair and share my terminals with others I rely on [[https://tmate.io/][tmate]].
 
 The main feature that I rely on in emacs is [[https://orgmode.org/][org-mode]]. This allows me to do literate programming, writing my documenation with embedded code blocks that are actually executable or exportable via [[https://orgmode.org/worg/org-contrib/babel/intro.html][babel]].
 
@@ -25,12 +27,9 @@ Working with some clients I also use [[https://code.visualstudio.com/][visual st
 
 ** Browsing the web
 
-My primary browser is [[https://www.mozilla.org/en-GB/firefox/new/][firefox]]. The addons I use are:
-  - u-block origin
-  - https everywhere
-  - privacy badger
+My primary browser is [[https://www.mozilla.org/en-GB/firefox/new/][firefox]]. Over the years various addons have come and gone but [[https://github.com/gorhill/uBlock][u-block origin]] has remained a constant and something I use everywhere.
 
-For monitoring traffic, blocking connections, enforcing secure dns and routing connections through other servers vpn style I rely on [[https://safing.io/portmaster/][Portmaster]] + [[https://safing.io/spn/][SPN]].
+For monitoring traffic, blocking connections, enforcing secure dns and routing connections through other servers vpn style I rely on [[https://safing.io/portmaster/][portmaster]] + [[https://safing.io/spn/][spn]].
 
 
 ** Reading email
