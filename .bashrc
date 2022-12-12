@@ -26,6 +26,9 @@ if [ -x /usr/bin/dircolors ]; then
     alias ll='ls -l --color=auto -h --group-directories-first'
 fi
 
+# Custom git alias for pushing to all remotes at once
+alias gpa='git remote | xargs -L1 git push --all'
+
 # simplify bitwarden cli usage 
 alias bwu='export BW_SESSION=$(bw unlock --raw > ~/.bw_session && cat ~/.bw_session)'
 function bwgp () { local test=$(export BW_SESSION=~/.bw_session) && bw get password "$1" | xclip -selection c; }
