@@ -58,3 +58,35 @@ To pair a wireless headset we first need to install the pa bluetooth module.
 #+begin_src tmate
 sudo apt install pulseaudio-module-bluetooth
 #+end_src
+
+
+* Optional configuration
+
+Once the primary setup is complete there is some further customisation I will generally do however these steps are optional.
+
+** List apt changelogs when upgrading
+
+Development for linux mobile packages is happening at a fast rate and breaking changes are sometimes introduced. For this reason I like to keep a close eye on package changelogs and get an idea of what is changing before an upgrade.
+
+To help with this package changelogs can be displayed directly in terminal whenever completing a ~sudo apt upgrade~. Follow the steps below to set this up.
+
+#+NAME: Install list changes
+#+begin_src tmate
+sudo apt install --yes apt-listchanges
+#+end_src
+
+#+NAME: Set listchanges config
+#+begin_src tmate
+sudo tee /etc/apt/listchanges.conf << EOF
+[apt]
+frontend=text
+which=both
+email_address=none
+email_format=text
+confirm=true
+headers=false
+reverse=false
+save_seen=/var/lib/apt/listchanges.db
+no_network=false
+EOF
+#+end_src
