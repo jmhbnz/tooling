@@ -15,3 +15,12 @@
 (set-face-background 'default "undefined")
 (add-hook 'text-mode-hook 'visual-line-mode)
 (add-hook 'org-mode-hook 'org-indent-mode)
+
+;; Prevent undo tree files from polluting your git repo
+(setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
+
+;; Fix annoying indentation with shell script src blocks in org-mode
+(setq org-edit-src-content-indentation 0)
+
+;; Change indentation of org-mode headline tags to left
+(setq org-tags-column 0)
