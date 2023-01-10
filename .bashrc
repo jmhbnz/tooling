@@ -29,14 +29,15 @@ fi
 # Custom git alias for pushing to all remotes at once
 alias gpa='git remote | xargs -L1 git push --all'
 
-# simplify bitwarden cli usage 
+# simplify bitwarden cli usage
+cpcmd="xclip -selection -c"; if [[ "$XDG_SESSION_TYPE" == "wayland" ]]; then cpcmd="wl-copy"; fi
 alias bwu='export BW_SESSION=$(bw unlock --raw > ~/.bw_session && cat ~/.bw_session)'
-function bwgp () { local test=$(export BW_SESSION=~/.bw_session) && bw get password "$1" | xclip -selection c; }
-function bwgt () { local test=$(export BW_SESSION=~/.bw_session) && bw get totp "$1" | xclip -selection c; }
+function bwgp () { local test=$(export BW_SESSION=~/.bw_session) && bw get password "$1" | $cpcmd; }
+function bwgt () { local test=$(export BW_SESSION=~/.bw_session) && bw get totp "$1" | $cpcmd; }
 function bwgi () { local test=$(export BW_SESSION=~/.bw_session) && bw get item --pretty "$1"; }
 function bwli () { local test=$(export BW_SESSION=~/.bw_session) && bw list items --search "$1" --pretty | egrep -i 'name|"id":'; }
-function bwol () { local test=$(export BW_SESSION=~/.bw_session) && bw get item --pretty "$1" | grep https | awk '{print $2}' | xclip -selection c; }
-function bwgu () { local test=$(export BW_SESSION=~/.bw_session) && bw get username "$1" | xclip -selection c; }
+function bwol () { local test=$(export BW_SESSION=~/.bw_session) && bw get item --pretty "$1" | grep https | awk '{print $2}' | $cpcmd; }
+function bwgu () { local test=$(export BW_SESSION=~/.bw_session) && bw get username "$1" | $cpcmd; }
 
 # automate multimonitor command
 alias hdmioff='xrandr --output HDMI-0 --off'
@@ -51,12 +52,6 @@ if ! shopt -oq posix; then
   elif [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
   fi
-fi
-
-# Configure display and browser for wsl
-if [ $(uname -r | sed -n 's/.*\( *Microsoft *\).*/\1/ip') ]; then
-    export DISPLAY=`grep -oP "(?<=nameserver ).+" /etc/resolv.conf`:0.0
-    export BROWSER="explorer.exe"
 fi
 
 # Configure emacs location
