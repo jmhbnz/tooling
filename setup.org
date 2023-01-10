@@ -22,29 +22,12 @@ cd ~/ && mkdir Documents Downloads
 #+end_src
 
 
-* Configure apt to use a local mirror
-
-To speed up how quickly our system can install new or updated packages we should tell ~apt~ to use a mirror here in New Zealand.
-
-#+NAME: Configure local apt mirror
-#+begin_src tmate
-# Backup our apt sources configuration before we make changes
-sudo cp /etc/apt/sources.list.d/official-package-repositories.list /etc/apt/sources.list.d/official-package-repositories.list.bak
-
-# Replace packages repo with local
-sudo sed -i 's|https://packages.linuxmint.com|http://ucmirror.canterbury.ac.nz/linux/mint/packages|g' /etc/apt/sources.list.d/official-package-repositories.list
-
-# Replace base repo with local
-sudo sed -i 's|https://archive.ubuntu.com/ubuntu|http://ucmirror.canterbury.ac.nz/ubuntu|g' /etc/apt/sources.list.d/official-package-repositories.list
-#+end_src
-
-
 * Install base packages
 
 Now that we have our ~apt~ package manager configured let's install the standard packages we use.
 
 #+begin_src tmate
-sudo apt install --yes htop screenfetch git curl wget xclip emacs xterm xtermcontrol jq tmux tmate apt-transport-https dict
+sudo apt install --yes htop screenfetch git curl wget xclip wl-clipboard emacs xterm xtermcontrol jq tmux tmate apt-transport-https dict
 #+end_src
 
 For working with container images locally outside of kubernetes clusters we use [[https://podman.io/][~podman~]] so that we can avoid the security problems of a standard docker daemon. Follow the steps below to install podman:
