@@ -4,7 +4,11 @@
 #+DATE: <2022-12-11 Sun 16:00>
 
 
-Below are the steps I follow post standard installation of mobian on my pinephone.
+Below are the steps I follow post standard installation of [[https://mobian-project.org][mobian]] on my [[https://www.pine64.org/pinephone/][pinephone]] or [[https://www.pine64.org/pinephonepro/][pinephone pro]].
+
+I've been using the pinephone pro as a daily driver since mid 2021, I still carry an android phone in my every day carry to act as my alarm and camera as these two functions don't currently work well enough for me on the pinephone pro.
+
+After much experimentation with various distros I have settled on Mobian with Phosh as this is keeps me in the Debian ecosystem that I run for my servers and laptop devices and also seems to be quite stable.
 
 * Start temporary terminal session
 
@@ -18,11 +22,14 @@ sudo apt install --yes tmate
 #+end_src
 
 
+Once ~tmate~ is installed we can launch it in a terminal and provided our device has internet connectivity use the ssh connection strings shown on screen to connect from a terminal or web browser on my primary device.
+
+
 * Setup ssh server
 
 Once we have a foothold on the device via tmate we need to setup ~ssh~ server which we will use to securely connect to the device.
 
-#+NAME: Setup ssh server[
+#+NAME: Setup ssh server
 #+begin_src tmate
 sudo apt install --yes openssh-server
 #+end_src
@@ -49,6 +56,52 @@ sudo dpkg -i cloudflared.deb &&
 sudo cloudflared service install <token>
 #+end_src
 
+
+At the client end we need to add the following to our ssh config to simplify the connection process so we can use our familar ~[user]@[hostname]~ approach for starting a session.
+
+#+NAME: Update ssh config
+#+begin_src shell
+cat << EOF >> ~/.ssh/config
+
+Host phone.jamma.life
+ProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h
+EOF
+
+
+#+end_src
+
+
+At this point with both services installed we should now be able to start both and connect. For security reasons we will be limiting connections to key based only and disabling both services by default so we need to intentionally start them.
+
+#+NAME: Start services
+#+begin_src tmate
+# Start services and exit tmate session
+sudo systemctl start cloudflared ssh && exit
+
+# Copy our key to the server
+ssh-copy-id -i ~/.ssh/james.pub mobian@phone.jamma.life
+
+# Connect via ssh
+ssh mobian@phone.jamma.life
+
+# Disable ssh password authentication
+sudo sed -i "s/#PasswordAuthentication yes/PasswordAuthentication no/"  /etc/ssh/sshd_config
+
+# Restart ssh daemon
+sudo systemctl restart ssh
+
+# Disable services by default
+sudo systemctl disable cloudflared ssh
+#+end_src
+
+
+* Install extra packages
+
+Now that we have our remote access done let's install any pinephone specific packages that we need over an above the standard packages covered in the [[../setup.org][setup.org]] file at the top level of this repository.
+
+#+begin_src tmate
+sudo apt install --yes yad
+#+end_src
 
 * Bluetooth audio fix
 
@@ -90,3 +143,71 @@ save_seen=/var/lib/apt/listchanges.db
 no_network=false
 EOF
 #+end_src
+
+
+** Disable haptic feedback for on screen keyboard
+
+I prefer to have no haptic vibration feedback when typing with the on screen keyboard. To disable it run the following:
+
+#+NAME: Disable haptic feedback
+#+begin_src tmate
+gsettings set org.sigxcpu.feedbackd.application:/org/sigxcpu/feedbackd/application/sm-puri-squeekboard/ profile silent
+#+end_src
+
+
+** Create app launcher for remote access
+
+I want a quick and easy way to launch the ~ssh~ and ~cloudflared~ services that I use for remote terminal access to the phone. Additionally this should provide a quick way to disable these services when no longer required, which gives us a battery life improvement.
+
+To achive this we can create a simple bash script leveraging [[https://manpages.debian.org/testing/yad/yad.1.en.html][yad]]. This will display gtk+ dialogs prompting for user input and return output to the script.
+
+#+NAME: Create remote access script
+#+begin_src tmate
+cat << EOF > ~/Downloads/remote-start.sh
+#!/usr/bin/env bash
+
+# Prompt for start
+yad --title "Start remote access." \
+    --text "Remote access via cloudflared and ssh will start once you press Ok." \
+    --button gtk-ok
+
+# Start services (this will prompt with native dialog for password)
+systemctl start cloudflared ssh
+
+# Prompt for end
+yad --title "End remote access." \
+    --text "Remote access via cloudflared and ssh will end once you press Ok." \
+    --button gtk-ok
+
+# Stop services (this will prompt with native dialog for password)
+systemctl stop cloudflared ssh
+EOF
+#+end_src
+
+
+Once the script has been created we can make it executable and test it manually by running the following:
+
+#+NAME: Execute and test script
+#+begin_src tmate
+chmod +x ~/Downloads/remote-start.sh
+
+cd ~/Downloads && ./remote-start.sh
+#+end_src
+
+
+We should see our flow of prompts and the services start and stop as expected. If all is well create a gnome phosh app launcher icon for the script as follows:
+
+#+NAME: Create app launcher icon
+#+begin_src tmate
+cat << EOF > ~/.local/share/applications/remote-access.sh
+[Desktop Entry]
+Type=Application
+Name=Remote access
+Icon=gnome-power-manager
+Exec=/home/mobian/Downloads/remote-start.sh
+Terminal=false
+EOF
+#+end_src
+
+
+Done! You now have a custom app in the launcher to control your remote device access 😎

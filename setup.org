@@ -24,7 +24,7 @@ cd ~/ && mkdir Documents Downloads
 
 * Install base packages
 
-Now that we have our ~apt~ package manager configured let's install the standard packages we use.
+Now that we have our home directory done let's install the standard packages we use.
 
 #+begin_src tmate
 sudo apt install --yes htop screenfetch git curl wget xclip wl-clipboard emacs xterm xtermcontrol jq tmux tmate apt-transport-https dict
