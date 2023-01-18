@@ -100,16 +100,7 @@ sudo systemctl disable cloudflared ssh
 Now that we have our remote access done let's install any pinephone specific packages that we need over an above the standard packages covered in the [[../setup.org][setup.org]] file at the top level of this repository.
 
 #+begin_src tmate
-sudo apt install --yes yad
-#+end_src
-
-* Bluetooth audio fix
-
-To pair a wireless headset we first need to install the pa bluetooth module.
-
-#+NAME: Install pa bt module
-#+begin_src tmate
-sudo apt install pulseaudio-module-bluetooth
+sudo apt install --yes yad wlr-randr pulseaudio-module-bluetooth
 #+end_src
 
 
