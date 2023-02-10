@@ -6,7 +6,7 @@
 
 This document captures my standard tooling for future replication and aims to make it as easy as possible to setup and use a new device with my workflows.
 
-For the purposes of this repository I broadly refer to tooling as the "standard" way devices are configured and which things are installed that are non-standard to the operating system.
+For the purposes of this repository I broadly refer to tooling as the "standard" way my devices are configured and which things are installed that are non-standard to the operating system.
 
 The environment is based on [[https://pop.system76.com/][Pop!_OS]] ~22.04 LTS~ for my primary work device which is a 2021 Razer Blade 14". Additionally a subdirectory is included for my smartphone which is a [[https://www.pine64.org/pinephonepro/][PinePhone Pro]] from Pine64 running [[https://mobian-project.org/][Mobian]] ~12~.
 
@@ -27,7 +27,7 @@ Working with some clients I also use [[https://code.visualstudio.com/][visual st
 
 ** Browsing the web
 
-My primary browser is [[https://www.mozilla.org/en-GB/firefox/new/][firefox]]. Over the years various addons have come and gone but [[https://github.com/gorhill/uBlock][u-block origin]] has remained a constant and something I use everywhere.
+My primary browser is [[https://www.mozilla.org/en-GB/firefox/new/][firefox]]. Over the years various extensions have come and gone but [[https://github.com/gorhill/uBlock][u-block origin]] has remained a constant and something I use everywhere. Currently I also have [[https://addons.mozilla.org/en-US/firefox/addon/darkreader/][dark reader]] installed to make working in low light situations less harsh.
 
 For monitoring traffic, blocking connections, enforcing secure dns and routing connections through other servers vpn style I rely on [[https://safing.io/portmaster/][portmaster]] + [[https://safing.io/spn/][spn]].
 
