@@ -47,4 +47,4 @@ The thing I like most about mutt is the caching which means I can traverse or sc
 
 One of the things I really like and use daily is leveraging bitwarden for my one time passwords. I can run something like ~bw get totp <thing> | xclip~ in a terminal and have a two factor auth code copied straight onto my clipboard ready to paste where it is required.
 
-The [[./.bashrc][.bashrc]] file in this repository includes helper functions to make bitwarden workflows even faster.
+The [[./.bashrc][.bashrc]] file in this repository includes helper functions to make bitwarden workflows even faster, including an implementation of a custom git credential cache to dynamically retrieve git https credentials from bitwarden.

@@ -39,6 +39,55 @@ function bwli () { local test=$(export BW_SESSION=~/.bw_session) && bw list item
 function bwol () { local test=$(export BW_SESSION=~/.bw_session) && bw get item --pretty "$1" | grep https | awk '{print $2}' | $cpcmd; }
 function bwgu () { local test=$(export BW_SESSION=~/.bw_session) && bw get username "$1" | $cpcmd; }
 
+# custom git credential cache implementation for bitwarden
+# https://github.com/bitwarden/cli/blob/master/examples/git-credential-bw.sh
+function bw_gitea () {
+   declare -A params
+
+   if [[ "$1" == "get" ]]; then
+       read -r line
+       while [ -n "$line" ]; do
+           key=${line%%=*}
+           value=${line#*=}
+           params[$key]=$value
+           read -r line
+       done
+
+       if [[ "${params['protocol']}" != "https" ]]; then
+           exit
+       fi
+
+       if [[ -z "${params["host"]}" ]]; then
+           exit
+       fi
+
+       if ! bw list items --search "asdf" > /dev/null 2>&1; then
+           echo "Please login to Bitwarden to use git credential helper" > /dev/stderr
+           exit
+       fi
+
+       id=$(bw list items --search "${params["host"]}"|jq ".[] | select(.name == \"${params["host"]}\").id" -r)
+
+       if [[ -z "$id" ]]; then
+           echo "Couldn't find item id in Bitwarden DB." > /dev/stderr
+           echo "${params}"
+           exit
+       fi
+
+       user=$(bw get username "${id}")
+       pass=$(bw get password "${id}")
+
+       if [[ -z "$user" ]] || [[ -z "$pass" ]]; then
+           echo "Couldn't find host in Bitwarden DB." > /dev/stderr
+           exit
+       fi
+
+       echo username="$user"
+       echo password="$pass"
+   fi
+}
+
+
 # automate multimonitor command
 alias hdmioff='xrandr --output HDMI-0 --off'
 alias hdmion='xrandr --output HDMI-0 --auto --rate 144.00 --left-of DVI-I-0 --primary'
@@ -100,6 +149,7 @@ elif [ -f ~/.bw_session ]; then export BW_SESSION=$(cat ~/.bw_session);
 else bwu; fi
 
 # Helper function for tmate pane renaming
+# This isn't working properly yet!
 function renamepane {
     printf '\033]2;%s\033\\' "${1}"
 }
