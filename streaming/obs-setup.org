@@ -6,7 +6,7 @@
 
 I use [[https://obsproject.com][Open Broadcast Studio]] in Linux Mint to manage my audio and video devices for virtual meetings which drastically improves my video and audio quality. This page documents how I set up and the configuration I use.
 
-Note: For audio hardware I generally rely on [[https://www.bluemic.com/en-us/products/yeti-nano/][Blue Yeti Nano]] microphones and [[https://electronics.sony.com/audio/headphones/headband/p/wh1000xm4-b][Sony WH-1000XM]] bluetooth headphones.
+Note: For audio hardware I generally rely on [[https://www.bluemic.com/en-us/products/yeti-nano/][Blue Yeti Nano]] microphones and [[https://electronics.sony.com/audio/headphones/headband/p/wh1000xm4-b][Sony WH-1000XM]] bluetooth headphones, for a camera I've recently moved to the [[https://www.logitech.com/en-au/products/webcams/brio-4k-hdr-webcam.960-001105.html][Logitech Brio 4k]].
 
 
 * Install obs
