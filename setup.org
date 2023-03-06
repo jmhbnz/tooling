@@ -221,12 +221,14 @@ An integral part of our pair development workflow is [[https://github.com/humacs
 
 #+NAME: Install and configure humacs
 #+BEGIN_SRC tmate
-# Clone down humac[s
+# Clone down humacs
 git clone --recursive https://github.com/jmhbnz/humacs /home/$USER/Downloads/
 
 # Need to ensure environment variables are set for load path
 export EMACSLOADPATH=/home/$USER/Downloads/humacs
 #+END_SRC
+
+Included in this repository is a ~.bashrc~ and ~humacs-custom.el~ which layer my personal preferences on top of humacs.
 
 
 ** Optional - Setup sbp powerline prompt

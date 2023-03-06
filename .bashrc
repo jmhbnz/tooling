@@ -87,11 +87,6 @@ function bw_gitea () {
    fi
 }
 
-
-# automate multimonitor command
-alias hdmioff='xrandr --output HDMI-0 --off'
-alias hdmion='xrandr --output HDMI-0 --auto --rate 144.00 --left-of DVI-I-0 --primary'
-
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
@@ -103,8 +98,9 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# Configure emacs location
+# Configure emacs location and aliases
 export EMACSLOADPATH=~/Downloads/humacs:
+alias e='emacsclient -a ""'
 
 # Setup prompt
 function color_my_prompt {
