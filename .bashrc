@@ -30,7 +30,7 @@ fi
 alias gpa='git remote | xargs -L1 git push --all'
 
 # simplify bitwarden cli usage
-cpcmd="xclip -selection -c"; if [[ "$XDG_SESSION_TYPE" == "wayland" ]]; then cpcmd="wl-copy"; fi
+cpcmd="xclip -selection c"; if [[ "$XDG_SESSION_TYPE" == "wayland" ]]; then cpcmd="wl-copy"; fi
 alias bwu='export BW_SESSION=$(bw unlock --raw > ~/.bw_session && cat ~/.bw_session)'
 function bwgp () { local test=$(export BW_SESSION=~/.bw_session) && bw get password "$1" | $cpcmd; }
 function bwgt () { local test=$(export BW_SESSION=~/.bw_session) && bw get totp "$1" | $cpcmd; }
