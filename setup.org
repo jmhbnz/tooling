@@ -27,7 +27,7 @@ cd ~/ && mkdir Documents Downloads
 Now that we have our home directory done let's install the standard packages we use.
 
 #+begin_src tmate
-sudo apt install --yes htop nvtop screenfetch git curl wget xclip wl-clipboard xsel emacs xterm xtermcontrol jq tmux tmate apt-transport-https dict gh
+sudo apt install --yes htop nvtop screenfetch git curl wget xclip wl-clipboard xsel emacs xterm xtermcontrol jq tmux tmate apt-transport-https dict gh unrar
 #+end_src
 
 For working with container images locally outside of kubernetes clusters we use [[https://podman.io/][~podman~]] so that we can avoid the security problems of a standard docker daemon. Follow the steps below to install podman:
