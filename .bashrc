@@ -9,7 +9,9 @@
 HISTCONTROL=ignoreboth
 
 # append to the history file, don't overwrite it
+# also ensure we write to history immediately instead of only on terminal close
 shopt -s histappend
+export PROMPT_COMMAND="history -a; history -n"
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=10000
@@ -108,7 +110,7 @@ if ! shopt -oq posix; then
 fi
 
 # Configure fuzzy find
-export FZF_DEFAULT_COMMAND="rg --files --follow --no-ignore-vcs --hidden -g '!{**/node_modules/*,**/.git/*}'"
+export FZF_DEFAULT_COMMAND="rg --files --follow --no-ignore-vcs --hidden -g '!{**/node_modules/*,**/.git/*,**.emacs.d/*}'"
 source /usr/share/doc/fzf/examples/key-bindings.bash
 
 # Configure emacs location and aliases
