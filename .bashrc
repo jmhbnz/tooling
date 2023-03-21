@@ -107,9 +107,22 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# Configure fuzzy find
+export FZF_DEFAULT_COMMAND="rg --files --follow --no-ignore-vcs --hidden -g '!{**/node_modules/*,**/.git/*}'"
+source /usr/share/doc/fzf/examples/key-bindings.bash
+
 # Configure emacs location and aliases
 export EMACSLOADPATH=~/Downloads/humacs:
-alias e='emacsclient -a ""'
+function e {
+
+    # If the file exists just open it
+    if test -f "$1"; then
+        emacsclient -a "" "$1"
+
+    # Otherwise we should search for it
+    else emacsclient -a "" $(fzf --height 40% --reverse -i --query "$1")
+    fi
+}
 
 # Setup prompt
 function color_my_prompt {
