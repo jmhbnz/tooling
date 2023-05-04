@@ -114,20 +114,24 @@ export FZF_DEFAULT_COMMAND="rg --files --follow --no-ignore-vcs --hidden -g '!{*
 source /usr/share/doc/fzf/examples/key-bindings.bash
 
 # Configure emacs location and aliases
-export EMACSLOADPATH=~/Downloads/humacs:
+export PATH=$PATH:/home/james/.config/emacs/bin/
+alias emacs="doom run"
+alias nano="doom run -nw"
+
 function e {
 
     # If the file exists just open it
     if test -f "$1"; then
-        emacsclient -a "" "$1"
+        doom run -nw "$1"
 
     # Otherwise we should search for it
-    else emacsclient -a "" $(fzf --height 40% --reverse -i --query "$1")
+    else doom run -nw $(fzf --height 40% --reverse -i --query "$1")
     fi
 }
 
 # Configure go location
 export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:/home/$USER/go/bin/
 
 # Setup prompt
 function color_my_prompt {
