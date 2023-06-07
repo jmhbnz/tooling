@@ -51,11 +51,6 @@ function bwol () { local test=$(export BW_SESSION=~/.bw_session) && bw get item 
 function bwgu () { local test=$(export BW_SESSION=~/.bw_session) && bw get username "$1" | $cpcmd; }
 
 # Custom function for creating new entries
-# Parameters must be provided:
-#   $1 = Name for item
-#   $2 = Username for item
-#   $3 = Secret for item
-#   $4 = Url for item (optional)
 function bwai () {
 
     # Verify enough parameters are supplied
