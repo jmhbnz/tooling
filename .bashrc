@@ -50,6 +50,34 @@ function bwli () { local test=$(export BW_SESSION=~/.bw_session) && bw list item
 function bwol () { local test=$(export BW_SESSION=~/.bw_session) && bw get item --pretty "$1" | grep https | awk '{print $2}' | $cpcmd; }
 function bwgu () { local test=$(export BW_SESSION=~/.bw_session) && bw get username "$1" | $cpcmd; }
 
+# Custom function for creating new entries
+# Parameters must be provided:
+#   $1 = Name for item
+#   $2 = Username for item
+#   $3 = Secret for item
+#   $4 = Url for item (optional)
+function bwai () {
+
+    # Verify enough parameters are supplied
+    if [ "$#" -lt "3" ]; then
+        echo 'Ensure all required parameters are supplied:'
+        echo '  $1 = Name for item'
+        echo '  $2 = Username for item'
+        echo '  $3 = Secret for item'
+        echo '  $4 = Url for item (optional)'
+        return 2
+    fi
+
+    # Pad the url with required json
+    bw_uris=$(bw get template item.login.uri | jq ".match="0" | .uri=\"${4}\"" | jq -c)
+
+    bw get template item | \
+        jq ".name=\"${1}\" | \
+        .login=$(bw get template item.login | jq ".username=\"${2}\" | .password=\"${3}\" | .uris=[${bw_uris}] | .totp=null")" | \
+        jq '.notes=null' | \
+        bw encode | bw create item && bw sync
+}
+
 # custom git credential cache implementation for bitwarden
 # https://github.com/bitwarden/cli/blob/master/examples/git-credential-bw.sh
 function bw_gitea () {
