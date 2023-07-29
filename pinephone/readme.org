@@ -6,7 +6,7 @@
 
 Below are the steps I follow post standard installation of [[https://mobian-project.org][mobian]] on my [[https://www.pine64.org/pinephone/][pinephone]] or [[https://www.pine64.org/pinephonepro/][pinephone pro]].
 
-I've been using the pinephone pro as a daily driver since mid 2021, I still carry an android phone in my every day carry to act as my alarm and camera as these two functions don't currently work well enough for me on the pinephone pro.
+I've been using the pinephone pro as a daily driver on and off since mid 2021. I still carry an android phone in my every day carry to act as my alarm and camera as these two functions don't currently work well enough for me on the pinephone pro.
 
 After much experimentation with various distros I have settled on Mobian with Phosh as this is keeps me in the Debian ecosystem that I run for my servers and laptop devices and also seems to be quite stable.
 
@@ -203,28 +203,3 @@ EOF
 
 Done! You now have a custom app in the launcher to control your remote device access 😎
 
-
-** Custom camera application
-
-The pinephone pro generally uses the [[https://gitlab.com/postmarketOS/megapixels][megapixels]] application for users interacting with the front and rear cameras.
-
-This works out of the box on the original pinephone, however for the pinephone pro a custom build of megapixels is required:
-
-Run the code block below to clone, compile and install the custom megapixels build:
-
-#+NAME: Compile and install custom megapixels
-#+begin_src tmate
-git clone https://github.com/kgmt0/megapixels -b linux-megi-6.1 && cd megapixels && wget http://deb.debian.org/debian/pool/main/m/megapixels/megapixels_1.6.0-1.debian.tar.xz && tar -xvf megapixels_1.6.0-1.debian.tar.xz && sudo apt build-dep . && dpkg-buildpackage -b -rfakeroot -us -uc && cd .. && sudo dpkg -i megapixels_1.6.0-1_arm64.deb
-#+end_src
-
-
-Once the custom megapixels build is installed and the phone has been rebooted the megapixels app will launch successfully and take photos, however these will be washed out with a green color.
-
-To fix this we can update the script the megapixels app uses to postprocess images that are taken, refer [[https://forum.pine64.org/showthread.php?tid=17711&pid=115439#pid115439][here]]. Run the block below to address this:
-
-#+NAME: Update post processing script
-#+begin_src tmate
-sudo cp /usr/share/megapixels/postprocess.sh /usr/share/megapixels/postprocess.sh.bak
-
-sudo sed -i 's/$DCRAW +M -H 4 -o 1 -q 3 -T "$@" "$MAIN_PICTURE.dng"/$DCRAW +M -H 4 -o 1 -q 3 -n 300 -a -m 0 -g 2.4 12.92 -b 1.0 -T "$@" "$MAIN_PICTURE.dng"./' /usr/share/megapixels/postprocess.sh
-#+end_src
