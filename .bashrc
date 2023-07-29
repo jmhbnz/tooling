@@ -138,17 +138,17 @@ source /usr/share/doc/fzf/examples/key-bindings.bash
 
 # Configure emacs location and aliases
 export PATH=$PATH:/home/james/.config/emacs/bin/
-alias emacs="doom run"
-alias nano="doom run -nw"
+alias emacs="emacsclient -nw -a 'doom run --bg-daemon && emacsclient -nw'"
+alias nano="emacsclient -nw -a 'doom run --bg-daemon' && emacsclient -nw"
 
 function e {
 
     # If the file exists just open it
     if test -f "$1"; then
-        doom run -nw "$1"
+    emacsclient -nw -a 'doom run --bg-daemon && emacsclient -nw' "$1"
 
     # Otherwise we should search for it
-    else doom run -nw $(fzf --height 40% --reverse -i --query "$1")
+    else emacsclient -nw -a 'doom run --bg-daemon && emacsclient -nw' $(fzf --height 40% --reverse -i --query "$1")
     fi
 }
 
