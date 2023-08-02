@@ -6,8 +6,8 @@
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets. It is optional.
-(setq user-full-name "John Doe"
-      user-mail-address "john@doe.com")
+(setq user-full-name "James Blair"
+      user-mail-address "mail@jamesblair.net")
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom:
 ;;
@@ -86,3 +86,19 @@
     (set-face-background 'default "unspecified-bg" frame)))
 (add-hook 'after-make-frame-functions 'set-background-for-terminal)
 (add-hook 'window-setup-hook 'set-background-for-terminal)
+
+;; Add nice mouse scrolling support
+(xterm-mouse-mode 1)
+
+(defun scroll-up-5-lines ()
+   "Scroll up 5 lines"
+   (interactive)
+   (scroll-up 5))
+
+ (defun scroll-down-5-lines ()
+   "Scroll down 5 lines"
+   (interactive)
+   (scroll-down 5))
+
+ (global-set-key (kbd "<mouse-4>") 'scroll-down-5-lines)
+ (global-set-key (kbd "<mouse-5>") 'scroll-up-5-lines)
