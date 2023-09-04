@@ -48,3 +48,9 @@
 ;(unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
+
+(package! ob-tmux)
+(package! ob-async)
+(package! kubernetes)
+(package! kubernetes-evil)
+(package! graphviz-dot-mode)

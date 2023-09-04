@@ -102,3 +102,16 @@
 
  (global-set-key (kbd "<mouse-4>") 'scroll-down-5-lines)
  (global-set-key (kbd "<mouse-5>") 'scroll-up-5-lines)
+
+(setq org-babel-default-header-args:shell
+      '((:results . "output code verbatim replace")
+        (:wrap . "example")))
+
+(require 'ob-async)
+(use-package! ob-tmux
+  :ensure t
+  :custom
+  (org-babel-default-header-args:tmux
+     (:session . "default")
+     (:socket  . nil)))
+(org-babel-tmux-terminal "iterm")
