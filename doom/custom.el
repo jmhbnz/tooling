@@ -18,8 +18,9 @@
  '(jdee-db-active-breakpoint-face-colors (cons "#0F1019" "#D85F00"))
  '(jdee-db-requested-breakpoint-face-colors (cons "#0F1019" "#79D836"))
  '(jdee-db-spec-breakpoint-face-colors (cons "#0F1019" "#767676"))
+ '(magit-todos-insert-after '(bottom) nil nil "Changed by setter of obsolete option `magit-todos-insert-at'")
  '(objed-cursor-color "#D83441")
- '(package-selected-packages '(yaml-mode cmake-mode))
+ '(package-selected-packages '(ob-tmux yaml-mode cmake-mode))
  '(pdf-view-midnight-colors (cons "#CEDBE5" "#0D0E16"))
  '(rustic-ansi-faces
    ["#0D0E16" "#D83441" "#79D836" "#D8B941" "#3679D8" "#8041D8" "#36D8BD" "#CEDBE5"])

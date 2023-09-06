@@ -19,6 +19,8 @@
        ;;chinese
        ;;japanese
        ;;layout            ; auie,ctsrnm is the superior home row
+       :os
+       (tty +osc)
 
        :completion
        company           ; the ultimate code completion backend

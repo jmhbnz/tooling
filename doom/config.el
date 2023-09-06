@@ -108,10 +108,8 @@
         (:wrap . "example")))
 
 (require 'ob-async)
-(use-package! ob-tmux
-  :ensure t
-  :custom
-  (org-babel-default-header-args:tmux
-     (:session . "default")
-     (:socket  . nil)))
-(org-babel-tmux-terminal "iterm")
+(require 'ob-tmux)
+(setq org-babel-default-header-args:tmux
+      '((:results . "silent")	;
+        (:session . "default")	; The default tmux session to send code to
+        (:socket  . nil)))      ; The default tmux socket to communicate with
