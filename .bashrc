@@ -169,10 +169,6 @@ function color_my_prompt {
 
 color_my_prompt
 
-# Start from home folder
-cd ~/
-
-
 # Configure ssh-agent
 if [ -z "$(pgrep ssh-agent)" ]; then
     rm -rf /tmp/ssh-*
@@ -198,16 +194,10 @@ elif [ -f ~/.bw_session ]; then export BW_SESSION=$(cat ~/.bw_session);
 # Otherwise unlock to start new session
 else bwu; fi
 
-# Helper function for tmate pane renaming
-# This isn't working properly yet!
-function renamepane {
-    printf '\033]2;%s\033\\' "${1}"
-}
-
-# Try connect to my default tmate socket
-if ! tmate -S /tmp/default.tmate attach; then
-    tmate -S /tmp/default.tmate.tmate new-session -s default -n default -d
-    tmate -S /tmp/default.tmate.tmate attach
+# Try connect to my default tmux socket
+if ! tmux -S /tmp/default.tmux attach; then
+    tmux -S /tmp/default.tmux new-session -s default -n default -d
+    tmux -S /tmp/default.tmux attach
 fi
 SBP_PATH=/home/james/Downloads/sbp
 source /home/james/Downloads/sbp/sbp.bash
