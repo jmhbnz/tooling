@@ -363,31 +363,3 @@ rustc -V && cargo -V
 #+end_src
 
 
-** Optional - Bluetooth manual pairing
-
-Using linux across all my devices has been pretty smooth however I have one annoyance with bluetooth on my HP Envy x360 ultrabook (model 13-ag0015AU). On that device I can't pair my Logitech k380 keyboard with the user interface, via either ~blueberry~ or ~blueman~.
-
-To work around this I found some excellent documentation on the Arch Linux wiki for [[https://wiki.archlinux.org/title/Bluetooth#Pairing][manually pairing]] with ~bluetoothctl~.
-
-The steps I follow to manually pair are:
-
-#+NAME: Manually pair keyboard
-#+begin_src tmate
-# Enter bluetoothctl interactive prompt
-bluetoothctl
-
-# Ensure laptop can pair
-pairable on
-
-# Scan for devices
-scan on
-
-# Pair with the keyboard
-pair 34:88:5D:D6:A6:2B
-
-# Trust the keyboard
-trust 34:88:5D:D6:A6:2B
-
-# Connect to the keyboard
-connect 34:88:5D:D6:A6:2B
-#+end_src
