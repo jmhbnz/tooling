@@ -113,3 +113,7 @@
       '((:results . "silent")	;
         (:session . "default")	; The default tmux session to send code to
         (:socket  . nil)))      ; The default tmux socket to communicate with
+
+;; Fix comment colors
+(set-face-foreground 'font-lock-string-face "green")
+(set-face-foreground 'font-lock-comment-face "green")
