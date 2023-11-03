@@ -1,0 +1,14 @@
+#+TITLE: Fairphone setup
+#+AUTHOR: James Blair
+#+EMAIL: mail@jamesblair.net
+#+DATE: <2023-11-03 Fri 16:45>
+
+
+Below are the steps I follow post standard installation of [[https://ubuntu-touch.io][ubuntu touch]] on my [[https://en.wikipedia.org/wiki/Fairphone_4][Fairphone 4]].
+
+I've been using the fairphone 4 as a daily driver since April 2023, most recently with Ubuntu Touch.
+
+
+* Downgrade prior to installation
+
+After initially purchasing the fairphone, while it was running android I had upgraded to android 12. Unfortunately the ubuntu touch installer is not fully working with Android 12 so I had to downgrade the phone to Android 11 by reinstalling a stock image before proceeding with the ubuntu touch installation.
