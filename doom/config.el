@@ -117,3 +117,6 @@
 ;; Fix comment colors
 (set-face-foreground 'font-lock-string-face "green")
 (set-face-foreground 'font-lock-comment-face "green")
+
+;; Add support for mdx files
+(add-to-list 'auto-mode-alist '("\\.mdx\\'" . markdown-mode))
