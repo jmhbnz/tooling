@@ -26,13 +26,13 @@ cd ~/ && mkdir Documents Downloads
 
 Now that we have our home directory done let's install the standard packages we use.
 
-#+begin_src tmate
-sudo apt install --yes btop nvtop screenfetch git curl wget xclip wl-clipboard xsel emacs xterm xtermcontrol jq tmux tmate apt-transport-https dict gh unrar ripgrep
+#+begin_src tmux
+sudo apt install --yes btop nvtop screenfetch git curl wget xclip wl-clipboard xsel emacs xterm xtermcontrol jq tmux apt-transport-https dict gh unrar ripgrep
 #+end_src
 
 For working with container images locally outside of kubernetes clusters we use [[https://podman.io/][~podman~]] so that we can avoid the security problems of a standard docker daemon. Follow the steps below to install podman:
 
-#+begin_src tmate
+#+begin_src tmux
 # Add the repositories to our apt sources
 echo "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/ /" | sudo tee /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list
 
@@ -46,7 +46,7 @@ sudo apt update && sudo apt --yes install podman
 When working with kubernetes applications we often use [[https://helm.sh][helm]], unfortunately we need an extra ~apt~ repository for this so let's add that now and install.
 
 #+NAME: Install helm
-#+BEGIN_SRC tmate
+#+BEGIN_src tmux
 curl https://baltocdn.com/helm/signing.asc | sudo apt-key add -
 echo "deb https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
 sudo apt-get update && sudo apt install -y helm
@@ -56,7 +56,7 @@ sudo apt-get update && sudo apt install -y helm
 Finally, we should upgrade the python package manger ~pip~ that we installed, before using it to install [[https://github.com/containers/podman-compose][podman-compose]].
 
 #+NAME: Upgrade pip
-#+BEGIN_SRC tmate
+#+BEGIN_src tmux
 sudo pip install --upgrade pip && sudo pip3 install podman-compose
 #+END_SRC
 
@@ -64,7 +64,7 @@ sudo pip install --upgrade pip && sudo pip3 install podman-compose
 For managing secrets we use [[https://bitwarden.com/][bitwarden]] which provides a great [[https://github.com/bitwarden/cli][cli utility]]. Additionally in our [[.bashrc][bashrc]] file included in this repository there are a number of helper functions to make working with ~bw~ easier.
 
 #+NAME: Install bitwarden and login
-#+begin_src tmate
+#+begin_src tmux
 # Download the latest release
 wget "https://vault.bitwarden.com/download/?app=cli&platform=linux" --output-document "bw.zip"
 
@@ -81,7 +81,7 @@ For ad-hoc system administration we use [[https://deb.nodesource.com/setup_12.x 
 For significant ansible or python projects a virtual environment for python is suggested to keep project packages separate from system python packages.
 
 #+NAME: Install ansible via pip
-#+BEGIN_SRC tmate
+#+BEGIN_src tmux
 pip3 install ansible
 #+END_SRC
 
@@ -144,7 +144,7 @@ source ~/.bashrc
 Currently ~kubectl~ is packaged separately to ~gcloud~ and other cloud provider tools so let's install that first.
 
 #+NAME: Install kubectl
-#+begin_src tmate
+#+begin_src tmux
 sudo apt-get update && sudo apt-get install -y apt-transport-https ca-certificates curl
 
 sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
@@ -159,7 +159,7 @@ sudo apt-get update && sudo apt-get install -y kubectl
 For working with google cloud platform we use the [[https://cloud.google.com/sdk/][GCP SDK]], which provides our cli tools.
 
 #+NAME: Install google cloud sdk
-#+BEGIN_SRC tmate
+#+BEGIN_src tmux
 # Download the sdk archive
 curl -o gcpsdk.tar -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-375.0.0-linux-x86_64.tar.gz
 
@@ -181,7 +181,7 @@ sudo chown -R $USER:$USER /usr/local/google-cloud-sdk
 For working with [[https://aws.com][Amazon Web Services]] we need the [[https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html][AWS CLI]].
 
 #+NAME: Install amazon web services cli
-#+BEGIN_SRC tmate
+#+BEGIN_src tmux
 # Download the binary
 cd ~/Downloads/
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
@@ -200,7 +200,7 @@ rm -rf ~/Downloads/aws*
 Some of my project work involves working with [[https://nodejs.org/en][nodejs]] and for package management namely we sometimes use [[https://www.npmjs.com/][node package manager]]. The code below installs node ~16.x~, which is the latest stable release as of <2022-09-16 Fri>.
 
 #+NAME: Install nodejs
-#+BEGIN_SRC tmate
+#+BEGIN_src tmux
 # Curl down the shell script for adding version 16 of nodejs to apt
 sudo curl  -sL https://deb.nodesource.com/setup_16.x | sudo bash -
 
@@ -220,7 +220,7 @@ sudo npm install --global yarn
 An integral part of our pair development workflow is [[https://github.com/humacs/humacs][humacs]]. Below are the instructions to set this up.
 
 #+NAME: Install and configure humacs
-#+BEGIN_SRC tmate
+#+BEGIN_src tmux
 # Clone down humacs
 git clone --recursive https://github.com/jmhbnz/humacs /home/$USER/Downloads/
 
@@ -243,7 +243,7 @@ As you can see in the screenshot, contextual "segments" are presented in the pro
 To set up this prompt the first thing we need to do is install powerline fonts:
 
 #+NAME: Install powerline fonts
-#+begin_src tmate
+#+begin_src tmux
 # Install the powerline fonts package
 sudo apt-get install fonts-powerline
 
@@ -255,7 +255,7 @@ sudo fc-cache --force --verbose
 Once powerline fonts are installed we need to install simple bash prompt:
 
 #+NAME: Install simple bash prompt
-#+begin_src tmate
+#+begin_src tmux
 # Clone the repository
 git clone https://github.com/jmhbnz/sbp ~/Downloads/sbp/
 
@@ -321,14 +321,14 @@ The [[https://gitlab.com/muttmua/mutt/][mutt]] mail client fills these roles wel
 The first step to setup mutt is to ensure it is installed.
 
 #+NAME: Install mutt
-#+BEGIN_SRC tmate
+#+BEGIN_src tmux
 sudo apt-get install -y mutt urlscan
 #+END_SRC
 
 After installing mutt we then need to create configuration directories and files.
 
 #+NAME: Create mutt config files
-#+BEGIN_SRC tmate
+#+BEGIN_src tmux
 mkdir -p ~/.mutt/cache/headers
 mkdir ~/.mutt/cache/bodies
 touch ~/.mutt/certificates
@@ -344,13 +344,13 @@ The example provided in this repository utilises the ~bitwarden~ cli utility for
 I've been tinkering with learning the [[https://www.rust-lang.org/][Rust]] programming language lately, to set that up follow these steps:
 
 #+NAME: Install pre-requisites
-#+begin_src tmate
+#+begin_src tmux
 # Ensure pre-requisites are installed
 sudo apt install curl build-essential gcc make -y
 #+end_src
 
 #+NAME: Install rust via helper script
-#+begin_src tmate
+#+begin_src tmux
 # Install rust via helper script
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 #+end_src
@@ -358,7 +358,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 Once installed you can check if the rust compiler is installed with the code block below:
 
 #+NAME: Verify installation
-#+begin_src tmate
+#+begin_src tmux
 rustc -V && cargo -V
 #+end_src
 
