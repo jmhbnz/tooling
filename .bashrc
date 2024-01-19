@@ -154,7 +154,7 @@ function e {
 
 # Configure go location
 export PATH=$PATH:/usr/local/go/bin
-export PATH=$PATH:/home/$USER/go/bin/
+export PATH=$PATH:/home/$USER/Downloads/go/bin/
 
 # Setup prompt
 function color_my_prompt {
