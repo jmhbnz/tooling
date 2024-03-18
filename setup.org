@@ -147,13 +147,13 @@ Currently ~kubectl~ is packaged separately to ~gcloud~ and other cloud provider 
 
 #+NAME: Install kubectl
 #+begin_src tmux
-sudo apt-get update && sudo apt-get install -y apt-transport-https ca-certificates curl
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
 
-sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
+sudo install kubectl /usr/local/bin/
 
-echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+which kubectl && kubectl version
 
-sudo apt-get update && sudo apt-get install -y kubectl
+rm kubectl
 #+end_src
 
 
