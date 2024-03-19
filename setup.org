@@ -163,7 +163,7 @@ For working with google cloud platform we use the [[https://cloud.google.com/sdk
 #+NAME: Install google cloud sdk
 #+BEGIN_src tmux
 # Download the sdk archive
-curl -o gcpsdk.tar -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-375.0.0-linux-x86_64.tar.gz
+curl -o gcpsdk.tar -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-468.0.0-linux-x86_64.tar.gz
 
 # Extract to a folder in path then remove archive
 sudo tar xvf gcpsdk.tar -C /usr/local/ && rm gcpsdk.tar
@@ -174,10 +174,6 @@ sudo chown -R $USER:$USER /usr/local/google-cloud-sdk
 # Run the install script
 /usr/local/google-cloud-sdk/install.sh
 #+END_SRC
-
-#+RESULTS: Install google cloud sdk
-#+begin_example
-#+end_example
 
 
 For working with [[https://aws.com][Amazon Web Services]] we need the [[https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html][AWS CLI]].
