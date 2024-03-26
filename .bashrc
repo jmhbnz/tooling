@@ -54,21 +54,24 @@ function bwgu () { local test=$(export BW_SESSION=~/.bw_session) && bw get usern
 function bwai () {
 
     # Verify enough parameters are supplied
-    if [ "$#" -lt "3" ]; then
+    if [ "$#" -lt "2" ]; then
         echo 'Ensure all required parameters are supplied:'
         echo '  $1 = Name for item'
         echo '  $2 = Username for item'
-        echo '  $3 = Secret for item'
+        echo '  $3 = Secret for item (optional)'
         echo '  $4 = Url for item (optional)'
         return 2
     fi
+
+    # Use a generated password if none supplied
+    local pass="${3:-$(tr -dc A-Za-z0-9 </dev/urandom | head -c 20; echo)}"
 
     # Pad the url with required json
     bw_uris=$(bw get template item.login.uri | jq ".match="0" | .uri=\"${4}\"" | jq -c)
 
     bw get template item | \
         jq ".name=\"${1}\" | \
-        .login=$(bw get template item.login | jq ".username=\"${2}\" | .password=\"${3}\" | .uris=[${bw_uris}] | .totp=null")" | \
+        .login=$(bw get template item.login | jq ".username=\"${2}\" | .password=\"${pass}\" | .uris=[${bw_uris}] | .totp=null")" | \
         jq '.notes=null' | \
         bw encode | bw create item && bw sync
 }
