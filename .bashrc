@@ -137,7 +137,7 @@ fi
 
 # Configure fuzzy find
 export FZF_DEFAULT_COMMAND="rg --files --follow --no-ignore-vcs --hidden -g '!{**/node_modules/*,**/.git/*,**.emacs.d/*}'"
-source /usr/share/doc/fzf/examples/key-bindings.bash
+eval "$(fzf --bash)"
 
 # Configure emacs location and aliases
 export PATH=$PATH:/home/james/.config/emacs/bin/
@@ -162,7 +162,7 @@ export PATH=$PATH:/home/$USER/Downloads/go/bin/
 # Setup prompt
 function color_my_prompt {
     local __user_and_host="\[\033[01;32m\]\u@\h"
-    local __cur_location="\[\033[01;34m\]\w"
+    local __cur_location="\[\032[01;34m\]\w"
     local __git_branch_color="\[\033[31m\]"
     local __git_branch='`git branch 2> /dev/null | grep -e ^* | sed -E  s/^\\\\\*\ \(.+\)$/\(\\\\\1\)\ /`'
     local __prompt_tail="\[\033[35m\]$"
