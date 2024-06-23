@@ -156,8 +156,7 @@ function e {
 }
 
 # Configure go location
-export PATH=$PATH:/usr/local/go/bin
-export PATH=$PATH:/home/$USER/Downloads/go/bin/
+export PATH=$PATH:/var/home/james/go/bin
 
 # Setup prompt
 function color_my_prompt {
@@ -204,3 +203,4 @@ if ! tmux -S /tmp/default.tmux attach; then
 fi
 SBP_PATH=/home/james/Downloads/sbp
 source /home/james/Downloads/sbp/sbp.bash
+export NODE_OPTIONS="--no-deprecation"
