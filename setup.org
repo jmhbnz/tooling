@@ -163,16 +163,13 @@ For working with google cloud platform we use the [[https://cloud.google.com/sdk
 #+NAME: Install google cloud sdk
 #+BEGIN_src tmux
 # Download the sdk archive
-curl -o gcpsdk.tar -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-468.0.0-linux-x86_64.tar.gz
+curl -o gcpsdk.tar -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-linux-x86_64.tar.gz
 
 # Extract to a folder in path then remove archive
-sudo tar xvf gcpsdk.tar -C /usr/local/ && rm gcpsdk.tar
-
-# Correct folder permissions
-sudo chown -R $USER:$USER /usr/local/google-cloud-sdk
+tar xvf gcpsdk.tar -C /home/${USER}/.var/bin && rm gcpsdk.tar
 
 # Run the install script
-/usr/local/google-cloud-sdk/install.sh
+/home/${USER}/.var/bin/google-cloud-sdk/install.sh
 #+END_SRC
 
 
@@ -193,6 +190,7 @@ rm -rf ~/Downloads/aws*
 #+END_SRC
 
 
+**
 ** Optional - Nodejs dev tooling
 
 Some of my project work involves working with [[https://nodejs.org/en][nodejs]] and for package management namely we sometimes use [[https://www.npmjs.com/][node package manager]]. The code below installs node ~16.x~, which is the latest stable release as of <2022-09-16 Fri>.
