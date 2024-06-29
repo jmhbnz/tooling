@@ -9,10 +9,12 @@ brew "emacs"
 brew "eza"
 brew "fd"
 brew "fzf"
+brew "gcc"
 brew "gh"
 brew "glab"
 brew "pcre2"
-brew "go"
+brew "go", link: false
+brew "go@1.21", link: true
 brew "helm"
 brew "openshift-cli"
 brew "pcre"
