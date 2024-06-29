@@ -28,6 +28,9 @@ if [ -x /usr/bin/dircolors ]; then
     alias ll='ls -l --color=auto -h --group-directories-first'
 fi
 
+# Alias docker to podman
+alias docker=podman
+
 # Custom git alias for pushing to all remotes at once
 alias gpa='git remote | xargs -L1 git push --all'
 
@@ -204,3 +207,9 @@ fi
 SBP_PATH=/home/james/Downloads/sbp
 source /home/james/Downloads/sbp/sbp.bash
 export NODE_OPTIONS="--no-deprecation"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/var/home/james/.var/bin/google-cloud-sdk/path.bash.inc' ]; then . '/var/home/james/.var/bin/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/var/home/james/.var/bin/google-cloud-sdk/completion.bash.inc' ]; then . '/var/home/james/.var/bin/google-cloud-sdk/completion.bash.inc'; fi
