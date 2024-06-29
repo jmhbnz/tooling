@@ -5,13 +5,12 @@
 [pull]
 	rebase = false
 [credential]
-        helper = cache --timeout=21600
+	helper = cache --timeout=21600
 [commit]
 	gpgsign = true
 [gpg]
 	format = ssh
-
 [alias]
 	sweep = !"git branch -d $(git branch --merged | grep -vw $(git rev-parse --abbrev-ref HEAD))"
 [core]
-	askPass = true
+	askPass = false
