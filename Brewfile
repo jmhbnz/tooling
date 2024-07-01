@@ -17,6 +17,8 @@ brew "go", link: false
 brew "go@1.21", link: true
 brew "govulncheck"
 brew "helm"
+brew "markdownlint-cli"
+brew "ocm"
 brew "openshift-cli"
 brew "pcre"
 brew "ripgrep"
