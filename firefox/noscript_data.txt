@@ -1,0 +1,124 @@
+{
+  "policy": {
+    "DEFAULT": {
+      "capabilities": [
+        "frame",
+        "fetch",
+        "noscript",
+        "other",
+        "media"
+      ],
+      "temp": false
+    },
+    "TRUSTED": {
+      "capabilities": [
+        "script",
+        "object",
+        "media",
+        "frame",
+        "font",
+        "webgl",
+        "fetch",
+        "ping",
+        "noscript",
+        "unchecked_css",
+        "lan",
+        "other"
+      ],
+      "temp": false
+    },
+    "UNTRUSTED": {
+      "capabilities": [],
+      "temp": false
+    },
+    "sites": {
+      "trusted": [
+        "§:addons.mozilla.org",
+        "§:ajax.aspnetcdn.com",
+        "§:ajax.googleapis.com",
+        "§:bootstrapcdn.com",
+        "§:code.jquery.com",
+        "§:google.com",
+        "§:googlevideo.com",
+        "§:gstatic.com",
+        "§:maps.googleapis.com",
+        "§:mozilla.net",
+        "§:noscript.net",
+        "§:paypal.com",
+        "§:paypalobjects.com",
+        "§:yimg.com",
+        "§:youtube.com",
+        "§:ytimg.com",
+        "§:jamma.life",
+        "§:github.com",
+        "§:githubassets.com",
+        "§:dreamhost.com",
+        "§:redhat.com",
+        "§:statuspage.io",
+        "§:southerncross.co.nz",
+        "§:azure.com",
+        "§:stripe.com",
+        "§:b2clogin.com",
+        "§:farmlands.co.nz",
+        "§:dynamics365commerce.ms",
+        "§:amazon.com",
+        "§:awsstatic.com",
+        "§:k8s.io",
+        "§:googleusercontent.com",
+        "§:windy.com",
+        "§:sharesies.nz",
+        "§:slack.com",
+        "§:slack-edge.com",
+        "§:tsbbank.co.nz",
+        "§:kiwibank.co.nz",
+        "§:linuxfoundation.org",
+        "§:cvent.com",
+        "§:cvent-assets.com",
+        "§:airnewzealand.com",
+        "§:airnewzealand.co.nz",
+        "§:airpointsstore.co.nz",
+        "§:cve.org",
+        "§:aquasec.com",
+        "§:nist.gov",
+        "§:cvefeed.io",
+        "§:mitre10.co.nz",
+        "§:cloudflare.com",
+        "§:jamma.dev",
+        "§:powershop.co.nz",
+        "§:flux.app",
+        "§:nzfarmsource.co.nz",
+        "§:primehort.co.nz",
+        "§:myworkday.com",
+        "§:opentlc.com",
+        "§:openshift.net",
+        "§:jmhbnz.github.io",
+        "§:redhatworkshops.io"
+      ],
+      "untrusted": [],
+      "custom": {}
+    },
+    "enforced": true,
+    "autoAllowTop": false
+  },
+  "local": {
+    "debug": false,
+    "showCtxMenuItem": true,
+    "showCountBadge": true,
+    "showFullAddresses": false,
+    "amnesticUpdates": false,
+    "storage": "local",
+  },
+  "sync": {
+    "global": false,
+    "xss": true,
+    "TabGuardMode": "incognito",
+    "TabGuardPrompt": "post",
+    "cascadeRestrictions": false,
+    "overrideTorBrowserPolicy": false,
+    "storage": "sync"
+  },
+  "xssUserChoices": {
+    "https://mail.google.com>https://www.youtube.com": "allow",
+    "https://drive.google.com>https://youtube.googleapis.com": "allow"
+  }
+}
