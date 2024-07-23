@@ -77,6 +77,8 @@
         "§:airnewzealand.com",
         "§:airnewzealand.co.nz",
         "§:airpointsstore.co.nz",
+        "§:reddit.com",
+        "§:redditstatic.com",
         "§:cve.org",
         "§:aquasec.com",
         "§:nist.gov",
@@ -92,7 +94,21 @@
         "§:opentlc.com",
         "§:openshift.net",
         "§:jmhbnz.github.io",
-        "§:redhatworkshops.io"
+        "§:redhatworkshops.io",
+        "§:bunnings.co.nz",
+        "§:openshiftapps.com",
+        "§:westpac.co.nz",
+        "§:kapiticoast.govt.nz",
+        "§:discord.com",
+        "§:farmlandspro.co.nz",
+        "§:hnry.io",
+        "§:trademe.co.nz",
+        "§:bitwarden.com",
+        "§:one.nz",
+        "§:vodafone.co.nz",
+        "§:cncf.io",
+        "§:openshift.com",
+        "§:force.com"
       ],
       "untrusted": [],
       "custom": {}
@@ -105,6 +121,7 @@
     "showCtxMenuItem": true,
     "showCountBadge": true,
     "showFullAddresses": false,
+    "showProbePlaceholders": true,
     "amnesticUpdates": false,
     "storage": "local",
   },
@@ -119,6 +136,7 @@
   },
   "xssUserChoices": {
     "https://mail.google.com>https://www.youtube.com": "allow",
-    "https://drive.google.com>https://youtube.googleapis.com": "allow"
+    "https://drive.google.com>https://youtube.googleapis.com": "allow",
+    "https://auth.redhat.com>https://sso.online.tableau.com": "allow"
   }
 }
