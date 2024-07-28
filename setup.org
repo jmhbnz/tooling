@@ -4,88 +4,30 @@
 #+DATE: <2022-11-15 Tue 09:15>
 
 
-This guide will walk through how I setup fresh installations of [[https://pop.system76.com/][POP!_OS]]. Pop!_OS is a free and open-source Linux distribution, based upon Ubuntu, and featuring a customized GNOME desktop environment known as COSMIC. The distribution is developed by American Linux computer manufacturer System76. Pop!_OS is primarily built to be bundled with the computers built by System76, but can also be downloaded and installed on most computers.
+This guide will walk through how I setup fresh installations of [[https://projectbluefin.io][Bluefin]]. Bluefin strives to cover these two use cases; For end users it provides a system as reliable as a Chromebook with near-zero maintainance, with the power of homebrew, flathub, and a container runtime to give you access to all the best software Open Source has to offer.
 
-Pop!_OS provides full out-of-the-box support for both AMD and Nvidia GPUs. It is regarded as an easy distribution to set up for gaming, mainly due to its built-in GPU support. Pop!_OS provides default disk encryption, streamlined window and workspace management, keyboard shortcuts for navigation as well as built-in power management profiles.
-
-I use POP!_OS as my daily driver operating system on a variety of different machines. The intent of this guide is to make it easy for me to get back up and running quickly whenver I do a fresh installation.
+I use Bluefin as my daily driver operating system on a variety of different machines. The intent of this guide is to make it easy for me to get back up and running quickly whenver I do a fresh installation.
 
 
-* Setup home directory structure
+* Install brew packages
 
-After installing the distribution I ensure the following directories are present in my home folder as they are relied on by other automated steps in this setup process:
-
-#+NAME: Setup home folder strucuture
-#+begin_src shell
-# Ensure we are in our home folder and create required directories
-cd ~/ && mkdir Documents Downloads
-#+end_src
-
-
-* Install base packages
-
-Now that we have our home directory done let's install the standard packages we use.
+Additional packages are ideally sourced from [[https://docs.brew.sh/Homebrew-on-Linux][Homebrew for Linux]], with [[https://flathub.org/][Flathub]] for anything I can't find in brew.  Included in this repository is my ~Brewfile~ of packages.
 
 #+begin_src tmux
-sudo apt install --yes btop nvtop screenfetch git curl wget xclip wl-clipboard xsel emacs xterm xtermcontrol jq tmux apt-transport-https dict gh unrar ripgrep
-#+end_src
-
-For working with container images locally outside of kubernetes clusters we use [[https://podman.io/][~podman~]] so that we can avoid the security problems of a standard docker daemon. Follow the steps below to install podman:
-
-#+begin_src tmux
-# Add the repositories to our apt sources
-echo "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/ /" | sudo tee /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list
-
-# Add the repository key
-curl -L "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/Release.key" | sudo apt-key add -
-
-sudo apt update && sudo apt --yes install podman
+brew bundle install
 #+end_src
 
 
-When working with kubernetes applications we often use [[https://helm.sh][helm]], let's download and install the latest release from github.
-
-#+NAME: Install helm
-#+BEGIN_src tmux
-wget $(sed 's/.\{1\}$//' <<< $(curl -s https://api.github.com/repos/helm/helm/releases/latest | grep -oP 'https...get.helm.sh.helm-v\d+.\d+.\d+-linux-amd64.tar.gz[)]'))
-
-tar xf helm*.tar.gz linux-amd64/helm --transform 's,linux-amd64,,' && rm -rf helm-*linux-amd64.tar.gz
-
-sudo mv helm /usr/local/bin/helm
-#+END_SRC
-
-
-Finally, we should upgrade the python package manger ~pip~ that we installed, before using it to install [[https://github.com/containers/podman-compose][podman-compose]].
-
-#+NAME: Upgrade pip
-#+BEGIN_src tmux
-sudo pip install --upgrade pip && sudo pip3 install podman-compose
-#+END_SRC
-
+* Secret management
 
 For managing secrets we use [[https://bitwarden.com/][bitwarden]] which provides a great [[https://github.com/bitwarden/cli][cli utility]]. Additionally in our [[.bashrc][bashrc]] file included in this repository there are a number of helper functions to make working with ~bw~ easier.
 
-#+NAME: Install bitwarden and login
+The ~bw~ utility should already be installed as part of our homebrew packages. Let's login now.
+
+#+NAME: Login to bitwarden
 #+begin_src tmux
-# Download the latest release
-wget "https://vault.bitwarden.com/download/?app=cli&platform=linux" --output-document "bw.zip"
-
-# Unzip and install the latest release
-unzip "bw.zip" && sudo install "bw" "/usr/local/bin" && rm "bw" "bw.zip"
-
-# Login to bitwarden
 bw login mail@jamesblair.net
 #+end_src
-
-
-For ad-hoc system administration we use [[https://deb.nodesource.com/setup_12.x ][ansible]]. We install ansible via ~pip3~ to ensure any modules or additional packages required at a later date can be easily managed.
-
-For significant ansible or python projects a virtual environment for python is suggested to keep project packages separate from system python packages.
-
-#+NAME: Install ansible via pip
-#+BEGIN_src tmux
-pip3 install ansible
-#+END_SRC
 
 
 * Restore ssh keys and dotfiles
@@ -143,22 +85,7 @@ source ~/.bashrc
 
 ** Optional - Cloud provider tools
 
-Currently ~kubectl~ is packaged separately to ~gcloud~ and other cloud provider tools so let's install that first.
-
-#+NAME: Install kubectl
-#+begin_src tmux
-curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-
-sudo install kubectl /usr/local/bin/
-
-which kubectl && kubectl version
-
-rm kubectl
-#+end_src
-
-
-
-For working with google cloud platform we use the [[https://cloud.google.com/sdk/][GCP SDK]], which provides our cli tools.
+For working with google cloud platform we use the [[https://cloud.google.com/sdk/][GCP SDK]], which provides our cli tools. Unfortunately we [[https://github.com/orgs/Homebrew/discussions/3594][can't install it via brew on Linux]] so we need to install it manually.
 
 #+NAME: Install google cloud sdk
 #+BEGIN_src tmux
@@ -173,58 +100,17 @@ tar xvf gcpsdk.tar -C /home/${USER}/.var/bin && rm gcpsdk.tar
 #+END_SRC
 
 
-For working with [[https://aws.com][Amazon Web Services]] we need the [[https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html][AWS CLI]].
+** Optional - Setup doom emacs
 
-#+NAME: Install amazon web services cli
+An integral part of my development workflow is [[https://github.com/doomemacs/doomemacs][Doom Emacs]]. Below are the instructions to set this up.
+
+#+NAME: Install and configure doom
 #+BEGIN_src tmux
-# Download the binary
-cd ~/Downloads/
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-
-# Install
-unzip awscliv2.zip
-sudo ./aws/install
-
-# Clean up
-rm -rf ~/Downloads/aws*
+git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
+~/.config/emacs/bin/doom install
 #+END_SRC
 
-
-**
-** Optional - Nodejs dev tooling
-
-Some of my project work involves working with [[https://nodejs.org/en][nodejs]] and for package management namely we sometimes use [[https://www.npmjs.com/][node package manager]]. The code below installs node ~16.x~, which is the latest stable release as of <2022-09-16 Fri>.
-
-#+NAME: Install nodejs
-#+BEGIN_src tmux
-# Curl down the shell script for adding version 16 of nodejs to apt
-sudo curl  -sL https://deb.nodesource.com/setup_16.x | sudo bash -
-
-# Install the nodejs package via apt
-sudo apt-get install -y nodejs
-
-# Install yarn dependency manager
-sudo npm install --global yarn
-#+END_SRC
-
-
-** Optional - Install hardware drivers
-
-
-** Optional - Setup humacs editor
-
-An integral part of our pair development workflow is [[https://github.com/humacs/humacs][humacs]]. Below are the instructions to set this up.
-
-#+NAME: Install and configure humacs
-#+BEGIN_src tmux
-# Clone down humacs
-git clone --recursive https://github.com/jmhbnz/humacs /home/$USER/Downloads/
-
-# Need to ensure environment variables are set for load path
-export EMACSLOADPATH=/home/$USER/Downloads/humacs
-#+END_SRC
-
-Included in this repository is a ~.bashrc~ and ~humacs-custom.el~ which layer my personal preferences on top of humacs.
+Included in this repository is a ~doom/~ subdirectory which layers my personal preferences on top of doom.
 
 
 ** Optional - Setup sbp powerline prompt
@@ -235,20 +121,6 @@ As you can see in the screenshot, contextual "segments" are presented in the pro
 
 [[./images/powerline-prompt.png]]
 
-
-To set up this prompt the first thing we need to do is install powerline fonts:
-
-#+NAME: Install powerline fonts
-#+begin_src tmux
-# Install the powerline fonts package
-sudo apt-get install fonts-powerline
-
-# Refresh the system font cache
-sudo fc-cache --force --verbose
-#+end_src
-
-
-Once powerline fonts are installed we need to install simple bash prompt:
 
 #+NAME: Install simple bash prompt
 #+begin_src tmux
@@ -306,56 +178,3 @@ sbp toggle peekaboo k8s
 #+end_src
 
 Congratulations - you should now have a functional, good looking and informative bash prompt! 🎉
-
-
-** Optional - Setup mutt mail client
-
-For reading email we ideally use a cli based client for fast searching and lightweight mail reading.
-
-The [[https://gitlab.com/muttmua/mutt/][mutt]] mail client fills these roles well for imap mailboxes.
-
-The first step to setup mutt is to ensure it is installed.
-
-#+NAME: Install mutt
-#+BEGIN_src tmux
-sudo apt-get install -y mutt urlscan
-#+END_SRC
-
-After installing mutt we then need to create configuration directories and files.
-
-#+NAME: Create mutt config files
-#+BEGIN_src tmux
-mkdir -p ~/.mutt/cache/headers
-mkdir ~/.mutt/cache/bodies
-touch ~/.mutt/certificates
-#+END_SRC
-
-One configuration folders and files exist we just need to populate our user mutt configuration file with a configuration for our particular mail provider.
-
-The example provided in this repository utilises the ~bitwarden~ cli utility for secrets to ensure these are securely gathered at runtime and not stored in the file.
-
-
-** Optional - Rust dev tooling
-
-I've been tinkering with learning the [[https://www.rust-lang.org/][Rust]] programming language lately, to set that up follow these steps:
-
-#+NAME: Install pre-requisites
-#+begin_src tmux
-# Ensure pre-requisites are installed
-sudo apt install curl build-essential gcc make -y
-#+end_src
-
-#+NAME: Install rust via helper script
-#+begin_src tmux
-# Install rust via helper script
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-#+end_src
-
-Once installed you can check if the rust compiler is installed with the code block below:
-
-#+NAME: Verify installation
-#+begin_src tmux
-rustc -V && cargo -V
-#+end_src
-
-
