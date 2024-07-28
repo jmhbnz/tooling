@@ -108,7 +108,15 @@
         "§:vodafone.co.nz",
         "§:cncf.io",
         "§:openshift.com",
-        "§:force.com"
+        "§:force.com",
+        "§:keddle.net.nz",
+        "§:ycombinator.com",
+        "§:snyk.io",
+        "§:docker.com",
+        "rhdemo.win",
+        "§:clearscore.com",
+        "§:projectbluefin.io",
+        "§:pbtech.co.nz"
       ],
       "untrusted": [],
       "custom": {}
@@ -122,8 +130,8 @@
     "showCountBadge": true,
     "showFullAddresses": false,
     "showProbePlaceholders": true,
-    "amnesticUpdates": false,
-    "storage": "local",
+    "amnesticUpdates": true,
+    "storage": "local"
   },
   "sync": {
     "global": false,
