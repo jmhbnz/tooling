@@ -80,54 +80,6 @@ function bwai () {
         bw encode | bw create item && bw sync
 }
 
-# custom git credential cache implementation for bitwarden
-# https://github.com/bitwarden/cli/blob/master/examples/git-credential-bw.sh
-function bw_gitea () {
-   declare -A params
-
-   if [[ "$1" == "get" ]]; then
-       read -r line
-       while [ -n "$line" ]; do
-           key=${line%%=*}
-           value=${line#*=}
-           params[$key]=$value
-           read -r line
-       done
-
-       if [[ "${params['protocol']}" != "https" ]]; then
-           exit
-       fi
-
-       if [[ -z "${params["host"]}" ]]; then
-           exit
-       fi
-
-       if ! bw list items --search "asdf" > /dev/null 2>&1; then
-           echo "Please login to Bitwarden to use git credential helper" > /dev/stderr
-           exit
-       fi
-
-       id=$(bw list items --search "${params["host"]}"|jq ".[] | select(.name == \"${params["host"]}\").id" -r)
-
-       if [[ -z "$id" ]]; then
-           echo "Couldn't find item id in Bitwarden DB." > /dev/stderr
-           echo "${params}"
-           exit
-       fi
-
-       user=$(bw get username "${id}")
-       pass=$(bw get password "${id}")
-
-       if [[ -z "$user" ]] || [[ -z "$pass" ]]; then
-           echo "Couldn't find host in Bitwarden DB." > /dev/stderr
-           exit
-       fi
-
-       echo username="$user"
-       echo password="$pass"
-   fi
-}
-
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
