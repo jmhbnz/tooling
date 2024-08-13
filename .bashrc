@@ -36,6 +36,7 @@ alias gpa='git remote | xargs -L1 git push --all'
 
 # simplify bitwarden cli usage
 cpcmd="xclip -selection c"; if [[ "$XDG_SESSION_TYPE" == "wayland" ]]; then cpcmd="wl-copy"; fi
+alias bw='NODE_OPTIONS="--no-deprecation" /home/linuxbrew/.linuxbrew/bin/bw'
 alias bwu='export BW_SESSION=$(bw unlock --raw > ~/.bw_session && cat ~/.bw_session)'
 
 function bwgp () {
@@ -145,7 +146,6 @@ eval "$(fzf --bash)"
 # Configure emacs location and aliases
 export PATH=$PATH:/home/james/.config/emacs/bin/
 alias emacs="emacsclient -nw -a 'doom run --bg-daemon && emacsclient -nw'"
-alias nano="emacsclient -nw -a 'doom run --bg-daemon' && emacsclient -nw"
 
 function e {
 
@@ -174,11 +174,18 @@ function color_my_prompt {
 
 color_my_prompt
 
-# Configure ssh-agent
+# If ssh-agent is not already running
 if [ -z "$(pgrep ssh-agent)" ]; then
-    rm -rf /tmp/ssh-*
+
+    # Cleanup any old ssh directory from tmp
+    if [ -d "/tmp/ssh" ]; then
+        rm --recursive --force /tmp/ssh-*
+    fi
+
+    # Start ssh-agent and set pid + auth sock
     eval $(ssh-agent -s) > /dev/null
 else
+    # Set pid + auth sock to ensure existing ssh-agent will be re-used
     export SSH_AGENT_PID=$(pgrep ssh-agent)
     export SSH_AUTH_SOCK=$(find /tmp/ssh-* -name agent.*)
 fi
@@ -188,25 +195,24 @@ ssh-add -l &>/dev/null
 if [ "$?" == 1 ]; then ssh-add ~/.ssh/$USER; fi
 
 # Remove bitwarden sessions older than a day
-if [[ $(find ~/.bw_session -mtime +1 -print) ]]; then rm ~/.bw_session; fi
+if [ -f ~/.bw_session ] && [[ $(find ~/.bw_session -mtime +1 -print) ]]; then rm ~/.bw_session; fi
 
-# If bitwarden session already set don't overwrite 
-if [ -n "$BW_SESSION" ]; then echo "Bitwarden set";
-
-# Else if there is a session file set from there 
-elif [ -f ~/.bw_session ]; then export BW_SESSION=$(cat ~/.bw_session);
+# If we have a bitwarden session file available set from it
+if [ -f ~/.bw_session ]; then export BW_SESSION=$(cat ~/.bw_session);
 
 # Otherwise unlock to start new session
-else bwu; fi
+elif [ -z "$BW_SESSION" ]; then bwu; fi
 
 # Try connect to my default tmux socket
-if ! tmux -S /tmp/default.tmux attach; then
-    tmux -S /tmp/default.tmux new-session -s default -n default -d
-    tmux -S /tmp/default.tmux attach
+if [ -z "$TMUX" ]; then
+    if ! tmux -S /tmp/default.tmux attach; then
+        tmux -S /tmp/default.tmux new-session -s default -n default -d
+        tmux -S /tmp/default.tmux attach
+    fi
 fi
+
 SBP_PATH=/home/james/Downloads/sbp
 source /home/james/Downloads/sbp/sbp.bash
-export NODE_OPTIONS="--no-deprecation"
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/var/home/james/.var/bin/google-cloud-sdk/path.bash.inc' ]; then . '/var/home/james/.var/bin/google-cloud-sdk/path.bash.inc'; fi
