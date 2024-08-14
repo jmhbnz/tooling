@@ -116,7 +116,11 @@
         "rhdemo.win",
         "§:clearscore.com",
         "§:projectbluefin.io",
-        "§:pbtech.co.nz"
+        "§:pbtech.co.nz",
+        "§:kde.org",
+        "§:protondb.com",
+        "§:sharesies.com",
+        "§:ryobi.co.nz"
       ],
       "untrusted": [],
       "custom": {}
