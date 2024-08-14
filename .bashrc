@@ -126,7 +126,9 @@ if [ -z "$(pgrep ssh-agent)" ]; then
 else
     # Set pid + auth sock to ensure existing ssh-agent will be re-used
     export SSH_AGENT_PID=$(pgrep ssh-agent)
-    export SSH_AUTH_SOCK=$(find /tmp/ssh-* -name agent.*)
+    if [ -d "/tmp/ssh" ]; then 
+	export SSH_AUTH_SOCK=$(find /tmp/ssh-* -name agent.*)
+    fi
 fi
 
 # If ssh-agent has no identities, add mine
