@@ -23,7 +23,8 @@
         "noscript",
         "unchecked_css",
         "lan",
-        "other"
+        "other",
+        "lazy_load"
       ],
       "temp": false
     },
@@ -120,7 +121,17 @@
         "§:kde.org",
         "§:protondb.com",
         "§:sharesies.com",
-        "§:ryobi.co.nz"
+        "§:ryobi.co.nz",
+        "§:metlink.org.nz",
+        "§:sched.com",
+        "§:sched.co",
+        "§:canva.com",
+        "§:safing.io",
+        "§:windcave.com",
+        "§:azure.net",
+        "§:microsoftonline.com",
+        "§:microsoft.com",
+        "§:msftauth.net"
       ],
       "untrusted": [],
       "custom": {}
