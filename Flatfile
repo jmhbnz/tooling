@@ -3,8 +3,10 @@ flathub com.transmissionbt.Transmission
 flathub com.valvesoftware.Steam
 flathub io.github.flattool.Warehouse
 flathub io.github.ungoogled_software.ungoogled_chromium
+flathub io.github.ungoogled_software.ungoogled_chromium.Codecs
 flathub io.podman_desktop.PodmanDesktop
 flathub org.gimp.GIMP
 flathub org.kde.kdenlive
 flathub org.mozilla.firefox
 flathub com.obsproject.Studio
+flathub org.fedoraproject.MediaWriter
