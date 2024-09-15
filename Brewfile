@@ -19,8 +19,9 @@ brew "gh"
 brew "git-lfs"
 brew "glab"
 brew "pcre2"
-brew "go"
+brew "go", link: false
 brew "go@1.21"
+brew "go@1.22", link: true
 brew "golangci-lint"
 brew "govulncheck"
 brew "helm"
