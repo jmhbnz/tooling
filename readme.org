@@ -8,7 +8,7 @@ This document captures my standard tooling for future replication and aims to ma
 
 For the purposes of this repository I broadly refer to tooling as the "standard" way my devices are configured and which things are installed that are non-standard to the operating system.
 
-The environment is based on [[https://pop.system76.com/][Pop!_OS]] ~22.04 LTS~ for my primary work device which is a 2021 Razer Blade 14". Additionally a subdirectory is included for my smartphone which is a [[https://en.wikipedia.org/wiki/Fairphone_4][Fairphone 4]] running [[https://en.wikipedia.org/wiki/Ubuntu_Touch][Ubuntu Touch]].
+The environment is based on [[https://projectbluefin.io/][Bluefin]] for my primary work device which is a 2021 Razer Blade 14". Additionally a subdirectory is included for my smartphone which is a [[https://en.wikipedia.org/wiki/Fairphone_4][Fairphone 4]] running [[https://en.wikipedia.org/wiki/Ubuntu_Touch][Ubuntu Touch]].
 
 
 * How I get things done
@@ -20,7 +20,7 @@ Before diving into the technical details, below is a brief summary of how I get 
 
 For an editor I primarily rely on [[https://www.gnu.org/software/emacs/][emacs]], specifically [[https://github.com/doomemacs/doomemacs][doom emacs]].
 
-The main feature that I rely on in emacs is [[https://orgmode.org/][org-mode]]. This allows me to do literate programming, writing my documenation with embedded code blocks that are actually executable or exportable via [[https://orgmode.org/worg/org-contrib/babel/intro.html][babel]].
+The main feature that I rely on in emacs is [[https://orgmode.org/][org-mode]]. This allows me to do literate programming, writing my documentation with embedded code blocks that are actually executable or exportable via [[https://orgmode.org/worg/org-contrib/babel/intro.html][babel]].
 
 
 ** Browsing the web
@@ -43,6 +43,6 @@ The thing I like most about mutt is the caching which means I can traverse or sc
 
 [[https://bitwarden.com/][Bitwarden]] is my secrets manager of choice. Primarily due to the emphasis they place on open source and excellent ~bw~ cli utility. Use of the bitwarden cli is incorporated into many of my workflows.
 
-One of the things I really like and use daily is leveraging bitwarden for my one time passwords. I can run something like ~bw get totp <thing> | xclip~ in a terminal and have a two factor auth code copied straight onto my clipboard ready to paste where it is required.
+One of the things I really like and use daily is leveraging bitwarden for my one time passwords. I can run something like ~bw get totp <thing> | wl-copy~ in a terminal and have a two factor auth code copied straight onto my clipboard ready to paste where it is required.
 
 The [[./.bashrc][.bashrc]] file in this repository includes helper functions to make bitwarden workflows even faster, including an implementation of a custom git credential cache to dynamically retrieve git https credentials from bitwarden.
