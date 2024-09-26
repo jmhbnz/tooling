@@ -16,6 +16,7 @@ brew "fd", link: false
 brew "fzf"
 brew "gcc"
 brew "gh"
+brew "git-absorb"
 brew "git-lfs"
 brew "glab"
 brew "pcre2"
