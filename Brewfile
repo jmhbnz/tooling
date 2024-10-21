@@ -20,9 +20,9 @@ brew "git-absorb"
 brew "git-lfs"
 brew "glab"
 brew "pcre2"
-brew "go", link: false
+brew "go"
 brew "go@1.21"
-brew "go@1.22", link: true
+brew "go@1.22"
 brew "golangci-lint"
 brew "govulncheck"
 brew "helm"
