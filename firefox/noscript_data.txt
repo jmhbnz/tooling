@@ -147,7 +147,14 @@
         "§:gitlab.com",
         "§:sessionize.com",
         "§:morganstanley.com",
-        "§:hnry.co.nz"
+        "§:hnry.co.nz",
+        "§:wise.com",
+        "§:deerstalkers.org.nz",
+        "§:arcgis.com",
+        "§:muscache.com",
+        "§:ird.govt.nz",
+        "§:p-airnz.com",
+        "§:nzpost.co.nz"
       ],
       "untrusted": [],
       "custom": {}
