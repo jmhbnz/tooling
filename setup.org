@@ -128,15 +128,6 @@ As you can see in the screenshot, contextual "segments" are presented in the pro
 
 [[./images/powerline-prompt.png]]
 
-Our first step is to ensure powerline fonts are installed, unfortunately in fedora silverblue that means layering it in as an os package.
-
-#+NAME: Install powerline fonts
-#+begin_src tmux
-sudo rpm-ostree install powerline-fonts
-#+end_src
-
-Once powerline fonts are available we can setup sbp and our prompt customisations.
-
 #+NAME: Install simple bash prompt
 #+begin_src tmux
 # Disable bluefin/aurora terminal motd
