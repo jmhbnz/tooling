@@ -106,8 +106,15 @@ An integral part of my development workflow is [[https://github.com/doomemacs/do
 
 #+NAME: Install and configure doom
 #+BEGIN_src tmux
+# Install doom emacs
 git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
 ~/.config/emacs/bin/doom install
+
+# Copy in my configuration
+cp /home/${USER}/Documents/doom/* /home/${USER}/.config/doom/
+
+# Doom sync to finalise
+doom sync
 #+END_SRC
 
 Included in this repository is a ~doom/~ subdirectory which layers my personal preferences on top of doom.
