@@ -93,7 +93,7 @@ For working with google cloud platform we use the [[https://cloud.google.com/sdk
 curl -o gcpsdk.tar -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-linux-x86_64.tar.gz
 
 # Extract to a folder in path then remove archive
-tar xvf gcpsdk.tar -C /home/${USER}/.var/bin && rm gcpsdk.tar
+mkdir /home/${USER}/.var/bin && tar xvf gcpsdk.tar -C /home/${USER}/.var/bin && rm gcpsdk.tar
 
 # Run the install script
 /home/${USER}/.var/bin/google-cloud-sdk/install.sh
