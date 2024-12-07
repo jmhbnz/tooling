@@ -120,6 +120,22 @@ doom sync
 Included in this repository is a ~doom/~ subdirectory which layers my personal preferences on top of doom.
 
 
+** Optional - setup tmux plugin manager
+
+For terminal efficiency I use the [[https://github.com/tmux/tmux][tmux]] terminal multiplexer, however to customize it further I use the [[https://github.com/tmux-plugins/tpm][tpm]] plugin manager.
+
+#+NAME Install tmux plugin manager
+#+begin_src tmux
+# Install tmux plugin manager
+mkdir --parents /home/${USER}/.tmux/plugins
+git clone https://github.com/tmux-plugins/tpm /home/${USER}/.tmux/plugins/tpm
+./home/${USER}/.tmux/plugins/tpm/bin/install_plugins
+
+# Source the tmux configuration file
+tmux source ~/.tmux.conf
+#+end_src
+
+
 ** Optional - Setup sbp powerline prompt
 
 Having an informative bash prompt can ease cognitive burden and make development more pleasant. Below is an example of my terminal prompt which is based on [[https://github.com/powerline/fonts/][powerline fonts]] for symbols and [[https://github.com/brujoand/sbp][simple bash prompt]] for the overall presentation.
