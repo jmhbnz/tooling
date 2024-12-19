@@ -24,12 +24,13 @@ set realname='James Blair'
 set header_cache="~/.mutt/cache/headers"
 set message_cachedir="~/.mutt/cache/bodies"
 set certificate_file="~/.mutt/certificates"
-set smtp_url="smtp://`bw get username hosted`@mail.jamesblair.net:587/"
+set smtp_url="smtp://`bw get username hosted`@smtp.dreamhost.com:587/"
 set smtp_pass=`bw get password hosted`
 set move=no
 set imap_keepalive=900
 set postponed="=INBOX.Drafts"
 set record="=INBOX.Sent"
+set sort=threads
 unset imap_passive
 
 macro index,pager \cb "<pipe-message> urlscan<Enter>" "call urlscan to extract URLs out of a message"
