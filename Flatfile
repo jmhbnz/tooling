@@ -11,3 +11,5 @@ flathub org.mozilla.firefox
 flathub com.obsproject.Studio
 flathub org.fedoraproject.MediaWriter
 flathub app.polychromatic.controller
+flathub org.videolan.VLC
+flathub org.remmina.Remmina
