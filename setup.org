@@ -4,7 +4,7 @@
 #+DATE: <2022-11-15 Tue 09:15>
 
 
-This guide will walk through how I setup fresh installations of [[https://projectbluefin.io][Bluefin]]. Bluefin strives to cover these two use cases; For end users it provides a system as reliable as a Chromebook with near-zero maintainance, with the power of homebrew, flathub, and a container runtime to give you access to all the best software Open Source has to offer.
+This guide will walk through how I setup fresh installations of [[https://projectbluefin.io][Bluefin]]. For end users Bluefin provides a system as reliable as a Chromebook with near-zero maintainance, with the power of homebrew, flathub, and a container runtime to give you access to all the best software Open Source has to offer.
 
 I use Bluefin as my daily driver operating system on a variety of different machines. The intent of this guide is to make it easy for me to get back up and running quickly whenver I do a fresh installation.
 
@@ -15,6 +15,15 @@ Additional packages are ideally sourced from [[https://docs.brew.sh/Homebrew-on-
 
 #+begin_src tmux
 brew bundle install
+#+end_src
+
+
+* Install flatpak packages
+
+For anything I can't get through Homebrew for Linux I install via Flathub. Included in this repository is my ~Flatfile~ of packages. Unfortunately the ~flatpak~ cli [[https://github.com/flatpak/flatpak/issues/5876][does not yet support list based installs]] so below is a bash oneliner to get the job done.
+
+#+begin_src
+while read line; do flatpak install --assumeyes `echo $line | awk '{print $2}'`; done < Flatfile
 #+end_src
 
 
