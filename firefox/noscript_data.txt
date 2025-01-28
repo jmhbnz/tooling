@@ -154,7 +154,18 @@
         "§:muscache.com",
         "§:ird.govt.nz",
         "§:p-airnz.com",
-        "§:nzpost.co.nz"
+        "§:nzpost.co.nz",
+        "§:fast.com",
+        "§:metservice.com",
+        "§:b-airnz.com",
+        "§:egencia.co.nz",
+        "§:egencia.com",
+        "§:wellingtonairport.co.nz",
+        "§:airnewzealand.com.au",
+        "§:homes.co.nz",
+        "§:netlify.com",
+        "§:github.dev",
+        "§:jaycar.co.nz"
       ],
       "untrusted": [],
       "custom": {}
@@ -183,6 +194,7 @@
   "xssUserChoices": {
     "https://mail.google.com>https://www.youtube.com": "allow",
     "https://drive.google.com>https://youtube.googleapis.com": "allow",
-    "https://auth.redhat.com>https://sso.online.tableau.com": "allow"
+    "https://app.sharesies.nz>https://js.stripe.com": "allow",
+    "https://app.sharesies.com>https://js.stripe.com": "allow"
   }
 }
