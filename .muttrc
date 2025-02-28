@@ -30,7 +30,7 @@ set move=no
 set imap_keepalive=900
 set postponed="=INBOX.Drafts"
 set record="=INBOX.Sent"
-set sort=threads
+set sort=date-received
 unset imap_passive
 
 macro index,pager \cb "<pipe-message> urlscan<Enter>" "call urlscan to extract URLs out of a message"
