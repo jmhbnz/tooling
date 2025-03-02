@@ -1,3 +1,4 @@
+flathub app.zen_browser.zen
 flathub com.calibre_ebook.calibre
 flathub com.transmissionbt.Transmission
 flathub com.valvesoftware.Steam
@@ -7,7 +8,6 @@ flathub io.github.ungoogled_software.ungoogled_chromium.Codecs
 flathub io.podman_desktop.PodmanDesktop
 flathub org.gimp.GIMP
 flathub org.kde.kdenlive
-flathub org.mozilla.firefox
 flathub com.obsproject.Studio
 flathub org.fedoraproject.MediaWriter
 flathub app.polychromatic.controller

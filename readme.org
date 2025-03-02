@@ -25,7 +25,7 @@ The main feature that I rely on in emacs is [[https://orgmode.org/][org-mode]]. 
 
 ** Browsing the web
 
-My primary browser is [[https://www.mozilla.org/en-GB/firefox/new/][firefox]]. Over the years various extensions have come and gone but [[https://github.com/gorhill/uBlock][u-block origin]] has remained a constant and something I use everywhere. Currently I also have [[https://addons.mozilla.org/en-US/firefox/addon/darkreader/][dark reader]] installed to make working in low light situations less harsh.
+My primary browser is [[https://zen-browser.app][zen]], a fork of firefox. Over the years various extensions have come and gone but [[https://github.com/gorhill/uBlock][u-block origin]] has remained a constant and something I use everywhere. Currently I also have [[https://addons.mozilla.org/en-US/firefox/addon/darkreader/][dark reader]] installed to make working in low light situations less harsh.
 
 For monitoring traffic, blocking connections, enforcing secure dns and routing connections through other servers vpn style I rely on [[https://safing.io/portmaster/][portmaster]] + [[https://safing.io/spn/][spn]].
 
