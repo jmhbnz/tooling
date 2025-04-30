@@ -152,6 +152,10 @@ if [ -z "$TMUX" ]; then
     fi
 fi
 
+# Helper functions for bluetooth
+alias bthsc="bluetoothctl connect CC:98:8B:B6:F0:8E"
+alias bthsd="bluetoothctl disconnect CC:98:8B:B6:F0:8E"
+
 SBP_PATH=/home/james/Downloads/sbp
 source /home/james/Downloads/sbp/sbp.bash
 
