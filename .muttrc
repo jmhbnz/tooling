@@ -57,6 +57,8 @@ alternative_order text/plain text/html
 auto_view text/html
 set mailcap_path = ~/.muttmailcap
 
+# Always include messages when replying
+set include
 
 #================================================================
 # Dracula theme colors
