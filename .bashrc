@@ -36,7 +36,6 @@ alias gpa='git remote | xargs -L1 git push --all'
 
 # simplify bitwarden cli usage
 cpcmd="xclip -selection c"; if [[ "$XDG_SESSION_TYPE" == "wayland" ]]; then cpcmd="wl-copy"; fi
-alias bw='NODE_OPTIONS="--no-deprecation" /home/linuxbrew/.linuxbrew/bin/bw'
 alias bwu='export BW_SESSION=$(bw unlock --raw > ~/.bw_session && cat ~/.bw_session)'
 
 function bwgp () {
