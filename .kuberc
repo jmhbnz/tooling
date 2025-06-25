@@ -1,0 +1,12 @@
+---
+apiVersion: kubectl.config.k8s.io/v1alpha1
+kind: Preference
+overrides:
+  - command: apply
+    flags:
+      - name: server-side
+        default: "true"
+  - command: delete
+    flags:
+      - name: interactive
+        default: "true"
