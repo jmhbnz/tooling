@@ -18,7 +18,7 @@ Before diving into the technical details, below is a brief summary of how I get 
 
 ** Code editing
 
-For an editor I primarily rely on [[https://www.gnu.org/software/emacs/][emacs]], specifically [[https://github.com/doomemacs/doomemacs][doom emacs]].
+For an editor I primarily rely on [[https://www.gnu.org/software/emacs/][emacs]], specifically [[https://github.com/doomemacs/doomemacs][doom emacs]], running within a terminal.
 
 The main feature that I rely on in emacs is [[https://orgmode.org/][org-mode]]. This allows me to do literate programming, writing my documentation with embedded code blocks that are actually executable or exportable via [[https://orgmode.org/worg/org-contrib/babel/intro.html][babel]].
 

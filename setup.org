@@ -43,7 +43,7 @@ bw login mail@jamesblair.net
 
 I make extensive use of ~.dotfiles~ to further customise my environment. The script below restores my versions of key dotfiles automatically.
 
-*** Obtain ssh key from bitwarden
+** Obtain ssh key from bitwarden
 
 In order to be able to clone the repository in the next step we need to obtain our ssh keys from bitwarden. Given we have installed the bitwarden cli we can mostly automte this process minus the initial login to bitwarden.
 
@@ -59,7 +59,7 @@ ssh-keygen -t rsa -f ~/.ssh/james -q -P ""
 export BW_SESSION=$(bw unlock --raw > ~/.bw_session && cat ~/.bw_session)
 
 # Export both keys
-export key=$(bw get item desktop --pretty | grep notes)
+export key=$(bw get item "$(hostname)" --pretty | grep notes)
 
 # Extract private key
 export private=${key:12}
@@ -71,7 +71,7 @@ export public=${key/*ssh-rsa/ssh-rsa} && echo ${public::-2} | awk '{gsub(/\\n/,"
 #+end_src
 
 
-*** Clone and restore dotfiles
+** Clone and restore dotfiles
 
 Once our keys are available to us we can clone down our dotfiles and get back to our comfortable normal terminal environment.
 
