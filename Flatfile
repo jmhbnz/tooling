@@ -12,5 +12,5 @@ flathub com.obsproject.Studio
 flathub org.fedoraproject.MediaWriter
 flathub app.polychromatic.controller
 flathub org.videolan.VLC
-flathub org.remmina.Remmina
+flathub com.thincast.client
 flathub org.raspberrypi.rpi-imager
