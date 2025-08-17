@@ -39,12 +39,21 @@ cpcmd="xclip -selection c"; if [[ "$XDG_SESSION_TYPE" == "wayland" ]]; then cpcm
 alias bwu='export BW_SESSION=$(bw unlock --raw > ~/.bw_session && cat ~/.bw_session)'
 
 function bwgp () {
-    local test=$(export BW_SESSION=~/.bw_session) && bw get password "$1" | $cpcmd;
 
-    # If the login has a totp associated we should leave a follow-up prompt for it
-    if totp=$(bw get totp "$1"); then
-        read -p "Press enter when ready for totp"
-        echo "${totp}" | $cpcmd
+    # Retrieve full json
+    local test
+    test=$(eval $(export BW_SESSION=~/.bw_session) && bw get item "${1}");
+
+    # Update clipboard with initial value
+    echo ${test} | jq -r '.login.password' | "${cpcmd}"
+
+    # Check if a totp is associated
+    if [ $(echo ${test} | jq -r .login.totp) != "null" ]; then
+
+        # Retrieve totp in background
+        exec 3< <(echo $(bw get totp "${1}"))
+        read -r -p "Press enter when ready for totp"
+        read -r <&3 line && echo "${line}" | "${cpcmd}"
     fi
 }
 function bwgt () { local test=$(export BW_SESSION=~/.bw_session) && bw get totp "$1" | $cpcmd; }
