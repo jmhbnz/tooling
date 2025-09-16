@@ -226,3 +226,13 @@ bluetoothctl connect 80:E1:26:6D:66:4A && bluetoothctl set-alias james-flipper
 bluetoothctl connect 88:C9:E8:5A:56:6C && bluetoothctl set-alias james-earphones
 bluetoothctl connect E2:A0:9F:BC:DB:27 && bluetoothctl set-alias james-home-mouse
 #+end_src
+
+
+** Optional - disable sleep
+
+I just power off my devices when they aren't in use, the snippet below disables sleep buttons and also ensures my devices will never unintentionally sleep when closing lid etc.
+
+#+NAME: Disable sleep
+#+begin_src bash
+sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
+#+end_src
