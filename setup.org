@@ -14,7 +14,7 @@ I use Bluefin as my daily driver operating system on a variety of different mach
 Additional packages are ideally sourced from [[https://docs.brew.sh/Homebrew-on-Linux][Homebrew for Linux]], with [[https://flathub.org/][Flathub]] for anything I can't find in brew.  Included in this repository is my ~Brewfile~ of packages.
 
 #+begin_src tmux
-brew bundle install
+brew bundle install --cleanup
 #+end_src
 
 
