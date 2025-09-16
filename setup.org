@@ -212,3 +212,17 @@ sbp toggle peekaboo k8s
 #+end_src
 
 Congratulations - you should now have a functional, good looking and informative bash prompt! 🎉
+
+
+** Optional - bluetooth device names
+
+On a fresh install a selection of bluetooth devices need to be paired. I prefer a custom naming scheme for these devices, so the snippet below can be used to bulk apply my preferred device names.
+
+#+NAME: Rename bluetooth devices
+#+begin_src tmux
+bluetoothctl connect CC:98:8B:B6:F0:8E && bluetoothctl set-alias james-headphones
+bluetoothctl connect CA:20:FE:30:DA:C0 && bluetoothctl set-alias james-travel-mouse
+bluetoothctl connect 80:E1:26:6D:66:4A && bluetoothctl set-alias james-flipper
+bluetoothctl connect 88:C9:E8:5A:56:6C && bluetoothctl set-alias james-earphones
+bluetoothctl connect E2:A0:9F:BC:DB:27 && bluetoothctl set-alias james-home-mouse
+#+end_src
