@@ -1,40 +1,42 @@
-# ==============================================================================
-# Personal $HOME/.bashrc file by James Blair <mail@jamesblair.net>
-# ==============================================================================
-
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-# don't put duplicate lines or lines starting with space in the history.
+# Don't put duplicate lines or lines starting with space in the history.
 HISTCONTROL=ignoreboth
 
-# append to the history file, don't overwrite it
-# also ensure we write to history immediately instead of only on terminal close
+# Append to the history file, don't overwrite it
+# Also ensure we write to history immediately instead of only on terminal close
 shopt -s histappend
 export PROMPT_COMMAND="history -a; history -n"
 
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=10000
-HISTFILESIZE=20000
+# Retain infinite bash history
+HISTSIZE=-1
+HISTFILESIZE=-1
 
-# check the window size after each command and, if necessary,
+# Check the window size after each command and, if necessary
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls -l --color=auto -h --group-directories-first'
-    alias ll='ls -l --color=auto -h --group-directories-first'
+# Alias ls to eza
+if [ "$(command -v eza)" ]; then
+    alias ll='eza -l --icons=auto --group-directories-first'
+    alias ls='eza -l --icons=auto --group-directories-first'
+fi
+
+# Alias cat to bat
+if [ "$(command -v bat)" ]; then
+    alias cat='bat --style=plain --pager=never' 2>/dev/null
 fi
 
 # Alias docker to podman
 alias docker=podman
 
-# Custom git alias for pushing to all remotes at once
-alias gpa='git remote | xargs -L1 git push --all'
+# Alias df to dysk
+if [ "$(command -v bat)" ]; then
+    alias df=dysk
+fi
 
-# simplify bitwarden cli usage
+# Simplify bitwarden cli usage
 cpcmd="xclip -selection c"; if [[ "$XDG_SESSION_TYPE" == "wayland" ]]; then cpcmd="wl-copy"; fi
 alias bwu='export BW_SESSION=$(bw unlock --raw > ~/.bw_session && cat ~/.bw_session)'
 
@@ -88,9 +90,7 @@ function bwai () {
         bw encode | bw create item && bw sync
 }
 
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
+# Enable programmable completion features
 if ! shopt -oq posix; then
   if [ -f /usr/share/bash-completion/bash_completion ]; then
     . /usr/share/bash-completion/bash_completion
@@ -135,7 +135,7 @@ else
     # Set pid + auth sock to ensure existing ssh-agent will be re-used
     export SSH_AGENT_PID=$(pgrep ssh-agent)
     if [ -d "/tmp/ssh" ]; then 
-	export SSH_AUTH_SOCK=$(find /tmp/ssh-* -name agent.*)
+        export SSH_AUTH_SOCK=$(find /tmp/ssh-* -name agent.*)
     fi
 fi
 
@@ -167,6 +167,7 @@ alias bthsd="bluetoothctl disconnect CC:98:8B:B6:F0:8E"
 # Add kubectl krew plugins to path
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
+# Enable simple bash prompt
 SBP_PATH=/home/james/Downloads/sbp
 source /home/james/Downloads/sbp/sbp.bash
 
