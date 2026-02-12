@@ -105,16 +105,16 @@ eval "$(fzf --bash)"
 
 # Configure emacs location and aliases
 export PATH=$PATH:/home/james/.config/emacs/bin/
-alias emacs="emacsclient -nw -a 'doom run --bg-daemon && emacsclient -nw'"
+alias emacs="emacsclient -nw -a 'doom emacs --bg-daemon && emacsclient -nw'"
 
 function e {
 
     # If the file exists just open it
     if test -f "$1"; then
-    emacsclient -nw -a 'doom run --bg-daemon && emacsclient -nw' "$1"
+    emacsclient -nw -a 'doom emacs --bg-daemon && emacsclient -nw' "$1"
 
     # Otherwise we should search for it
-    else emacsclient -nw -a 'doom run --bg-daemon && emacsclient -nw' $(fzf --height 40% --reverse -i --query "$1")
+    else emacsclient -nw -a 'doom emacs --bg-daemon && emacsclient -nw' $(fzf --height 40% --reverse -i --query "$1")
     fi
 }
 
