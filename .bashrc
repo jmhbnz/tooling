@@ -167,6 +167,10 @@ alias bthsd="bluetoothctl disconnect CC:98:8B:B6:F0:8E"
 # Add kubectl krew plugins to path
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
+# Helper aliases for kubectl
+alias k='kubectl'
+alias k-list-all='kubectl api-resources --verbs=list --namespaced -o name | xargs -n 1 kubectl get --ignore-not-found --show-kind -n '
+
 # Enable simple bash prompt
 SBP_PATH=/home/james/Downloads/sbp
 source /home/james/Downloads/sbp/sbp.bash
