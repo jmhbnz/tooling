@@ -1,3 +1,4 @@
+brew "asciidoctor"
 brew "atuin"
 brew "awscli"
 brew "azure-cli"
