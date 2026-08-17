@@ -161,7 +161,7 @@ mkdir --parents /home/$USER/.config/sbp/
 # Write the config file
 cat << EOF > /home/$USER/.config/sbp/settings.conf
 #!/usr/bin/env bash
-SBP_THEME_COLOR='apathy'
+SBP_THEME_COLOR='atlas'
 SBP_THEME_LAYOUT='powerline'
 
 # Hooks will run once before every prompt
