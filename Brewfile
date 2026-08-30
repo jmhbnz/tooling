@@ -18,8 +18,6 @@ brew "bat"
 brew "node"
 # Secure and free password manager for all of your devices
 brew "bitwarden-cli"
-# GNU compiler collection
-brew "gcc"
 # Resource monitor. C++ version and continuation of bashtop and bpytop
 brew "btop"
 # Container Evolution Kit
@@ -40,6 +38,8 @@ brew "eza"
 brew "fd"
 # Command-line fuzzy finder written in Go
 brew "fzf"
+# GNU compiler collection
+brew "gcc"
 # GitHub command-line tool
 brew "gh"
 # Automatic git commit --fixup
@@ -126,7 +126,6 @@ brew "yamllint"
 brew "yq"
 # Shell extension to navigate your filesystem faster
 brew "zoxide"
-go "github.com/argoproj-labs/argocd-agent/cmd/ctl"
 flatpak "app.polychromatic.controller"
 flatpak "app.zen_browser.zen"
 flatpak "com.calibre_ebook.calibre"
