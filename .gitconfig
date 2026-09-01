@@ -30,6 +30,7 @@
 
 [alias]
 	sweep = !"git branch -d $(git branch --merged | grep -vw $(git rev-parse --abbrev-ref HEAD))"
+    find = log --pretty=\"format:%Cgreen%H %Cblue%s\" --name-status --grep
 
 [help]
 	autocorrect = 10
