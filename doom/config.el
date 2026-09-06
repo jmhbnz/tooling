@@ -32,7 +32,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-badger)
+(setq doom-theme 'doom-dracula)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -120,3 +120,21 @@
 
 ;; Add support for mdx files
 (add-to-list 'auto-mode-alist '("\\.mdx\\'" . markdown-mode))
+
+;; Fix clipboard in terminal mode on wayland
+(use-package emacs-solo-clipboard
+  :ensure nil
+  :no-require t
+  :defer t
+  :init
+  (when (and (eq system-type 'gnu/linux)
+             (executable-find "wl-copy"))
+    (setq interprogram-cut-function
+          (lambda (text &optional _)
+            (let ((process-connection-type nil))
+              (let ((proc (start-process "wl-copy" "*Messages*" "wl-copy")))
+                (process-send-string proc text)
+                (process-send-eof proc)))))
+    (setq interprogram-paste-function
+          (lambda ()
+            (shell-command-to-string "wl-paste -n")))))
