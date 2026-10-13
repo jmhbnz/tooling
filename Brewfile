@@ -46,16 +46,12 @@ brew "gh"
 brew "git-absorb"
 # Git extension for versioning large files
 brew "git-lfs"
-# Open-source GitLab command-line tool
-brew "glab"
 # Open source programming language to build simple/reliable/efficient software
 brew "go"
 # Open source programming language to build simple/reliable/efficient software
-brew "go@1.24"
+brew "go@1.26"
 # Fast linters runner for Go
 brew "golangci-lint"
-# Foreman clone written in Go
-brew "goreman"
 # Database client and tools for the Go vulnerability database
 brew "govulncheck"
 # Library access to GnuPG
@@ -74,8 +70,6 @@ brew "krew"
 brew "kubetail"
 # Template-free customization of Kubernetes YAML manifests
 brew "kustomize"
-# Kubernetes WithOut Kubelet - Simulates thousands of Nodes and Clusters
-brew "kwok"
 # Text-based web browser
 brew "lynx"
 # CLI for Node.js style checker and lint tool for Markdown files
