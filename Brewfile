@@ -18,6 +18,8 @@ brew "bat"
 brew "node"
 # Secure and free password manager for all of your devices
 brew "bitwarden-cli"
+# GNU compiler collection
+brew "gcc"
 # Resource monitor. C++ version and continuation of bashtop and bpytop
 brew "btop"
 # Container Evolution Kit
@@ -38,8 +40,6 @@ brew "eza"
 brew "fd"
 # Command-line fuzzy finder written in Go
 brew "fzf"
-# GNU compiler collection
-brew "gcc"
 # GitHub command-line tool
 brew "gh"
 # Automatic git commit --fixup
@@ -108,6 +108,8 @@ brew "shellcheck"
 brew "sshfs"
 # Ultra fast grep with query UI, fuzzy search, archive search, and more
 brew "ugrep"
+# Instant terminal sharing
+brew "upterm"
 # View/select the URLs in an email message or file
 brew "urlscan"
 # Allows for using more advanced kubevirt features
