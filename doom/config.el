@@ -121,6 +121,16 @@
 ;; Add support for mdx files
 (add-to-list 'auto-mode-alist '("\\.mdx\\'" . markdown-mode))
 
+;; Ensure magit sees my bw session
+(defun my/refresh-bitwarden-session ()
+  (interactive)
+  (setenv "BW_SESSION"
+          (string-trim
+           (with-temp-buffer
+             (insert-file-contents "~/.bw_session")
+             (buffer-string))))
+  (message "Bitwarden session refreshed"))
+
 ;; Fix clipboard in terminal mode on wayland
 (use-package emacs-solo-clipboard
   :ensure nil
